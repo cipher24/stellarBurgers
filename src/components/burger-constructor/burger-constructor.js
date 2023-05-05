@@ -20,9 +20,9 @@ function BurgerConstructor(props) {
                         </div>
                     </li>
                     <div className={`${styles.constructorScroll} pr-1`}>
-                    {datas.map(element => ( 
+                    {datas.map((element, index) => ( 
                       element.type === "main" && 
-                      <li className={styles.constructorLi}>
+                      <li key={index} className={styles.constructorLi}>
                           <DragIcon />
                           <div className={` ${styles.constructorPiece} ml-1`}>
                             <img className={`${styles.constructorImage}`} src={element.image_mobile}></img> 

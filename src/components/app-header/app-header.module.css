@@ -7,28 +7,17 @@
   align-items: center;
 }
 
-.headernav {
+.headerLink {
   display: flex;
   align-items: center;
-}
-.account {
-  margin-left: 270px;
-}
-.moveLogo {
-  margin-right: 116px;
-}
-.logo {
-  position: absolute;
+  cursor: pointer;
+  color: inherit; 
+  text-decoration: none;
 }
 
-::-webkit-scrollbar {
-  width: 6px;
+.moveLinks {
+  margin-left: 144px;
+  margin-right: 268px;
 }
 
-body::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-}
-::-webkit-scrollbar-thumb {
-  background-color: rgb(109, 109, 109);
-  outline: 1px solid slategrey;
-}
+

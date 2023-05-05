@@ -23,6 +23,7 @@ function BurgerIngredients(props) {
                 </div>
               
               {/* наверное можно сделать в единственном варианте передавая тип ингредиентов */}
+              {/* подсказал ревьюер что можно лучше сделать через useMemo */}
               <div className={styles.wholeList} >
                 <p className={`${styles.title} text text_type_main-medium mb-6`}> Булки </p>
                 <ul className={styles.list}>
@@ -30,7 +31,7 @@ function BurgerIngredients(props) {
                     datas.map((element, index) => {
                       
                       return (element.type === 'bun') ? (
-                      <li className={styles.ingredientCard}>
+                      <li key={index} className={styles.ingredientCard}>
                         
                         <img src={element.image} alt="bun photo"/>
                         <div className={`${styles.priceInfo} mt-1 mb-1 text text_type_main-default`}> <span className='mr-1'>{element.price}</span>  <CurrencyIcon /> </div>
@@ -50,7 +51,7 @@ function BurgerIngredients(props) {
                     datas.map((element, index) => {
                       
                       return (element.type === 'sauce') ? (
-                      <li className={styles.ingredientCard}>
+                      <li key={index} className={styles.ingredientCard}>
                         <img src={element.image} alt="sauce photo"/>
                         <div className={`${styles.priceInfo} mt-1 mb-1 text text_type_main-default`}> <span className='mr-1'>{element.price}</span> <CurrencyIcon /> </div>
                         <p className={styles.ingredientName}> {element.name}</p>
@@ -66,10 +67,10 @@ function BurgerIngredients(props) {
 
                 <ul className={styles.list}>
                   {
-                    datas.map((element) => {
+                    datas.map((element, index) => {
                       
                       return (element.type === 'main') ? (
-                      <li className={styles.ingredientCard}>
+                      <li key={index} className={styles.ingredientCard}>
                         <img src={element.image} alt="main photo"/>
                         <div className={`${styles.priceInfo} mt-1 mb-1 text text_type_main-default`}> <span className='mr-1'>{element.price}</span> <CurrencyIcon /> </div>
                         <p className={styles.ingredientName}> {element.name}</p>
