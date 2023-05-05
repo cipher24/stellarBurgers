@@ -36,3 +36,15 @@
     transform: rotate(360deg);
   }
 }
+.main {
+  display: grid;
+  grid-template-columns: 600px 600px;
+  grid-template-rows: 915px;
+  column-gap: 40px;
+  justify-content: center;
+}
+
+p {
+  margin: 0;
+  padding: 0;
+}
