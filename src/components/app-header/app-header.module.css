@@ -1,0 +1,23 @@
+.appheader {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  width: 1280px;
+  margin: auto;
+  align-items: center;
+}
+
+.headerLink {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  color: inherit; 
+  text-decoration: none;
+}
+
+.moveLinks {
+  margin-left: 144px;
+  margin-right: 268px;
+}
+
+
