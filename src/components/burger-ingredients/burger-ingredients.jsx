@@ -4,12 +4,13 @@ import styles from './burger-ingredients.module.css';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import BurgerIngredient from '../burger-ingredient/burger-ingredient';
+import propTypesData from '../utils/prop-types';
 import PropTypes from 'prop-types';
 
 function BurgerIngredients(props) {
 
   const [isShowModal, setIsShowModal] = React.useState(false);
-  const [currentTab, setCurrentTab] = React.useState('one');
+  const [currentTab, setCurrentTab] = React.useState('buns');
   const [ingredientToPop, setIngredientToPop] = React.useState({});
  
   const datas = props.loadedData;
@@ -42,13 +43,13 @@ function BurgerIngredients(props) {
       <p className={`${styles.title} text text_type_main-large mt-10 mb-5`}> Соберите бургер</p>
       <div className={`${styles.tabs} mb-10`} >
 
-        <Tab value="one" active={currentTab === 'one'} onClick={selectTab}>
+        <Tab value="buns" active={currentTab === 'buns'} onClick={selectTab}>
           Булки
         </Tab>
-        <Tab value="two" active={currentTab === 'two'} onClick={selectTab}>
+        <Tab value="sauces" active={currentTab === 'sauces'} onClick={selectTab}>
           Соусы
         </Tab>
-        <Tab value="three" active={currentTab === 'three'} onClick={selectTab}>
+        <Tab value="mains" active={currentTab === 'mains'} onClick={selectTab}>
           Начинки
         </Tab>
 
@@ -56,7 +57,7 @@ function BurgerIngredients(props) {
 
       <div className={styles.wholeList} >
 
-        <p className={`${styles.title} text text_type_main-medium mb-6`} id="one"> Булки </p>
+        <p className={`${styles.title} text text_type_main-medium mb-6`} id="buns"> Булки </p>
         <ul className={styles.list}>
           {
             buns.map((element) => {
@@ -65,7 +66,7 @@ function BurgerIngredients(props) {
           }
         </ul>
 
-        <p className={`${styles.title} text text_type_main-medium mt-10 mb-6`} id="two"> Соусы </p>
+        <p className={`${styles.title} text text_type_main-medium mt-10 mb-6`} id="sauces"> Соусы </p>
         <ul className={styles.list}>
           {
             sauces.map((element) => {
@@ -74,7 +75,7 @@ function BurgerIngredients(props) {
           }
         </ul>
 
-        <p className={`${styles.title} text text_type_main-medium mt-10 mb-6`} id="three"> Начинки </p>
+        <p className={`${styles.title} text text_type_main-medium mt-10 mb-6`} id="mains"> Начинки </p>
         <ul className={styles.list}>
           {
             mains.map((element) => {
@@ -96,18 +97,5 @@ function BurgerIngredients(props) {
 export default BurgerIngredients;
 
 BurgerIngredients.propTypes = {
-  loadedData: PropTypes.arrayOf(PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-    calories: PropTypes.number.isRequired,
-    carbohydrates: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    proteins: PropTypes.number.isRequired,
-    price: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-    image_large: PropTypes.string.isRequired,
-    image_mobile: PropTypes.string.isRequired,
-    __v: PropTypes.number.isRequired,
-  }).isRequired).isRequired 
+  loadedData: PropTypes.arrayOf(propTypesData.isRequired).isRequired 
 }

@@ -4,6 +4,7 @@ import Modal from '../modal/modal';
 import React from 'react';
 import OrderDetails from '../order-details/order-details';
 import PropTypes from 'prop-types';
+import propTypesData from '../utils/prop-types';
 
 function BurgerConstructor(props) {
   const [isShowOrder, setIsShowOrder] = React.useState(false);
@@ -36,7 +37,7 @@ function BurgerConstructor(props) {
           </div>
         </li>
 
-       <div className={`${styles.constructorScroll} pr-1`}>
+        <div className={`${styles.constructorScroll} pr-1`}>
           {mains.map((element, index) => (
             element.type === "main" &&
             <li key={index} className={styles.constructorLi}>
@@ -54,7 +55,7 @@ function BurgerConstructor(props) {
           ))}
         </div>
 
-       <li className={`${styles.flexLi} mt-4`} >
+        <li className={`${styles.flexLi} mt-4`} >
           <div className={` ${styles.lastLi} pl-6 pr-8`}>
             <img className={styles.constructorImage} src={datas[0].image_mobile}></img>
             <p>{`${datas[0].name} (низ)`}</p>
@@ -75,11 +76,11 @@ function BurgerConstructor(props) {
         </Button>
       </form>
       <div className={styles.modalContainer}>
-        {isShowOrder && (
+        {
+          isShowOrder &&
           <Modal onCloseClick={onCloseClick} >
-              <OrderDetails orderNumber={123456} />
+            <OrderDetails orderNumber={123456} />
           </Modal>
-        )
         }
       </div>
     </section>
@@ -89,18 +90,5 @@ function BurgerConstructor(props) {
 export default BurgerConstructor;
 
 BurgerConstructor.propTypes = {
-  loadedData: PropTypes.arrayOf(PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-    calories: PropTypes.number.isRequired,
-    carbohydrates: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    proteins: PropTypes.number.isRequired,
-    price: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-    image_large: PropTypes.string.isRequired,
-    image_mobile: PropTypes.string.isRequired,
-    __v: PropTypes.number.isRequired,
-  }).isRequired).isRequired 
+  loadedData: PropTypes.arrayOf(propTypesData.isRequired).isRequired
 }

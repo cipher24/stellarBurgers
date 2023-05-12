@@ -1,7 +1,7 @@
 import styles from './burger-ingredient.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
-import React from 'react';
+import propTypesData from '../utils/prop-types';
 
 const BurgerIngredient = ({ element, showIngredientInfo }) => {
   return (
@@ -20,19 +20,6 @@ const BurgerIngredient = ({ element, showIngredientInfo }) => {
 export default BurgerIngredient;
 
 BurgerIngredient.propTypes = {
-  element: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-    calories: PropTypes.number.isRequired,
-    carbohydrates: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    proteins: PropTypes.number.isRequired,
-    price: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-    image_large: PropTypes.string.isRequired,
-    image_mobile: PropTypes.string.isRequired,
-    __v: PropTypes.number.isRequired,
-  }).isRequired,
+  element: propTypesData.isRequired,
   showIngredientInfo: PropTypes.func.isRequired
 }
