@@ -1,0 +1,19 @@
+.nutrition {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  column-gap: 20px;
+  text-align: center;
+  line-height: 20px;
+}
+
+.nutrition * {
+  line-height: 30px;
+}
+
+.ingredientCard{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+

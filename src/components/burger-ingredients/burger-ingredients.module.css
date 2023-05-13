@@ -1,4 +1,3 @@
-
 .title {
   display: block;
 }
@@ -7,11 +6,14 @@
   display: flex;
   flex-direction: row;
 }
-.wholeList{
+
+.wholeList {
+  padding-right: 4px;
   height: 700px;
   overflow: scroll;
   overflow-x: hidden;
 }
+
 .list {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -19,36 +21,6 @@
   list-style: none;
 }
 
-.ingredientCard {
-  position: relative;
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 120px 24px 42px;
-  row-gap: 4px;
-  justify-content: center; 
-  align-content: center;
-}
-
-.ingredientCard * {
-  justify-self: center;
-}
-
-.priceInfo {
-  display: flex;
-  justify-self: center;
-  align-self: center;
-}
-
-
-.ingredientName {
-  height: 48px;
-}
-
-.countIngredient{
-  position: absolute;
-  top: 0;
-  right: 0;
-  background-color: #4C4CFF;
-  padding: 5px 10px;
-  border-radius: 50%;
+.modalContainer {
+  overflow: hidden;
 }

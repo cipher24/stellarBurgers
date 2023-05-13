@@ -1,0 +1,15 @@
+.orderContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.checkIconContainer {
+  background-color: #4C4CFF40;
+  border-radius: 50%;
+  padding: 20px 30px;
+}
+
+.checkIconContainer svg {
+  font-size: 60px;
+}

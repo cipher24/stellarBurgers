@@ -1,19 +1,17 @@
 .constructorBlock {
-  
   display: flex;
   flex-direction: column;
   justify-content: start;
-  
 }
 .list {
   list-style: none;
-  
+  padding-inline-start: 0;
 }
 
 .list li {
   margin-bottom: 16px;
 }
-.constructorLi{
+.constructorLi {
   display: flex;
   align-items: center;
   justify-content: end;
@@ -25,7 +23,6 @@
   overflow-x: hidden;
 }
 
-
 .constructorPiece {
   height: 80px;
   width: 536px;
@@ -35,20 +32,18 @@
   justify-content: start;
   justify-items: center;
   align-items: center;
-  background-color: #1C1C21;
+  background-color: #1c1c21;
   border-radius: 40px;
   padding: 0 32px 0 24px;
 }
-
 
 .flexLi {
   height: 80px;
   display: flex;
   justify-content: end;
-} 
+}
 
 .firstLi {
-
   display: grid;
   grid-template-columns: 80px minmax(min-content, auto) auto 24px;
   grid-template-rows: 80px;
@@ -62,8 +57,7 @@
   border-top-right-radius: 100px 100px;
   border-bottom-left-radius: 40px 40px;
   border-bottom-right-radius: 40px 40px;
-  background-color: #1C1C21;
-
+  background-color: #1c1c21;
 }
 
 .lastLi {
@@ -73,12 +67,11 @@
   margin-right: 12px;
   column-gap: 20px;
   align-items: center;
-
   border-top-left-radius: 40px 40px;
   border-top-right-radius: 40px 40px;
   border-bottom-left-radius: 100px 100px;
   border-bottom-right-radius: 100px 100px;
-  background-color: #1C1C21;
+  background-color: #1c1c21;
 }
 
 .priceInfo {
@@ -91,7 +84,11 @@
   align-items: center;
 }
 
-.constructorImage{
+.constructorImage {
   width: 80px;
   height: 40px;
+}
+
+.modalContainer {
+  overflow: hidden;
 }
