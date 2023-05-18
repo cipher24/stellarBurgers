@@ -2,11 +2,12 @@ import styles from './burger-ingredient.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import propTypesData from '../utils/prop-types';
+import React from 'react';
 
 const BurgerIngredient = ({ element, showIngredientInfo }) => {
   return (
     <li className={styles.ingredientCard} data-id={element._id} onClick={showIngredientInfo} >
-      <img src={element.image} alt="bun image" />
+      <img src={element.image} alt="image" />
       <div className={`${styles.priceInfo} mt-1 mb-1 text text_type_main-default`}>
         <span className='mr-1'>{element.price}</span>
         <CurrencyIcon />

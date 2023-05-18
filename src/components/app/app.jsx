@@ -3,7 +3,8 @@ import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import { useState, useEffect } from 'react';
 import styles from './app.module.css';
-import getIngredients from '../utils/burger-api';
+import {getIngredients} from '../utils/burger-api';
+import { DataContext } from '../utils/data-context';
 
 function App() {
 
@@ -32,10 +33,10 @@ function App() {
       <main className={styles.main} >
         {
           data.length > 0 &&
-          <>
-            <BurgerIngredients loadedData={data} />
-            <BurgerConstructor loadedData={data} />
-          </>
+            <DataContext.Provider value={[data]} >
+              <BurgerIngredients />
+              <BurgerConstructor />
+            </DataContext.Provider>
         }
       </main>
     </>

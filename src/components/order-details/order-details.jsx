@@ -1,12 +1,17 @@
 import { CheckMarkIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './order-details.module.css';
 import PropTypes from 'prop-types';
+import React from 'react';
+import { ConstructorContext } from '../utils/constructor-context';
 
-const OrderDetails = ({ orderNumber }) => {
-  
+const OrderDetails = () => {
+  const state = React.useContext(ConstructorContext);
+
   return (
     <div className={styles.orderContainer}>
-      <h1 className="text text_type_digits-large"> {orderNumber}</h1>
+      { state.answer &&
+        <h1 className="text text_type_digits-large"> {state.orderNumber}</h1>
+      }
       <p className="text text_type_main-medium mt-8 mb-15">идентификатор заказа</p>
       <div className={styles.checkIconContainer}>
         <CheckMarkIcon type="primary" />
@@ -19,6 +24,6 @@ const OrderDetails = ({ orderNumber }) => {
 
 export default OrderDetails;
 
-OrderDetails.propTypes = {
+/* OrderDetails.propTypes = {
   orderNumber: PropTypes.number.isRequired
-}
+} */
