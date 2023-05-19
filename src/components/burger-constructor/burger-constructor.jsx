@@ -12,8 +12,8 @@ import { requestToServer } from '../utils/burger-api';
 
 function BurgerConstructor() {
 
-  const [datas] = React.useContext(DataContext);
-
+  const {context} = React.useContext(DataContext);
+ const datas = context.data;
   const [isShowOrder, setIsShowOrder] = React.useState(false);
   const [state, setConstructorState] = React.useState({
     upperBun: null,
@@ -24,13 +24,12 @@ function BurgerConstructor() {
     orderNumber: null
   });
 
-
   const buns = React.useMemo(() => datas.filter((element) => element.type === 'bun'), [datas]);
   const notBuns = React.useMemo(() => datas.filter((element) => element.type !== 'bun'), [datas]);
 
   const randomBun = buns[Math.floor(Math.random() * buns.length)];
   const randomIng = [];
-  for (let i = 0; i < 6; i++) {
+  for (let i = 0; i < 2; i++) {
     randomIng.push(notBuns[Math.floor(Math.random() * notBuns.length)]);
   }
 
@@ -45,24 +44,17 @@ function BurgerConstructor() {
     })
   }, [datas]);
 
-  const totalPrice = () => {
-    return (state.ingredients.reduce(
-      (acc, current) => acc + current.price, 0)
-      + state.upperBun.price
-      + state.lowerBun.price
-    )
-  };
-
   const onCloseClick = () => {
     setIsShowOrder(false);
   }
-  const onOrderButtonClick = () => {
+
+  const onOrderButtonClick = (event) => {
     setIsShowOrder(true);
     requestToServer(getIngredientsIds())
-      .then((data) => {
-        setConstructorState({ ...state, answer: data, orderNumber: data.order.number })
-      })
-      .catch(e => console.log("! ОШИБКА: ", e))
+    .then((data) => {
+      setConstructorState({ ...state, answer: data, orderNumber: data.order.number })
+    })
+    .catch(e => console.log("! ОШИБКА: ", e));
   }
 
   const getIngredientsIds = () => {
@@ -123,12 +115,12 @@ function BurgerConstructor() {
 
 
       <ConstructorContext.Provider value={state} >
-        <form className={styles.confirmOrder}>
+        <div className={styles.confirmOrder} >
           <p className='text text_type_digits-medium mr-10'><span>{state.total}</span> <CurrencyIcon /></p>
           <Button htmlType="button" type="primary" size="medium" onClick={onOrderButtonClick}>
             Оформить заказ
           </Button>
-        </form>
+        </div>
         <div className={styles.modalContainer}>
           {isShowOrder &&
             <Modal onCloseClick={onCloseClick} >

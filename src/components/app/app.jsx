@@ -1,7 +1,7 @@
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect} from 'react';
 import styles from './app.module.css';
 import {getIngredients} from '../utils/burger-api';
 import { DataContext } from '../utils/data-context';
@@ -26,14 +26,18 @@ function App() {
 
   }, [])
 
-  const { data } = state;
+  const dataContextValue = React.useMemo(() => {
+    return {context:state, setContext:setState};
+  }, [state, setState]);
+
+  // const { data } = state;
   return (
     <>
       <AppHeader />
       <main className={styles.main} >
         {
-          data.length > 0 &&
-            <DataContext.Provider value={[data]} >
+          state.data.length > 0 &&
+            <DataContext.Provider value={dataContextValue} >
               <BurgerIngredients />
               <BurgerConstructor />
             </DataContext.Provider>

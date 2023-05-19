@@ -14,7 +14,8 @@ function BurgerIngredients() {
   const [currentTab, setCurrentTab] = React.useState('buns');
   const [ingredientToPop, setIngredientToPop] = React.useState({});
  
-  const [datas] = React.useContext(DataContext);
+  const {context} = React.useContext(DataContext);
+  const datas = context.data;
 
   const buns = useMemo(() => datas.filter((element) => element.type === 'bun'), [datas]);
   const mains = useMemo(() => datas.filter((element) => element.type === 'main'), [datas]);
