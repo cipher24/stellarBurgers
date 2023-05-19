@@ -11,67 +11,43 @@
 .list li {
   margin-bottom: 16px;
 }
-.constructorLi {
-  display: flex;
-  align-items: center;
-  justify-content: end;
-}
 
 .constructorScroll {
   height: 470px;
+  width: 584px;
   overflow: scroll;
   overflow-x: hidden;
 }
-
-.constructorPiece {
-  height: 80px;
-  width: 536px;
-  display: grid;
-  grid-template-columns: 80px minmax(min-content, auto) auto 24px;
-  column-gap: 20px;
-  justify-content: start;
-  justify-items: center;
-  align-items: center;
-  background-color: #1c1c21;
-  border-radius: 40px;
-  padding: 0 32px 0 24px;
+.constructorImage {
+  width: 80px;
+  height: 40px;
 }
 
-.flexLi {
+.flexBun {
   height: 80px;
   display: flex;
-  justify-content: end;
+  justify-content: start;
 }
 
-.firstLi {
+.topBun {
   display: grid;
   grid-template-columns: 80px minmax(min-content, auto) auto 24px;
-  grid-template-rows: 80px;
-  margin-left: 24px;
-  margin-right: 12px;
-  align-items: center;
-  justify-content: start;
-  justify-items: center;
+  margin-right: 16px;
   column-gap: 20px;
+  align-items: center;
+  background-color: #1c1c21;
   border-top-left-radius: 100px 100px;
   border-top-right-radius: 100px 100px;
   border-bottom-left-radius: 40px 40px;
   border-bottom-right-radius: 40px 40px;
-  background-color: #1c1c21;
 }
 
-.lastLi {
-  display: grid;
-  grid-template-columns: 80px minmax(min-content, auto) auto 24px;
-  margin-left: 24px;
-  margin-right: 12px;
-  column-gap: 20px;
-  align-items: center;
+.downBun {
+  composes: topBun;
   border-top-left-radius: 40px 40px;
   border-top-right-radius: 40px 40px;
   border-bottom-left-radius: 100px 100px;
   border-bottom-right-radius: 100px 100px;
-  background-color: #1c1c21;
 }
 
 .priceInfo {
@@ -82,11 +58,6 @@
   display: flex;
   align-self: end;
   align-items: center;
-}
-
-.constructorImage {
-  width: 80px;
-  height: 40px;
 }
 
 .modalContainer {

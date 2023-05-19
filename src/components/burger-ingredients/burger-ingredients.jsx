@@ -6,14 +6,15 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
 import BurgerIngredient from '../burger-ingredient/burger-ingredient';
 import propTypesData from '../utils/prop-types';
 import PropTypes from 'prop-types';
+import { DataContext } from '../utils/data-context';
 
-function BurgerIngredients(props) {
+function BurgerIngredients() {
 
   const [isShowModal, setIsShowModal] = React.useState(false);
   const [currentTab, setCurrentTab] = React.useState('buns');
   const [ingredientToPop, setIngredientToPop] = React.useState({});
  
-  const datas = props.loadedData;
+  const [datas] = React.useContext(DataContext);
 
   const buns = useMemo(() => datas.filter((element) => element.type === 'bun'), [datas]);
   const mains = useMemo(() => datas.filter((element) => element.type === 'main'), [datas]);
@@ -96,6 +97,6 @@ function BurgerIngredients(props) {
 }
 export default BurgerIngredients;
 
-BurgerIngredients.propTypes = {
+/* BurgerIngredients.propTypes = {
   loadedData: PropTypes.arrayOf(propTypesData.isRequired).isRequired 
-}
+}  */
