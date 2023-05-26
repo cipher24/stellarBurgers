@@ -2,7 +2,7 @@ import styles from './ingredient-details.module.css';
 import propTypesData from '../utils/prop-types';
 import React from 'react';
 
-const IngredientDetails = ({ ingredient }) => {
+export const IngredientDetails = ({ ingredient }) => {
   return (
     <div className={styles.ingredientCard}>
       <img src={ingredient.image_large} alt='ingredient photo'></img>
@@ -29,7 +29,7 @@ const IngredientDetails = ({ ingredient }) => {
   )
 }
 
-export default IngredientDetails;
+// export default IngredientDetails;
 
 
 IngredientDetails.propTypes = {

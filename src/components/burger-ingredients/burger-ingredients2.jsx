@@ -4,11 +4,26 @@ import styles from './burger-ingredients.module.css';
 import Modal from '../modal/modal';
 import {IngredientDetails} from '../ingredient-details/ingredient-details';
 import BurgerIngredient from '../burger-ingredient/burger-ingredient';
-import propTypesData from '../utils/prop-types';
-import PropTypes from 'prop-types';
-import { DataContext } from '../utils/data-context';
+// import propTypesData from '../utils/prop-types';
+// import PropTypes from 'prop-types';
+// import { DataContext } from '../utils/data-context';
 import { useDispatch, useSelector } from 'react-redux';
 import { getIngredientsRequest } from '../../services/actions/burger-ingredients';
+import CategoryIngredients from '../category-ingredients/category-ingredients';
+
+const category = (category) => {
+  switch (category) {
+    case "sauce" : {
+      return {type: category, title: 'Соусы'}
+    }
+    case 'main' : {
+      return {type: category, title: 'Начинки'}
+    }
+    case 'bun' : {
+      return {type: category, title: 'Булки'}
+    }
+  }
+}
 
 export default function BurgerIngredients() {
 
@@ -55,7 +70,7 @@ export default function BurgerIngredients() {
     return (
       <section className={`${styles.ingredientsBlock}`} >
   
-        <p className={`${styles.title} text text_type_main-large mt-10 mb-5`}> Соберите бургер</p>
+        <p className={`${styles.title} text text_type_main-large mt-10 mb-5`}> Соберите бургер 234234</p>
         <div className={`${styles.tabs} mb-10`} >
   
           <Tab value="buns" active={currentTab === 'buns'} onClick={selectTab}>
@@ -71,6 +86,7 @@ export default function BurgerIngredients() {
         </div>
   
         <div className={styles.wholeList} >
+          <CategoryIngredients category={category('main')} />
   
           <p className={`${styles.title} text text_type_main-medium mb-6`} id="buns"> Булки </p>
           <ul className={styles.list}>

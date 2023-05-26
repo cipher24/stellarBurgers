@@ -9,11 +9,14 @@ import ConstructorPiece from '../constructor-piece/constructor-piece';
 import { DataContext } from '../utils/data-context';
 import { ConstructorContext } from '../utils/constructor-context';
 import { requestToServer } from '../utils/burger-api';
+import { useSelector } from 'react-redux';
 
-function BurgerConstructor() {
-
+export default function BurgerConstructor() {
+/* 
   const {context} = React.useContext(DataContext);
- const datas = context.data;
+ const datas = context.data; */
+ const datas = useSelector(store => store.burgerIngredientsReducer.ingredients); 
+
   const [isShowOrder, setIsShowOrder] = React.useState(false);
   const [state, setConstructorState] = React.useState({
     upperBun: null,
@@ -70,7 +73,8 @@ function BurgerConstructor() {
 
 
       <ul className={`${styles.list} mt-25 mb-10 ml-4`}>
-
+        
+        {/* Верхняя булка */}
         {state.upperBun &&
           <li className={`${styles.flexBun} ml-8`} key={'00'} >
             <div className={` ${styles.topBun} pl-6 pr-8`} >
@@ -84,7 +88,7 @@ function BurgerConstructor() {
             </div>
           </li>
         }
-
+        {/* Ингредиенты */}
         {state.ingredients &&
           <div className={`${styles.constructorScroll}`}>
             {state.ingredients.map((element, index) => (
@@ -97,6 +101,7 @@ function BurgerConstructor() {
           </div>
         }
 
+        {/* нижняя булка */}
         {state.lowerBun &&
           <li className={`${styles.flexBun} mt-4 ml-8`} key={'01'}>
             <div className={` ${styles.downBun} pl-6 pr-8`} >
@@ -133,7 +138,7 @@ function BurgerConstructor() {
   )
 }
 
-export default BurgerConstructor;
+// export default BurgerConstructor;
 
 /* BurgerConstructor.propTypes = {
   loadedData: PropTypes.arrayOf(propTypesData.isRequired).isRequired
