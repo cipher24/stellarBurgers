@@ -6,15 +6,13 @@
 .list {
   list-style: none;
   padding-inline-start: 0;
-}
-
-.list li {
-  margin-bottom: 16px;
+  padding: 2px;
 }
 
 .constructorScroll {
-  height: 470px;
-  width: 584px;
+  max-height: 470px;
+  min-height: 250px;
+  width: auto;
   overflow: scroll;
   overflow-x: hidden;
 }
@@ -62,4 +60,9 @@
 
 .modalContainer {
   overflow: hidden;
+}
+
+.dropZone {
+  padding: 0;
+  border: 2px dashed rgb(89, 27, 139);
 }

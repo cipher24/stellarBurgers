@@ -1,11 +1,13 @@
 import styles from './ingredient-details.module.css';
-import propTypesData from '../utils/prop-types';
-import React from 'react';
+import { useSelector } from 'react-redux';
 
-export const IngredientDetails = ({ ingredient }) => {
+export const IngredientDetails = () => {
+
+  const ingredient = useSelector(store=>store.ingredientDetailsReducer);
+
   return (
     <div className={styles.ingredientCard}>
-      <img src={ingredient.image_large} alt='ingredient photo'></img>
+      <img src={`${ingredient.src}`} alt='ingredient photo'></img>
       <p className={`mt-4 mb-8 text text_type_main-medium`}>{ingredient.name}</p>
       <div className={`${styles.nutrition} text text_type_main-default text_color_inactive mb-15`}>
         <div>
@@ -27,11 +29,4 @@ export const IngredientDetails = ({ ingredient }) => {
       </div>
     </div>
   )
-}
-
-// export default IngredientDetails;
-
-
-IngredientDetails.propTypes = {
-  ingredient: propTypesData.isRequired
 }

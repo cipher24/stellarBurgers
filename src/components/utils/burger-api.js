@@ -14,7 +14,7 @@ export const getIngredients = () => {
 };
 
 
-export const requestToServer = (ingredientsIds) => {
+export const postToServer = (ingredientsIds) => {
   return fetch( `${NORMA_URL}/orders`, {
     method: "POST",
     body: JSON.stringify({
@@ -26,11 +26,8 @@ export const requestToServer = (ingredientsIds) => {
   })
     .then(responseCheck)
     .then(data => {
-      return data.success ? data : Promise.reject(data)
-    })
-    .catch(e => {
-      console.log("! ОШИБКА: ", e);
-    })
+      return data.success ? data : Promise.reject()
+    });
 }
 
 

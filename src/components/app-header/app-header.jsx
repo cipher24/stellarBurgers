@@ -35,5 +35,3 @@ export default function AppHeader() {
     </header>
   )
 }
-
-// export default AppHeader;

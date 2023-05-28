@@ -1,16 +1,14 @@
 import { CheckMarkIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './order-details.module.css';
-import PropTypes from 'prop-types';
-import React from 'react';
-import { ConstructorContext } from '../utils/constructor-context';
+import { useSelector } from 'react-redux';
 
 const OrderDetails = () => {
-  const state = React.useContext(ConstructorContext);
+  const { answer, orderNumber } = useSelector(store=>store.orderDetailsReducer);
 
   return (
     <div className={styles.orderContainer}>
-      { state.answer &&
-        <h1 className="text text_type_digits-large"> {state.orderNumber}</h1>
+      { answer &&
+        <h1 className="text text_type_digits-large"> {orderNumber}</h1>
       }
       <p className="text text_type_main-medium mt-8 mb-15">идентификатор заказа</p>
       <div className={styles.checkIconContainer}>
@@ -23,7 +21,3 @@ const OrderDetails = () => {
 }
 
 export default OrderDetails;
-
-/* OrderDetails.propTypes = {
-  orderNumber: PropTypes.number.isRequired
-} */
