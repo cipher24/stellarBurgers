@@ -1,53 +1,54 @@
 import styles from './burger-constructor.module.css'
-import { Button, CurrencyIcon, LockIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Button, CurrencyIcon, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
-import { useSelector, useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { requestServer, closeOrder } from '../../services/actions/order-details';
 import { v4 as uuidv4 } from 'uuid';
 import { useDrop } from 'react-dnd';
 import { ADD_INGREDIENT, ADD_BUNS } from '../../services/actions/burger-constructor';
-import ConstructorIngredients from '../constructor-ingredients/constructor-ingredients';
+import ConstructorPiece from '../constructor-piece/constructor-piece';
 
 export default function BurgerConstructor() {
 
- const dispatch = useDispatch();
-  const isShowOrder = useSelector(store=>store.orderDetailsReducer.isShowOrder);
+  const dispatch = useDispatch();
+  const {isShowOrder} = useSelector(store => store.orderDetailsReducer);
+  const states = useSelector(store => store.burgerConstructorReducer);
+
+  const [{ isDragging }, dropTargetRef] = useDrop({
+    accept: 'ingredient',
+    collect: monitor => ({
+      isDragging: monitor.canDrop()
+    }),
+    drop(item) {
+      if (item.element.type !== 'bun') {
+        dispatch({
+          type: ADD_INGREDIENT,
+          item: {
+            ...item.element,
+            dragId: uuidv4(),
+          }
+        })
+      } else {
+        dispatch({
+          type: ADD_BUNS,
+          item: {
+            ...item.element,
+            dragId: uuidv4(),
+          }
+        })
+      }
+    }
+  });
 
   const onCloseClick = () => {
     dispatch(closeOrder());
   }
-
-const [{ isDragging }, dropTargetRef] = useDrop({
-  accept: 'ingredient',
-  collect: monitor => ({
-    isDragging: monitor.canDrop()
-  }),
-  drop(item) {
-    if (item.element.type !== 'bun') {
-      dispatch({
-        type: ADD_INGREDIENT,
-        item: {
-          ...item.element,
-          dragId: uuidv4(),
-        }
-      })
-    } else {
-      dispatch({
-        type: ADD_BUNS,
-        item: {
-          ...item.element,
-          dragId: uuidv4(),
-        }
-      })
-    }
-  }
-});
-
-//useCallback ? нужен c добавлением диспатч в депс ?
+  //useCallback ? нужен c добавлением диспатч в депс ?
   const onOrderButtonClick = () => {
-    dispatch(requestServer(getIngredientsIds()));
-
+    if (states.buns.name !== undefined) {
+      dispatch(requestServer(getIngredientsIds()));
+    } else { window.alert('Добавьте булку, чтобы завершить заказ'); }
   }
 
   const getIngredientsIds = () => {
@@ -58,68 +59,68 @@ const [{ isDragging }, dropTargetRef] = useDrop({
     return ids;
   }
 
-  const states = useSelector(store => store.burgerConstructorReducer);
-  
   return (
-    <section   className={` ${styles.constructorBlock} text text_type_main-default`}>
+    <section className={` ${styles.constructorBlock} text text_type_main-default`}>
 
+      <ul
+        ref={dropTargetRef}
+        className={`${isDragging ? styles.dropZone : ''} ${styles.list} mt-25 mb-10 ml-4`}>
 
-      <ul ref={dropTargetRef} className={`${isDragging ? styles.dropZone :'' } ${styles.list} mt-25 mb-10 ml-4`}>
-        
-        {/* Верхняя булка */}
-        { states.buns.name !== undefined &&
-          <li className={`${styles.flexBun} ml-8`} key={'00'} >
-            <div className={` ${styles.topBun} pl-6 pr-8`} >
-              <img className={styles.constructorImage} src={states.buns.image_mobile}></img>
-              <p>{`${states.buns.name} (верх)`}</p>
-              <p className={styles.priceInfo}>
-                <span className="mr-1">{states.buns.price}</span>
-                <CurrencyIcon />
-              </p>
-              <LockIcon type="secondary" />
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          {states.buns.name &&
+            <li key={'00'}>
+              <ConstructorElement
+                type="top"
+                isLocked={true}
+                text={`${states.buns.name} (верх)`}
+                price={states.buns.price}
+                thumbnail={states.buns.image_mobile}
+                extraClass={styles.buns}
+              />
+            </li>
+          }
+    
+          {states.ingredients &&
+            <div className={`${styles.constructorScroll}`}>
+              {states.ingredients.map((element, index) => (
+                <ConstructorPiece
+                  element={element}
+                  key={element.dragId}
+                  index={index}
+                />
+              ))}
             </div>
-          </li>
-        }
-        {/* Ингредиенты */}
-        {states.ingredients &&
-          <div className={`${styles.constructorScroll}`}>
-            <ConstructorIngredients />
-          </div>
-        }
-        
+          }
 
-        {/* нижняя булка */}
-        {states.buns.name !== undefined &&
-          <li className={`${styles.flexBun} mt-4 ml-8`} key={'01'}>
-            <div className={` ${styles.downBun} pl-6 pr-8`} >
-              <img className={styles.constructorImage} src={states.buns.image_mobile}></img>
-              <p>{`${states.buns.name} (низ)`}</p>
-              <p className={styles.priceInfo}>
-                <span className="mr-1">{states.buns.price}</span>
-                <CurrencyIcon />
-              </p>
-              <LockIcon type="secondary" />
-            </div>
-          </li>
-        }
+          {states.buns.name &&
+            <li key={'01'}>
+              <ConstructorElement
+                type="bottom"
+                isLocked={true}
+                text={`${states.buns.name} (низ)`}
+                price={states.buns.price}
+                thumbnail={states.buns.image_mobile}
+                extraClass={`${styles.buns} ${styles.bottomBun}`}
+              />
+            </li>
+          }
+        </div>
 
       </ul>
 
-
-
-        <div className={styles.confirmOrder} >
-          <p className='text text_type_digits-medium mr-10'><span>{states.total}</span> <CurrencyIcon /></p>
-          <Button htmlType="button" type="primary" size="medium" onClick={onOrderButtonClick}>
-            Оформить заказ
-          </Button>
-        </div>
-        <div className={styles.modalContainer}>
-          {isShowOrder &&
-            <Modal onCloseClick={onCloseClick} >
-              <OrderDetails />
-            </Modal>
-          }
-        </div>
+      <div className={styles.confirmOrder} >
+        <p className='text text_type_digits-medium mr-10'><span>{states.total}</span> <CurrencyIcon /></p>
+        <Button htmlType="button" type="primary" size="medium" onClick={onOrderButtonClick}>
+          Оформить заказ
+        </Button>
+      </div>
+      <div className={styles.modalContainer}>
+        {isShowOrder &&
+          <Modal onCloseClick={onCloseClick} >
+            <OrderDetails />
+          </Modal>
+        }
+      </div>
     </section>
   )
 }

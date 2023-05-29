@@ -16,10 +16,6 @@
   overflow: scroll;
   overflow-x: hidden;
 }
-.constructorImage {
-  width: 80px;
-  height: 40px;
-}
 
 .flexBun {
   height: 80px;
@@ -27,31 +23,6 @@
   justify-content: start;
 }
 
-.topBun {
-  display: grid;
-  grid-template-columns: 80px minmax(min-content, auto) auto 24px;
-  margin-right: 16px;
-  column-gap: 20px;
-  align-items: center;
-  background-color: #1c1c21;
-  border-top-left-radius: 100px 100px;
-  border-top-right-radius: 100px 100px;
-  border-bottom-left-radius: 40px 40px;
-  border-bottom-right-radius: 40px 40px;
-}
-
-.downBun {
-  composes: topBun;
-  border-top-left-radius: 40px 40px;
-  border-top-right-radius: 40px 40px;
-  border-bottom-left-radius: 100px 100px;
-  border-bottom-right-radius: 100px 100px;
-}
-
-.priceInfo {
-  display: flex;
-  align-items: center;
-}
 .confirmOrder {
   display: flex;
   align-self: end;
@@ -65,4 +36,14 @@
 .dropZone {
   padding: 0;
   border: 2px dashed rgb(89, 27, 139);
+}
+
+.buns {
+  background-color: #1c1c21;
+  margin-left: 32px;
+  align-items: center;
+}
+
+.bottomBun {
+  margin-top: 16px;
 }

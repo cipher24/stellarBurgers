@@ -46,7 +46,8 @@ export const burgerConstructorReducer = (state = initialState, action) => {
     case DELETE_INGREDIENT: {
       return {
         ...state,
-        ingredients: action.payload
+        ingredients: action.payload,
+        total: state.total - action.item.price
       }
     }
     case POST_SUCCESS: {

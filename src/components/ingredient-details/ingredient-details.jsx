@@ -7,7 +7,7 @@ export const IngredientDetails = () => {
 
   return (
     <div className={styles.ingredientCard}>
-      <img src={`${ingredient.src}`} alt='ingredient photo'></img>
+      <img src={`${ingredient.src}`} alt={`изображение ${ingredient.name}`}></img>
       <p className={`mt-4 mb-8 text text_type_main-medium`}>{ingredient.name}</p>
       <div className={`${styles.nutrition} text text_type_main-default text_color_inactive mb-15`}>
         <div>

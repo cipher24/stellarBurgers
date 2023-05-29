@@ -1,4 +1,4 @@
-import { postToServer } from '../../components/utils/burger-api';
+import { postToServer, requestNorma } from '../../utils/burger-api';
 
 export const POST_REQUEST = 'POST_REQUEST'; 
 export const POST_ERROR = 'POST_ERROR'; 
@@ -12,7 +12,7 @@ export function requestServer(ids) {
     dispatch({
       type: POST_REQUEST
     })
-    postToServer(ids)
+    requestNorma('orders', ids)
     .then(data=>{
       dispatch({
         type: POST_SUCCESS,

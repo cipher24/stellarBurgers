@@ -12,9 +12,8 @@ export const orderDetailsReducer = (state=initialState, action) => {
     
     case POST_REQUEST: {
       return {
-        ...state,
-        isOrderError: false,
-        isShowOrder: false
+        ...initialState,
+        isShowOrder: true,
       }
     }
     case POST_SUCCESS: {

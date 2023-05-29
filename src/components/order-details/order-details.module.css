@@ -13,3 +13,10 @@
 .checkIconContainer svg {
   font-size: 60px;
 }
+.loader {
+  text-align: center;
+  margin: auto;
+  margin-top: 100px;
+  width: 400px;
+  height: 400px;
+}

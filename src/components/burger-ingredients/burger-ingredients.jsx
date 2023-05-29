@@ -1,13 +1,12 @@
-import React, { useMemo, useEffect } from 'react';
+import React from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredients.module.css';
 import Modal from '../modal/modal';
 import {IngredientDetails} from '../ingredient-details/ingredient-details';
 import { useDispatch, useSelector } from 'react-redux';
-import { getIngredientsRequest } from '../../services/actions/burger-ingredients';
 import CategoryIngredients from '../category-ingredients/category-ingredients';
 import { closeDetails } from '../../services/actions/ingredient-details';
-import { category } from '../utils/category-const';
+import { category } from '../../utils/category-const';
 
 export default function BurgerIngredients() {
   

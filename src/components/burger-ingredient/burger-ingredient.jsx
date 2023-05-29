@@ -1,8 +1,6 @@
 import styles from './burger-ingredient.module.css';
-import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
-import propTypesData from '../utils/prop-types';
-import React from 'react';
+import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
+import propTypesData from '../../utils/prop-types';
 import { getIngredientInfo } from '../../services/actions/ingredient-details';
 import { useDispatch } from 'react-redux';
 import { useDrag } from 'react-dnd';
@@ -24,12 +22,13 @@ const BurgerIngredient = ({ element }) => {
   });
 
   const countInfo = element.count
-    ? <span className={`${styles.countIngredient} text text_type_digits-default`}>{element.count}</span>
+    // ? <span className={`${styles.countIngredient} text text_type_digits-default`}>{element.count}</span>
+    ? <Counter count={element.count} size="default" extraClass="m-1" />
     : '';
 
   return (
     <li ref={dragRef} style={{ opacity }} className={styles.ingredientCard} data-id={element._id} onClick={showIngredientInfo} >
-      <img src={element.image} alt="image" />
+      <img src={`${element.image}`} alt={`изображение ${element.name}`} />
       <div className={`${styles.priceInfo} mt-1 mb-1 text text_type_main-default`}>
         <span className='mr-1'>{element.price}</span>
         <CurrencyIcon />
