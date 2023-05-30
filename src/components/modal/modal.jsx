@@ -8,9 +8,8 @@ import PropTypes from 'prop-types';
 const modalRoot = document.getElementById('react-modals');
 
 const Modal = (props) => {
-  const { children, onCloseClick, title } = props;
+  const { children, title, onCloseClick} = props;
  
-
   useEffect(() => {
     const escPressHandler = (event) => {
       if (event.key === "Escape") onCloseClick();

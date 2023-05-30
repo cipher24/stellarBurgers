@@ -13,6 +13,7 @@ const propTypesData = PropTypes.shape({
   image_large: PropTypes.string.isRequired,
   image_mobile: PropTypes.string.isRequired,
   __v: PropTypes.number.isRequired,
+  // count: PropTypes.number.isRequired
 })
 
 export default propTypesData;

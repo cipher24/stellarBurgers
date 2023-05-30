@@ -1,4 +1,4 @@
-.constructorImage {
+/* .constructorImage {
   width: 80px;
   height: 40px;
 }
@@ -19,6 +19,7 @@
   align-items: center;
   column-gap: 20px;
   justify-content: start;
+  
 }
 
 .listRightPart {
@@ -28,13 +29,24 @@
 .name {
   text-align: start;
 }
+
+.priceInfo {
+  display: flex;
+  align-items: center;
+}
+ 
+*/
+
 .constructorLi {
   display: grid;
   grid-template-columns: 32px 536px;
   align-items: center;
   justify-content: start;
 }
-.priceInfo {
-  display: flex;
-  align-items: center;
+
+.ingredient {
+  background-color: #1c1c21;
+}
+.ingredient span {
+  margin-top: 3px;
 }

@@ -1,148 +1,126 @@
 import styles from './burger-constructor.module.css'
-import { Button, CurrencyIcon, LockIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Button, CurrencyIcon, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../modal/modal';
-import React, { useEffect } from 'react';
 import OrderDetails from '../order-details/order-details';
-import PropTypes from 'prop-types';
-import propTypesData from '../utils/prop-types';
+import { useSelector, useDispatch } from 'react-redux';
+import { requestServer, closeOrder } from '../../services/actions/order-details';
+import { v4 as uuidv4 } from 'uuid';
+import { useDrop } from 'react-dnd';
+import { ADD_INGREDIENT, ADD_BUNS } from '../../services/actions/burger-constructor';
 import ConstructorPiece from '../constructor-piece/constructor-piece';
-import { DataContext } from '../utils/data-context';
-import { ConstructorContext } from '../utils/constructor-context';
-import { requestToServer } from '../utils/burger-api';
 
-function BurgerConstructor() {
+export default function BurgerConstructor() {
 
-  const [datas] = React.useContext(DataContext);
+  const dispatch = useDispatch();
+  const {isShowOrder} = useSelector(store => store.orderDetailsReducer);
+  const states = useSelector(store => store.burgerConstructorReducer);
 
-  const [isShowOrder, setIsShowOrder] = React.useState(false);
-  const [state, setConstructorState] = React.useState({
-    upperBun: null,
-    lowerBun: null,
-    ingredients: [],
-    total: null,
-    answer: null,
-    orderNumber: null
+  const [{ isDragging }, dropTargetRef] = useDrop({
+    accept: 'ingredient',
+    collect: monitor => ({
+      isDragging: monitor.canDrop()
+    }),
+    drop(item) {
+      if (item.element.type !== 'bun') {
+        dispatch({
+          type: ADD_INGREDIENT,
+          item: {
+            ...item.element,
+            dragId: uuidv4(),
+          }
+        })
+      } else {
+        dispatch({
+          type: ADD_BUNS,
+          item: {
+            ...item.element,
+            dragId: uuidv4(),
+          }
+        })
+      }
+    }
   });
 
-
-  const buns = React.useMemo(() => datas.filter((element) => element.type === 'bun'), [datas]);
-  const notBuns = React.useMemo(() => datas.filter((element) => element.type !== 'bun'), [datas]);
-
-  const randomBun = buns[Math.floor(Math.random() * buns.length)];
-  const randomIng = [];
-  for (let i = 0; i < 6; i++) {
-    randomIng.push(notBuns[Math.floor(Math.random() * notBuns.length)]);
-  }
-
-  // Блок генерирующий случайный бургер
-  useEffect(() => {
-    setConstructorState({
-      ...state,
-      upperBun: randomBun,
-      lowerBun: randomBun,
-      ingredients: randomIng,
-      total: (randomBun.price * 2) + randomIng.reduce((acc, current) => acc + current.price, 0)
-    })
-  }, [datas]);
-
-  const totalPrice = () => {
-    return (state.ingredients.reduce(
-      (acc, current) => acc + current.price, 0)
-      + state.upperBun.price
-      + state.lowerBun.price
-    )
-  };
-
   const onCloseClick = () => {
-    setIsShowOrder(false);
+    dispatch(closeOrder());
   }
+  //useCallback ? нужен c добавлением диспатч в депс ?
   const onOrderButtonClick = () => {
-    setIsShowOrder(true);
-    requestToServer(getIngredientsIds())
-      .then((data) => {
-        setConstructorState({ ...state, answer: data, orderNumber: data.order.number })
-      })
-      .catch(e => console.log("! ОШИБКА: ", e))
+    if (states.buns.name !== undefined) {
+      dispatch(requestServer(getIngredientsIds()));
+    } else { window.alert('Добавьте булку, чтобы завершить заказ'); }
   }
 
   const getIngredientsIds = () => {
     const ids = [];
-    ids.push(state.upperBun._id);
-    ids.push(state.lowerBun._id);
-    state.ingredients.forEach((element) => ids.push(element._id));
+    ids.push(states.buns._id);
+    ids.push(states.buns._id);
+    states.ingredients.forEach((element) => ids.push(element._id));
     return ids;
   }
 
   return (
-    <section className={`${styles.constructorBlock} text text_type_main-default`}>
+    <section className={` ${styles.constructorBlock} text text_type_main-default`}>
 
+      <ul
+        ref={dropTargetRef}
+        className={`${isDragging ? styles.dropZone : ''} ${styles.list} mt-25 mb-10 ml-4`}>
 
-      <ul className={`${styles.list} mt-25 mb-10 ml-4`}>
-
-        {state.upperBun &&
-          <li className={`${styles.flexBun} ml-8`} key={'00'} >
-            <div className={` ${styles.topBun} pl-6 pr-8`} >
-              <img className={styles.constructorImage} src={state.upperBun.image_mobile}></img>
-              <p>{`${state.upperBun.name} (верх)`}</p>
-              <p className={styles.priceInfo}>
-                <span className="mr-1">{state.upperBun.price}</span>
-                <CurrencyIcon />
-              </p>
-              <LockIcon type="secondary" />
-            </div>
-          </li>
-        }
-
-        {state.ingredients &&
-          <div className={`${styles.constructorScroll}`}>
-            {state.ingredients.map((element, index) => (
-              <ConstructorPiece
-                element={element}
-                key={index}
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          {states.buns.name &&
+            <li key={'00'}>
+              <ConstructorElement
+                type="top"
+                isLocked={true}
+                text={`${states.buns.name} (верх)`}
+                price={states.buns.price}
+                thumbnail={states.buns.image_mobile}
+                extraClass={styles.buns}
               />
-            )
-            )}
-          </div>
-        }
-
-        {state.lowerBun &&
-          <li className={`${styles.flexBun} mt-4 ml-8`} key={'01'}>
-            <div className={` ${styles.downBun} pl-6 pr-8`} >
-              <img className={styles.constructorImage} src={state.lowerBun.image_mobile}></img>
-              <p>{`${state.lowerBun.name} (низ)`}</p>
-              <p className={styles.priceInfo}>
-                <span className="mr-1">{state.lowerBun.price}</span>
-                <CurrencyIcon />
-              </p>
-              <LockIcon type="secondary" />
+            </li>
+          }
+    
+          {states.ingredients &&
+            <div className={`${styles.constructorScroll}`}>
+              {states.ingredients.map((element, index) => (
+                <ConstructorPiece
+                  element={element}
+                  key={element.dragId}
+                  index={index}
+                />
+              ))}
             </div>
-          </li>
-        }
+          }
+
+          {states.buns.name &&
+            <li key={'01'}>
+              <ConstructorElement
+                type="bottom"
+                isLocked={true}
+                text={`${states.buns.name} (низ)`}
+                price={states.buns.price}
+                thumbnail={states.buns.image_mobile}
+                extraClass={`${styles.buns} ${styles.bottomBun}`}
+              />
+            </li>
+          }
+        </div>
 
       </ul>
 
-
-      <ConstructorContext.Provider value={state} >
-        <form className={styles.confirmOrder}>
-          <p className='text text_type_digits-medium mr-10'><span>{state.total}</span> <CurrencyIcon /></p>
-          <Button htmlType="button" type="primary" size="medium" onClick={onOrderButtonClick}>
-            Оформить заказ
-          </Button>
-        </form>
-        <div className={styles.modalContainer}>
-          {isShowOrder &&
-            <Modal onCloseClick={onCloseClick} >
-              <OrderDetails />
-            </Modal>
-          }
-        </div>
-      </ConstructorContext.Provider>
+      <div className={styles.confirmOrder} >
+        <p className='text text_type_digits-medium mr-10'><span>{states.total}</span> <CurrencyIcon /></p>
+        <Button htmlType="button" type="primary" size="medium" onClick={onOrderButtonClick}>
+          Оформить заказ
+        </Button>
+      </div>
+      <div className={styles.modalContainer}>
+        {isShowOrder &&
+          <Modal onCloseClick={onCloseClick} >
+            <OrderDetails />
+          </Modal>
+        }
+      </div>
     </section>
   )
 }
-
-export default BurgerConstructor;
-
-/* BurgerConstructor.propTypes = {
-  loadedData: PropTypes.arrayOf(propTypesData.isRequired).isRequired
-} */
