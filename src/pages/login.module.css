@@ -1,0 +1,19 @@
+.container {
+  margin: 200px  auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.form {
+  composes: container;
+  margin: 0;
+}
+
+.links {
+  text-decoration: none;
+  color:#4C4CFF;
+  transition: color 0.3s;
+}
+.links:hover {
+  color: white
+}

@@ -47,6 +47,7 @@ export default function BurgerConstructor() {
   //useCallback ? нужен c добавлением диспатч в депс ?
   const onOrderButtonClick = () => {
     if (states.buns.name !== undefined) {
+      //ПРОВЕРЯТЬ АВТОРИЗИРОВАН ЛИ ПОЛЬЗОВАТЕЛЬ и ТОГДА ДАВАТЬ ОТПРАВЛЯТЬ
       dispatch(requestServer(getIngredientsIds()));
     } else { window.alert('Добавьте булку, чтобы завершить заказ'); }
   }
@@ -56,7 +57,7 @@ export default function BurgerConstructor() {
     ids.push(states.buns._id);
     ids.push(states.buns._id);
     states.ingredients.forEach((element) => ids.push(element._id));
-    return ids;
+    return {ingredients: ids};
   }
 
   return (

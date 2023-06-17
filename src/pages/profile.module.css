@@ -1,0 +1,22 @@
+.menu {
+  width: 320px;
+}
+.menu h1 {
+  height: 64px;
+}
+
+.inputs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.container{
+  margin-top: 200px;
+  display: flex;
+  margin-left: 55px; 
+  align-items: start;
+}
+
+.inactive{
+  color: #8585AD;
+}
