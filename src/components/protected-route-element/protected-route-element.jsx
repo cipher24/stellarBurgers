@@ -1,5 +1,6 @@
 import {Navigate, useLocation} from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 export function ProtectedRouteElement({onlyGuest = false, children}) {
@@ -7,17 +8,22 @@ export function ProtectedRouteElement({onlyGuest = false, children}) {
   const location = useLocation();
   const { user } = useSelector(store => store.profileReducer);
 
+  useEffect(()=>{
+    if (!isAuthChecked) return () => <p>Идет загрузка..</p>
+  },[isAuthChecked])
+
   if (onlyGuest && user) {
     console.log('Пользователь авторозирован');
+    const {from} = location.state || {from: '/'};
     return (
-      <Navigate to='/' />
+      <Navigate to={from} />
     )
   }
 
   if (!onlyGuest && !user) {
     console.log('Пользователь не авторозирован');
     return (  
-        <Navigate to="/login" />
+        <Navigate to="/login" state={{ from: location}} />
     )
     }
 

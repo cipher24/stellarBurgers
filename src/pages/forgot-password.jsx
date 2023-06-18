@@ -1,30 +1,25 @@
-import { EmailInput, PasswordInput, Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
+import { EmailInput, Button} from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './forgot-password.module.css';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { forgotPasswordRequest } from '../services/actions/forgot-password';
 import { useSelector, useDispatch } from 'react-redux';
 import { resetPasswordInit } from '../services/actions/reset-password';
+import {useForm} from '../hooks/use-form';
 
 export function ForgotPasswordPage() {
 
-  const [forgotInfo, setForgotInfo] = React.useState({
+  const {values, handleChange, setValues} = useForm({
     email: ''
   });
-  const navigate = useNavigate();
 
   const { isExistedEmail } = useSelector(store => store.forgotPasswordReducer);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const onChange = (e) => {
-    setForgotInfo({
-      [e.target.name]: e.target.value
-    })
-  };
-  
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(forgotPasswordRequest(forgotInfo));
+    dispatch(forgotPasswordRequest(values));
   }
   
   useEffect(()=> {
@@ -41,8 +36,8 @@ export function ForgotPasswordPage() {
           <p className='text text_type_main-medium mb-6'> Восстановление пароля </p>
           <EmailInput
             placeholder="Укажите e-mail"
-            onChange={onChange}
-            value={forgotInfo.email}
+            onChange={handleChange}
+            value={values.email}
             name={'email'}
           ></EmailInput>
           <Button

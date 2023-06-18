@@ -85,12 +85,13 @@ export default function App() {
           <ProtectedRouteElement>
             <ProfilePage />
           </ProtectedRouteElement>
-        } />
-        <Route exact path='/profile/orders' element={
-          <ProtectedRouteElement >
-            <OrdersPage />
-          </ProtectedRouteElement>
-        } />
+        } >
+          <Route exact path='/profile/orders' element={
+            <ProtectedRouteElement >
+              <OrdersPage />
+            </ProtectedRouteElement>
+          } />
+        </Route>
         <Route exact path="/ingredients/:id" element={
           <div className='defaultDiv'>
 

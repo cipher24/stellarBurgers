@@ -1,18 +1,17 @@
 import styles from './ingredient-details.module.css';
 import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 export const IngredientDetails = () => {
 
   const [ingredient, setIngredient] = useState(null);
-  const location = useLocation();
   const checkIngredient = useSelector(store => store.ingredientDetailsReducer);
   const { ingredients } = useSelector(store => store.burgerIngredientsReducer);
-  const ingredientID = location.pathname.split('/ingredients/')[1];
+  const {id} = useParams();
   useEffect(() => {
     if (checkIngredient.name === '') {
-      const out = ingredients.find(element => element._id === ingredientID);
+      const out = ingredients.find(element => element._id === id);
       setIngredient(out);
     } else {
       setIngredient(checkIngredient);

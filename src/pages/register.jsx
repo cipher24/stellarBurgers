@@ -1,35 +1,30 @@
 import { EmailInput, PasswordInput, Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './register.module.css';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { registerRequest } from '../services/actions/register';
+import {useForm} from '../hooks/use-form';
 
 export function RegisterPage() {
-  const dispatch = useDispatch();
-  const [registerData, setRegisterData] = useState({
+  
+  const {values, handleChange, setValues} = useForm({
     email: '',
     password: '',
     name: ''
-  });
+  })
+  const dispatch = useDispatch();
   const { isSuccessRegistration } = useSelector(store => store.registerReducer);
-  const onChange = (e) => {
-    setRegisterData({
-      ...registerData,
-      [e.target.name]: e.target.value
-    })
-  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('sending:', registerData);
-    dispatch(registerRequest(registerData));
+    console.log('sending:', values);
+    dispatch(registerRequest(values));
   }
-
 
   useEffect(() => {
     if (isSuccessRegistration) {
-      setRegisterData({
+      setValues({
         email: '',
         password: '',
         name: ''
@@ -43,23 +38,23 @@ export function RegisterPage() {
         <form className={styles.form} onSubmit={handleSubmit}>
           <p className='text text_type_main-medium mb-6'> Регистрация </p>
           <Input
-            value={registerData.name}
-            onChange={onChange}
+            value={values.name}
+            onChange={handleChange}
             name={'name'}
             type={'text'}
             placeholder={'Имя'}
             extraClass="mb-6"
           ></Input>
           <EmailInput
-            value={registerData.email}
+            value={values.email}
             name={'email'}
-            onChange={onChange}
+            onChange={handleChange}
             extraClass="mb-6"
           ></EmailInput>
           <PasswordInput
-            value={registerData.password}
+            value={values.password}
             name={'password'}
-            onChange={onChange}
+            onChange={handleChange}
           ></PasswordInput>
           <Button
             htmlType="submit"

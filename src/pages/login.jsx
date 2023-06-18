@@ -1,34 +1,26 @@
 import { EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './login.module.css';
 import { Link } from 'react-router-dom';
-import { useState} from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch} from 'react-redux';
 import { loginRequest } from '../services/actions/login';
 import { forgotPasswordInit } from '../services/actions/forgot-password';
+import {useForm} from '../hooks/use-form';
 
 export function LoginPage() {
-  const [loginData, setLoginData] = useState({
+
+  const {values, handleChange, setValues} = useForm({
     email: '',
     password: ''
   });
-
   const dispatch = useDispatch();
-  const {isSuccessLogin} = useSelector(store=> store.loginReducer);
 
   const onForgotPasswordClick = () => {
     dispatch(forgotPasswordInit());
   }
 
-  const onChange = (e) => {
-    setLoginData({
-      ...loginData,
-      [e.target.name]: e.target.value
-    })
-  }
-  
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(loginRequest(loginData))
+    dispatch(loginRequest(values))
   }
   
   return (
@@ -38,15 +30,15 @@ export function LoginPage() {
         <form className={styles.form} onSubmit={handleSubmit}>
           <p className='text text_type_main-medium mb-6'> Вход</p>
           <EmailInput
-            onChange={onChange}
-            value={loginData.email}
+            onChange={handleChange}
+            value={values.email}
             name={'email'}
             placeholder="Логин"
             extraClass="mb-6"
           ></EmailInput>
           <PasswordInput
-            onChange={onChange}
-            value={loginData.password}
+            onChange={handleChange}
+            value={values.password}
             name={'password'}
           ></PasswordInput>
           <Button

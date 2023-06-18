@@ -1,33 +1,27 @@
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './reset-password.module.css';
-import {useState, useEffect} from 'react';
+import {useEffect} from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetPasswordRequest } from '../services/actions/reset-password';
-
+import {useForm} from '../hooks/use-form';
 
 export function ResetPasswordPage() {
 
-  const [resetInfo, setResetInfo] = useState({
+  const {values, handleChange, setValues} = useForm({
     password: '',
     token: ''
-  })
+  });
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const {isSuccessReset} = useSelector(store=>store.resetPasswordReducer);
   const {isExistedEmail} = useSelector(store=>store.forgotPasswordReducer);
 
-  const onChange = (e) => {
-    setResetInfo({
-      ...resetInfo,
-      [e.target.name]: e.target.value
-    })
-  }
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('sending:', resetInfo)
-    dispatch(resetPasswordRequest(resetInfo))
+    console.log('sending:', values)
+    dispatch(resetPasswordRequest(values))
   }
 
   useEffect(()=>{
@@ -39,7 +33,7 @@ export function ResetPasswordPage() {
 
   useEffect(()=>{
     if (isSuccessReset) {
-      setResetInfo({
+      setValues({
         password: '',
         token: ''
       })
@@ -52,8 +46,8 @@ export function ResetPasswordPage() {
         <form className={styles.form} onSubmit={handleSubmit}>
           <p className='text text_type_main-medium mb-6'> Восстановление пароля </p>
           <Input
-            value={resetInfo.password}
-            onChange={onChange}
+            value={values.password}
+            onChange={handleChange}
             name={'password'}
             type={'text'}
             placeholder={'Введите новый пароль'}
@@ -61,8 +55,8 @@ export function ResetPasswordPage() {
             extraClass="mb-6">
           </Input>
           <Input
-            value={resetInfo.token}
-            onChange={onChange}
+            value={values.token}
+            onChange={handleChange}
             name={'token'}
             type={'text'}
             placeholder={'Введите код из письма'}

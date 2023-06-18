@@ -13,7 +13,7 @@
 .container{
   margin-top: 200px;
   display: flex;
-  margin-left: 55px; 
+  margin-left: 340px; 
   align-items: start;
 }
 
@@ -24,6 +24,12 @@
 .exit {
   cursor: pointer;
 }
-.link {
+
+.linkActive {
   text-decoration: none;
+  color:white;
+}
+.linkInActive{
+  text-decoration: none;
+  color: #8585AD;
 }
