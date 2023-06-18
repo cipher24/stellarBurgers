@@ -6,7 +6,7 @@ const initialState = {
   fat: 0,
   proteins: 0,
   carbohydrates: 0,
-  src: '',
+  image_large: '',
   isShowDetails: false
 }
 
@@ -21,7 +21,7 @@ export const ingredientDetailsReducer = (state=initialState, action) => {
         fat: ingredient.fat,
         proteins: ingredient.proteins,
         carbohydrates: ingredient.carbohydrates,
-        src: ingredient.image_large,
+        image_large: ingredient.image_large,
         isShowDetails: true
       }
     }
@@ -33,7 +33,7 @@ export const ingredientDetailsReducer = (state=initialState, action) => {
         fat: 0,
         proteins: 0,
         carbohydrates: 0,
-        src: '',
+        image_large: '',
         isShowDetails: false
       }
     }

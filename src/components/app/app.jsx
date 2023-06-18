@@ -7,7 +7,7 @@ import { getIngredientsRequest } from '../../services/actions/burger-ingredients
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useEffect } from 'react';
-import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { ProtectedRouteElement } from '../protected-route-element/protected-route-element';
 import { checkAuthorization } from '../../services/actions/profile';
 import {
@@ -17,18 +17,28 @@ import {
   ResetPasswordPage,
   ProfilePage,
   OrdersPage,
+  FeedPage,
   NotFound404
 } from '../../pages';
+
+
+import Modal from '../modal/modal';
+import { IngredientDetails } from '../ingredient-details/ingredient-details';
+
 export default function App() {
   const location = useLocation();
-  // const background = location.state && location.state.background;
+  const background = location.state && location.state.background;
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getIngredientsRequest());
-    // dispatch(checkAuthorization());
+    dispatch(checkAuthorization());
   }, [dispatch, getIngredientsRequest, checkAuthorization]);
 
+  const onCloseClick = () => {
+    navigate(-1);
+  }
   const data = useSelector(store => store.burgerIngredientsReducer.ingredients);
 
   function Main() {
@@ -47,9 +57,10 @@ export default function App() {
 
       <AppHeader />
       <Routes
-      // location={background || location}
+        location={background || location}
       >
         <Route path='/' element={<Main />} />
+        <Route path='/feed' element={<FeedPage />} />
         <Route path='/login' element={
           <ProtectedRouteElement onlyGuest={true}>
             <LoginPage />
@@ -70,19 +81,41 @@ export default function App() {
             <ResetPasswordPage />
           </ProtectedRouteElement>
         } />
-        <Route path='/profile' element={
+        <Route exact path='/profile' element={
           <ProtectedRouteElement>
             <ProfilePage />
           </ProtectedRouteElement>
         } />
-        <Route path='/profile/orders' element={
+        <Route exact path='/profile/orders' element={
           <ProtectedRouteElement >
             <OrdersPage />
           </ProtectedRouteElement>
         } />
+        <Route exact path="/ingredients/:id" element={
+          <div className='defaultDiv'>
+
+            <p className="text text_type_main-large mb-10">
+              Детали ингредиента
+            </p>
+            <IngredientDetails />
+          </div>
+        }></Route>
         <Route path='*' element={<NotFound404 />} />
       </Routes>
+      {background && (
+        <>
+          <Routes>
 
+            <Route exact path="/ingredients/:id" element={
+              <Modal
+                onCloseClick={onCloseClick}
+                title='Детали ингредиента' >
+                <IngredientDetails />
+              </Modal>}>
+            </Route>
+          </Routes>
+        </>
+      )}
     </>
   )
 }

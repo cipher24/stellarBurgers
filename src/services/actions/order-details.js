@@ -1,4 +1,4 @@
-import { postToServer, requestNorma } from '../../utils/burger-api';
+import { requestNorma } from '../../utils/burger-api';
 
 export const POST_REQUEST = 'POST_REQUEST'; 
 export const POST_ERROR = 'POST_ERROR'; 

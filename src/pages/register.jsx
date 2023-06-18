@@ -1,38 +1,32 @@
 import { EmailInput, PasswordInput, Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './register.module.css';
 import { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { registerRequest,registerInit } from '../services/actions/register';
+import { registerRequest } from '../services/actions/register';
 
 export function RegisterPage() {
   const dispatch = useDispatch();
-  // const [isError, setIsError] = React.useState(false);
   const [registerData, setRegisterData] = useState({
     email: '',
     password: '',
     name: ''
   });
   const { isSuccessRegistration } = useSelector(store => store.registerReducer);
-  // const navigate = useNavigate();
   const onChange = (e) => {
     setRegisterData({
       ...registerData,
       [e.target.name]: e.target.value
     })
   }
-  /* const onLoginClick = () => {
-    navigate('/login');
-  } */
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('sending:', registerData);
     dispatch(registerRequest(registerData));
   }
-  /* const onError = () => {
-    setIsError(true)
-  } */
-  // localStorage.setItem('test', '236344');
+
+
   useEffect(() => {
     if (isSuccessRegistration) {
       setRegisterData({

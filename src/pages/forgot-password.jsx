@@ -1,16 +1,15 @@
 import { EmailInput, PasswordInput, Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './forgot-password.module.css';
 import React, { useEffect } from 'react';
-import { useNavigate, Navigate, Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { forgotPasswordRequest } from '../services/actions/forgot-password';
-import { requestNorma } from '../utils/burger-api';
 import { useSelector, useDispatch } from 'react-redux';
 import { resetPasswordInit } from '../services/actions/reset-password';
 
 export function ForgotPasswordPage() {
 
   const [forgotInfo, setForgotInfo] = React.useState({
-    email: 'mediumAndrew@yandex.ru'
+    email: ''
   });
   const navigate = useNavigate();
 
@@ -23,42 +22,11 @@ export function ForgotPasswordPage() {
     })
   };
   
-  /* const onResetClick = () => {
-    forgotPasswordRequest()
-    .then(data => {
-      if (data.success) {
-        navigate('/reset-password')
-      }
-    })
-  } */
-  const onResetClick = async () => {
-    dispatch(forgotPasswordRequest(forgotInfo));
-    console.log(test);
-    // if(isExistedEmail) navigate('/reset-password');
-    // dispatch()
-  }
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(forgotPasswordRequest(forgotInfo));
   }
-  /* const onResetClick = () => {
-    fetch('https://norma.nomoreparties.space/api/password-reset', {
-      method: "POST",
-      body: JSON.stringify({
-        email: 'mediumAndrew@yandex.ru'
-      }),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8"
-      }
-    })
-    .then((response) => { return response.ok ? response.json() : response.json().then(e => Promise.reject(e)) } )
-    .then((data) => {
-      console.log(data);
-      if (data.success) {
-       navigate('/reset-password')
-      }
-    })
-  } */
+  
   useEffect(()=> {
     if (isExistedEmail) {
       dispatch(resetPasswordInit());
@@ -69,7 +37,6 @@ export function ForgotPasswordPage() {
   return (
     <>
       <div className={styles.container}>
-        {/* {isExistedEmail && <Navigate to="/reset-password"/>} */}
         <form className={styles.form} onSubmit={handleSubmit}>
           <p className='text text_type_main-medium mb-6'> Восстановление пароля </p>
           <EmailInput

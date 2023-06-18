@@ -39,8 +39,8 @@ body::-webkit-scrollbar-track {
 
 .defaultDiv {
   display: flex;
-  flex-direction: row;
-  margin: 300px auto;
+  flex-direction: column;
+  margin: 100px auto;
   justify-content: center;
   align-items: center;
 }

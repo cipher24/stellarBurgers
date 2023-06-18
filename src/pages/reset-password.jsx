@@ -1,7 +1,7 @@
-import { EmailInput, PasswordInput, Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './reset-password.module.css';
 import {useState, useEffect} from 'react';
-import { Navigate, useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetPasswordRequest } from '../services/actions/reset-password';
 
@@ -12,28 +12,31 @@ export function ResetPasswordPage() {
     password: '',
     token: ''
   })
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const {isSuccessReset} = useSelector(store=>store.resetPasswordReducer);
+  const {isExistedEmail} = useSelector(store=>store.forgotPasswordReducer);
 
-  /* const onLoginClick = () => {
-    navigate('/login')
-  } */
   const onChange = (e) => {
     setResetInfo({
       ...resetInfo,
       [e.target.name]: e.target.value
     })
   }
-  /* const onResetClick = () => {
-    console.log(resetInfo);
-    dispatch(resetPasswordRequest(resetInfo))
-  } */
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('sending:', resetInfo)
     dispatch(resetPasswordRequest(resetInfo))
   }
+
+  useEffect(()=>{
+    if (!isExistedEmail) {
+      navigate('/forgot-password');
+      return () => {}
+    }
+  },[isExistedEmail]);
+
   useEffect(()=>{
     if (isSuccessReset) {
       setResetInfo({

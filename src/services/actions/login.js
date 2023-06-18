@@ -1,5 +1,4 @@
 import { requestNorma } from '../../utils/burger-api';
-import { setCookie, getCookie } from '../../utils/cookie';
 import {updateTokens} from '../../utils/update-tokens';
 
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';

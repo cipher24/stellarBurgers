@@ -20,3 +20,10 @@
 .inactive{
   color: #8585AD;
 }
+
+.exit {
+  cursor: pointer;
+}
+.link {
+  text-decoration: none;
+}

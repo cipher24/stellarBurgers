@@ -1,9 +1,9 @@
 
-export function OrdersPage() {
+export function FeedPage() {
 
   return (
     <div className="text text_type_main-large defaultDiv">
-      История Заказов
+      Лента Заказов
     </div>
   )
 }

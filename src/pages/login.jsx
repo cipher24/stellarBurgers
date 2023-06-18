@@ -1,39 +1,35 @@
 import { EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './login.module.css';
-import { useNavigate, Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginRequest } from '../services/actions/login';
 import { forgotPasswordInit } from '../services/actions/forgot-password';
 
 export function LoginPage() {
   const [loginData, setLoginData] = useState({
-    email: 'mediumAndrew@yandex.ru',
-    password: 'burger234'
+    email: '',
+    password: ''
   });
-  const navigate = useNavigate();
+
   const dispatch = useDispatch();
   const {isSuccessLogin} = useSelector(store=> store.loginReducer);
 
   const onForgotPasswordClick = () => {
     dispatch(forgotPasswordInit());
   }
+
   const onChange = (e) => {
     setLoginData({
       ...loginData,
       [e.target.name]: e.target.value
     })
   }
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(loginRequest(loginData))
   }
-
-  useEffect (()=> {
-    if (isSuccessLogin)  {
-      navigate('/', {replace: true});
-    }
-  },[isSuccessLogin]);
   
   return (
     <>

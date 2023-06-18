@@ -1,6 +1,6 @@
 import {requestNorma} from '../../utils/burger-api';
-import { setCookie, deleteCookie } from '../../utils/cookie';
-import {updateTokens} from '../../utils/update-tokens';
+import { deleteCookie } from '../../utils/cookie';
+
 
 export const LOGOUT_ERROR = 'LOGOUT_ERROR'; 
 export const LOGOUT_REQUEST = 'LOGOUT_REQUEST'; 
