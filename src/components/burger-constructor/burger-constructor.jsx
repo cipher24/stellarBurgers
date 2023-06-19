@@ -3,6 +3,7 @@ import { Button, CurrencyIcon, ConstructorElement } from '@ya.praktikum/react-de
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { requestServer, closeOrder } from '../../services/actions/order-details';
 import { v4 as uuidv4 } from 'uuid';
 import { useDrop } from 'react-dnd';
@@ -12,6 +13,7 @@ import ConstructorPiece from '../constructor-piece/constructor-piece';
 export default function BurgerConstructor() {
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const {isShowOrder} = useSelector(store => store.orderDetailsReducer);
   const states = useSelector(store => store.burgerConstructorReducer);
 
@@ -46,7 +48,9 @@ export default function BurgerConstructor() {
   }
   //useCallback ? нужен c добавлением диспатч в депс ?
   const onOrderButtonClick = () => {
-    if (states.buns.name !== undefined) {
+    if(!localStorage.getItem('refreshToken')) {
+      navigate('/login', {state: {from:"/"} })
+    } else if (states.buns.name !== undefined) {
       dispatch(requestServer(getIngredientsIds()));
     } else { window.alert('Добавьте булку, чтобы завершить заказ'); }
   }
@@ -56,7 +60,7 @@ export default function BurgerConstructor() {
     ids.push(states.buns._id);
     ids.push(states.buns._id);
     states.ingredients.forEach((element) => ids.push(element._id));
-    return ids;
+    return {ingredients: ids};
   }
 
   return (

@@ -73,13 +73,13 @@ export default function BurgerIngredients() {
         </div>
          
   
-        {isShowDetails && 
+        {/* {isShowDetails && 
           <Modal 
           onCloseClick={onCloseClick}
            title='Детали ингредиента' >
             <IngredientDetails />
           </Modal>
-        }
+        } */}
       </section>
     )
   }

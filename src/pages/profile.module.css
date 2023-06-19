@@ -1,0 +1,35 @@
+.menu {
+  width: 320px;
+}
+.menu h1 {
+  height: 64px;
+}
+
+.inputs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.container{
+  margin-top: 200px;
+  display: flex;
+  margin-left: 340px; 
+  align-items: start;
+}
+
+.inactive{
+  color: #8585AD;
+}
+
+.exit {
+  cursor: pointer;
+}
+
+.linkActive {
+  text-decoration: none;
+  color:white;
+}
+.linkInActive{
+  text-decoration: none;
+  color: #8585AD;
+}

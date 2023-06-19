@@ -30,3 +30,7 @@
 .ingredientCard * {
   justify-self: center;
 }
+.link {
+  text-decoration: none;
+  color: white;
+}
