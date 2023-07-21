@@ -1,13 +1,29 @@
-import { POST_REQUEST, POST_ERROR, POST_SUCCESS, CLOSE_ORDER } from "../actions/order-details"
+import {
+  POST_REQUEST,
+  POST_ERROR,
+  POST_SUCCESS,
+  CLOSE_ORDER,
+  TData
+} from "../actions/order-details";
+import type { TOrderActions } from "../actions/order-details";
+import type { TAnswer } from "../actions/order-details";
 
-const initialState = {
+
+type TInitialState = {
+  orderNumber: number | null;
+  answer: TData | null;
+  isOrderError: boolean;
+  isShowOrder: boolean;
+}
+
+const initialState: TInitialState = {
   orderNumber: null,
-  answer: {},
+  answer: null,
   isOrderError: false,
   isShowOrder: false
 }
 
-export const orderDetailsReducer = (state = initialState, action: any) => {
+export const orderDetailsReducer = (state = initialState, action: TOrderActions): TInitialState => {
   switch (action.type) {
 
     case POST_REQUEST: {
@@ -29,7 +45,7 @@ export const orderDetailsReducer = (state = initialState, action: any) => {
       return {
         ...initialState,
         isShowOrder: false,
-        isError: true
+        isOrderError: true
       }
     }
     case CLOSE_ORDER: {
@@ -38,6 +54,12 @@ export const orderDetailsReducer = (state = initialState, action: any) => {
         isShowOrder: false
       }
     }
+    /* case LOGOUT_SUCCESS: {
+      return {
+        ...state,
+        isShowOrder: false
+      }
+    } */
     default: {
       return state
     }

@@ -1,20 +1,39 @@
 import { requestNorma } from '../../utils/burger-api';
 import { updateTokens } from '../../utils/update-tokens';
-import { TRequestProps } from '../../utils/types';
+import { AppDispatch, TRequestProps } from '../../utils/types';
+import { GET_PROFILE_SUCCESS } from './profile';
 
-export const REGISTER_REQUEST = 'REGISTER_REQUEST';
-export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
-export const REGISTER_ERROR = 'REGISTER_ERROR';
-export const REGISTER_INIT = 'REGISTER_INIT';
+export const REGISTER_REQUEST: 'REGISTER_REQUEST' = 'REGISTER_REQUEST';
+export const REGISTER_SUCCESS: 'REGISTER_SUCCESS' = 'REGISTER_SUCCESS';
+export const REGISTER_ERROR: 'REGISTER_ERROR' = 'REGISTER_ERROR';
+export const REGISTER_INIT: 'REGISTER_INIT' = 'REGISTER_INIT';
 
-export function registerInit() {
+export interface IRegisterRequest {
+  readonly type: typeof REGISTER_REQUEST;
+}
+export interface IRegisterSuccess {
+  readonly type: typeof REGISTER_SUCCESS;
+}
+export interface IRegisterError {
+  readonly type: typeof REGISTER_ERROR;
+}
+export interface IRegisterInit {
+  readonly type: typeof REGISTER_INIT;
+}
+export type TRegisterActions =
+  | IRegisterRequest
+  | IRegisterSuccess
+  | IRegisterError
+  | IRegisterInit;
+
+export function registerInit(): IRegisterInit {
   return {
     type: REGISTER_INIT
   }
 }
 
 export function registerRequest(value: TRequestProps) {
-  return function (dispatch: any) {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: REGISTER_REQUEST
     })
@@ -25,6 +44,10 @@ export function registerRequest(value: TRequestProps) {
         updateTokens(answer);
         dispatch({
           type: REGISTER_SUCCESS,
+          payload: answer.user
+        })
+        dispatch({
+          type: GET_PROFILE_SUCCESS,
           payload: answer.user
         })
       })

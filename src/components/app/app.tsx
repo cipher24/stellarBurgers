@@ -1,8 +1,9 @@
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
+import { FeedOrder } from '../feed-order/feed-order';
 import styles from './app.module.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from '../../utils/hooks';
 import { getIngredientsRequest } from '../../services/actions/burger-ingredients';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -28,7 +29,7 @@ import { IngredientDetails } from '../ingredient-details/ingredient-details';
 export default function App() {
   const location = useLocation();
   const background = location.state && location.state.background;
-  const dispatch: any = useDispatch();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -39,7 +40,7 @@ export default function App() {
   const onCloseClick = () => {
     navigate(-1);
   }
-  const data = useSelector((store: any) => store.burgerIngredientsReducer.ingredients);
+  const data = useSelector((store) => store.burgerIngredientsReducer.ingredients);
 
   function Main() {
     return <main className={styles.main} >
@@ -61,6 +62,9 @@ export default function App() {
       >
         <Route path='/' element={<Main />} />
         <Route path='/feed' element={<FeedPage />} />
+        <Route path='/feed/:id' element={<FeedOrder />
+
+        } />
         <Route path='/login' element={
           <ProtectedRouteElement onlyGuest={true}>
             <LoginPage />
@@ -91,7 +95,13 @@ export default function App() {
               <OrdersPage />
             </ProtectedRouteElement>
           } />
+
         </Route>
+        <Route path='/profile/orders/:id' element={
+          <ProtectedRouteElement >
+            <FeedOrder />
+          </ProtectedRouteElement>
+        } />
         <Route path="/ingredients/:id" element={
           <div className='defaultDiv'>
 
@@ -106,7 +116,6 @@ export default function App() {
       {background && (
         <>
           <Routes>
-
             <Route path="/ingredients/:id" element={
               <Modal
                 onCloseClick={onCloseClick}
@@ -114,6 +123,21 @@ export default function App() {
                 <IngredientDetails />
               </Modal>}>
             </Route>
+            {/* роут на модалку? */}
+            <Route path='/feed/:id' element={
+              <Modal
+                onCloseClick={onCloseClick}
+              >
+                <FeedOrder />
+              </Modal>
+            }/>
+            <Route path='/profile/orders/:id' element={
+              <Modal
+                onCloseClick={onCloseClick}
+              >
+                <FeedOrder />
+              </Modal>
+            }/>
           </Routes>
         </>
       )}

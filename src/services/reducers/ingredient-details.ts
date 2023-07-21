@@ -1,39 +1,47 @@
-import { GET_INGREDIENT_INFO, CLOSE_DETAILS } from "../actions/ingredient-details"
+import {
+  GET_INGREDIENT_INFO,
+  CLOSE_DETAILS
+} from "../actions/ingredient-details";
+import type {TIngredientDetailsActions} from "../actions/ingredient-details";
+import { IElement } from "../../utils/types";
 
-const initialState = {
-  name: '',
-  calories: 0,
-  fat: 0,
-  proteins: 0,
-  carbohydrates: 0,
-  image_large: '',
+/* type TInitialState = {
+  name: string;
+  calories: number;
+  fat: number;
+  proteins: number;
+  carbohydrates: number;
+  image_large: string;
+  isShowDetails: boolean;
+} */
+type TInitialState = {
+  ingredient: IElement | null;
+  isShowDetails: boolean;
+}
+const initialState: TInitialState = {
+  ingredient: null,
   isShowDetails: false
 }
 
-export const ingredientDetailsReducer = (state = initialState, action: any) => {
-  const ingredient = action.payload;
+export const ingredientDetailsReducer = (state = initialState, action: TIngredientDetailsActions): TInitialState => {
   switch (action.type) {
     case GET_INGREDIENT_INFO: {
       return {
         ...state,
-        name: ingredient.name,
-        calories: ingredient.calories,
-        fat: ingredient.fat,
-        proteins: ingredient.proteins,
-        carbohydrates: ingredient.carbohydrates,
-        image_large: ingredient.image_large,
+        /* name: action.payload.name,
+        calories: action.payload.calories,
+        fat: action.payload.fat,
+        proteins: action.payload.proteins,
+        carbohydrates: action.payload.carbohydrates,
+        image_large: action.payload.image_large, */
+        ingredient: action.payload,
         isShowDetails: true
       }
     }
     case CLOSE_DETAILS: {
       return {
         ...state,
-        name: '',
-        calories: 0,
-        fat: 0,
-        proteins: 0,
-        carbohydrates: 0,
-        image_large: '',
+        ingredient: null,
         isShowDetails: false
       }
     }

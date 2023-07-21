@@ -2,7 +2,8 @@ import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-component
 import styles from './reset-password.module.css';
 import { useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+
+import { useSelector, useDispatch } from '../utils/hooks';
 import { resetPasswordRequest } from '../services/actions/reset-password';
 import { useForm } from '../hooks/use-form';
 
@@ -14,9 +15,9 @@ export function ResetPasswordPage() {
   });
 
   const navigate = useNavigate();
-  const dispatch: any = useDispatch();
-  const { isSuccessReset } = useSelector((store: any) => store.resetPasswordReducer);
-  const { isExistedEmail } = useSelector((store: any) => store.forgotPasswordReducer);
+  const dispatch = useDispatch();
+  const { isSuccessReset } = useSelector((store) => store.resetPasswordReducer);
+  const { isExistedEmail } = useSelector((store) => store.forgotPasswordReducer);
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();

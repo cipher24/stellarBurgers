@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from "./components/app/app";
@@ -8,6 +8,25 @@ import { rootReducer } from './services/reducers/index';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import thunk from 'redux-thunk';
+// import { configureStore, } from '@reduxjs/toolkit';
+import { socketMiddleware } from './services/middleware/socket-middleware';
+import {
+  FEED_WS_CONNECT,
+  FEED_WS_DISCONNECT,
+  WS_ON_OPEN,
+  WS_ON_ERROR,
+  WS_ON_MESSAGE,
+  WS_ON_CLOSE,
+  HISTORY_WS_DISCONNECT,
+  HISTORY_WS_CONNECT,
+} from './services/actions/socket';
+// import { TRootState } from './utils/types';
+
+
+//новый код V 
+// import {connect, disconnect, wsClose, wsConnecting,wsError,wsMessage,wsOpen} from './services/actions/socket';
+//^
+
 
 declare global {
   interface Window {
@@ -21,21 +40,58 @@ typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
 ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
 :compose;
  */
-const enhancer = composeEnhancers(applyMiddleware(thunk));
 
-const store = createStore(rootReducer, enhancer);
+const feedMiddleware = socketMiddleware({
+  wsConnect: FEED_WS_CONNECT,
+  wsDisconnect: FEED_WS_DISCONNECT,
+  onOpen: WS_ON_OPEN,
+  onError: WS_ON_ERROR,
+  onMessage: WS_ON_MESSAGE,
+  onClose: WS_ON_CLOSE
+})
+const ordersMiddleware = socketMiddleware({
+  wsConnect: HISTORY_WS_CONNECT,
+  wsDisconnect: HISTORY_WS_DISCONNECT,
+  onOpen: WS_ON_OPEN,
+  onError: WS_ON_ERROR,
+  onMessage: WS_ON_MESSAGE,
+  onClose: WS_ON_CLOSE
+})
+
+const enhancer = composeEnhancers(applyMiddleware(thunk, feedMiddleware, ordersMiddleware));
+export const store = createStore(rootReducer, enhancer);
+
+
+//новый код v
+/* const feedMiddleware = socketMiddleware({
+  onClose: wsClose,
+  onOpen: wsOpen,
+  onError: wsError,
+  onMessage: wsMessage,
+  wsConnecting: wsConnecting,
+  wsConnect: connect,
+  wsDisconnect: disconnect,
+})
+
+export const store = configureStore({
+  reducer: rootReducer,
+  middleware: (gDM) => gDM().concat(feedMiddleware)
+}) */
+// ^
+
+
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </BrowserRouter>
-  </React.StrictMode>
+  // <React.StrictMode>
+  <BrowserRouter>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </BrowserRouter>
+  // </React.StrictMode>
 );
 
 

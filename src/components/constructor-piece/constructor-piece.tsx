@@ -2,8 +2,9 @@ import styles from './constructor-piece.module.css';
 import { DragIcon, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDrop, useDrag } from 'react-dnd';
 import { useRef, useCallback, FC } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from '../../utils/hooks';
 import { DELETE_INGREDIENT, UPDATE_INGREDIENTS_ORDER } from '../../services/actions/burger-constructor';
+import { DECREASE_INGREDIENT_COUNT } from '../../services/actions/burger-ingredients';
 import { IElement } from '../../utils/types';
 
 type TSwapIngredientCallback = (dragIndex: number, hoverIndex: number) => void;
@@ -17,7 +18,7 @@ const ConstructorPiece: FC<TFunctionProps> = ({ element, index }) => {
   const ref = useRef<HTMLLIElement>(null);
   const dispatch = useDispatch();
   // const dragKey = key;
-  const ingredients = useSelector((store: any) => store.burgerConstructorReducer.ingredients);
+  const ingredients = useSelector((store) => store.burgerConstructorReducer.ingredients);
 
   const swapIngredient = useCallback<TSwapIngredientCallback>((dragIndex, hoverIndex) => {
     const dragIngredient = ingredients[dragIndex];
@@ -31,6 +32,7 @@ const ConstructorPiece: FC<TFunctionProps> = ({ element, index }) => {
     })
   }, [ingredients, dispatch]);
 
+//функции удаления ингредиента из конструктора по нажатию на кнопку корзины рядом с элементом
   const deleteIngredient = useCallback<TDeleteIngredientCallback>((index, element) => {
     const newOrder = [...ingredients];
     newOrder.splice(index, 1);
@@ -38,6 +40,10 @@ const ConstructorPiece: FC<TFunctionProps> = ({ element, index }) => {
     dispatch({
       type: DELETE_INGREDIENT,
       payload: newOrder,
+      item: element
+    })
+    dispatch({
+      type: DECREASE_INGREDIENT_COUNT,
       item: element
     })
   }, [ingredients, dispatch]);

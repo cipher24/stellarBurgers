@@ -1,21 +1,26 @@
 import { Navigate, useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { useEffect, FC } from 'react';
+import { useSelector } from '../../utils/hooks';
+import { FC} from 'react';
 
 type TProtectedRouteElementProps = {
   onlyGuest?: boolean;
   children: JSX.Element;
 }
 export const ProtectedRouteElement: FC<TProtectedRouteElementProps> = ({ onlyGuest = false, children }) => {
-  const { isAuthChecked } = useSelector((store: any) => store.profileReducer);
+  const { isAuthChecked } = useSelector((store) => store.profileReducer);
+  // const [isAuth, setIsAuth] = useState<boolean>(false);
   const location = useLocation();
-  const { user } = useSelector((store: any) => store.profileReducer);
+  const { user } = useSelector((store) => store.profileReducer);
 
-  useEffect((): any => {
+ /*  useEffect((): any => {
     if (!isAuthChecked) {
       return () => <p>Идет загрузка..</p>
     }
-  }, [isAuthChecked])
+  }, [isAuthChecked]) */
+  // setIsAuth(isAuthChecked);
+  if (!isAuthChecked) {
+    return (<p>Идет загрузка..</p>)
+  }
 
   if (onlyGuest && user) {
     console.log('Пользователь авторозирован');

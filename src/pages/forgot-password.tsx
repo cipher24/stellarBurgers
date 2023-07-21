@@ -3,7 +3,7 @@ import styles from './forgot-password.module.css';
 import { useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { forgotPasswordRequest } from '../services/actions/forgot-password';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../utils/hooks';
 import { resetPasswordInit } from '../services/actions/reset-password';
 import { useForm } from '../hooks/use-form';
 
@@ -13,9 +13,9 @@ export function ForgotPasswordPage() {
     email: ''
   });
 
-  const { isExistedEmail } = useSelector((store: any) => store.forgotPasswordReducer);
+  const { isExistedEmail } = useSelector((store) => store.forgotPasswordReducer);
   const navigate = useNavigate();
-  const dispatch: any = useDispatch();
+  const dispatch = useDispatch();
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();

@@ -1,5 +1,6 @@
 .menu {
   width: 320px;
+  margin-top: 130px;
 }
 .menu h1 {
   height: 64px;
@@ -11,9 +12,9 @@
   align-items: center;
 }
 .container{
-  margin-top: 200px;
   display: flex;
-  margin-left: 340px; 
+  width: 1200px;
+  margin: 0 auto; 
   align-items: start;
 }
 

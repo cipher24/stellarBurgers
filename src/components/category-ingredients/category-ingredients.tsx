@@ -1,15 +1,15 @@
 import BurgerIngredient from '../burger-ingredient/burger-ingredient';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../utils/hooks';
 import styles from './category-ingredients.module.css';
-import {FC} from 'react';
-import {IElement} from '../../utils/types';
+import { FC } from 'react';
+import { IElement } from '../../utils/types';
 
 type TCategory = {
   type: string;
   title: string;
 }
-const CategoryIngredients: FC<{category: TCategory}> = ({category}) => {
-  const ingredients = useSelector((store:any)=>store.burgerIngredientsReducer.ingredients);
+const CategoryIngredients: FC<{ category: TCategory }> = ({ category }) => {
+  const ingredients = useSelector((store) => store.burgerIngredientsReducer.ingredients);
 
   return (
     <>
@@ -18,10 +18,10 @@ const CategoryIngredients: FC<{category: TCategory}> = ({category}) => {
 
         {
           ingredients
-          .filter((element: IElement) => element.type === category.type)
-          .map((element:IElement) => {
-            return <BurgerIngredient key={element._id} element={element} />
-          })
+            .filter((element: IElement) => element.type === category.type)
+            .map((element: IElement) => {
+              return <BurgerIngredient key={element._id} element={element} />
+            })
         }
       </ul>
     </>

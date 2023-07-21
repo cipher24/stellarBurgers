@@ -8,7 +8,7 @@ export default function AppHeader() {
   const location = useLocation();
 
   return (
-    <header >
+    <header className='' >
       <nav className={`${styles.appHeader} pt-4 pb-4`}>
         <NavLink to='/' className={`${styles.headerLink} pt-4 pb-4 pl-5 pr-5`}>
           <BurgerIcon type={`${location.pathname === "/" ? "primary" : "secondary"}`} />

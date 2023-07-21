@@ -1,5 +1,5 @@
 type TCookieProps = {
-  expires?: any;
+  expires?: any ;
 };
 export function setCookie(value: string | null, props: TCookieProps | null) {
   props = props || {};

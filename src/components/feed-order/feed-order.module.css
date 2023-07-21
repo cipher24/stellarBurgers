@@ -1,0 +1,50 @@
+.main {
+  width: 640px;
+  margin: 0 auto;
+}
+.status {
+  color: #00CCCC;
+}
+.flexWithSpace {
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+align-items: center;
+}
+.align {
+  display: flex;
+  align-items: center;
+}
+.ingredients {
+  overflow-y: scroll;
+  height: 366px;
+}
+.flex {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.flexName {
+  composes: flex;
+  flex: 1;
+}
+.currency {
+  composes: flex;
+  justify-self: right;
+}
+.container {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  border: solid 3px purple;
+}
+.picture {
+  width: 58px;
+  height: 58px;
+  object-fit: cover;
+  object-position: center;
+}
+.number {
+  justify-content: center;
+}
