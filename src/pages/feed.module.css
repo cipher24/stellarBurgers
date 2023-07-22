@@ -1,0 +1,41 @@
+.orderList {
+  width: 608px;
+  height: 852px;
+}
+
+.ordersInfo {
+  color: white;
+}
+.flexRow {
+  display: flex;
+  flex-direction: row;
+}
+.flexColumn {
+  display: flex;
+  flex-direction: column;
+}
+
+.scroll {
+  overflow-y: scroll;
+  color: green;
+}
+
+.doneOrdersContainer {
+
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 10;
+  overflow: hidden;
+  columns: 5;
+  column-gap: 5px;
+}
+.doneOrders{
+  color: #00CCCC;
+}
+.workingOrders {
+  color: white;
+}
+.main {
+  margin: 0 auto;
+  width: 1285px;
+}

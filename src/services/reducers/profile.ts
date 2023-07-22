@@ -5,31 +5,38 @@ import {
   PATCH_PROFILE_ERROR,
   PATCH_PROFILE_SUCCESS,
   PATCH_PROFILE_REQUEST,
-  AUTH_CHECKED
+  AUTH_CHECKED,
+  AUTH_RESET,
+  RESET_PROFILE,
 } from "../actions/profile";
+import type { TProfileActions } from "../actions/profile";
+import type { TUser } from "../../utils/types";
 
-import { LOGIN_SUCCESS } from '../actions/login';
-import { LOGOUT_SUCCESS } from "../actions/logout";
-import { REGISTER_SUCCESS } from "../actions/register";
-
-const initialState = {
+type TInitialState = {
+  user: TUser | null;
+  isSuccessRequest: boolean;
+  isError: boolean;
+  isAuthChecked: boolean;
+}
+const initialState: TInitialState = {
   user: null,
   isSuccessRequest: false,
   isError: false,
   isAuthChecked: false
 }
 
-export const profileReducer = (state = initialState, action: any) => {
+export const profileReducer = (state = initialState, action: TProfileActions): TInitialState => {
   switch (action.type) {
     case PATCH_PROFILE_REQUEST:
     case GET_PROFILE_REQUEST:
-    case LOGOUT_SUCCESS: {
-      return initialState
+    case RESET_PROFILE: {
+      return {
+        ...initialState,
+        isAuthChecked: state.isAuthChecked
+      } 
     }
     case PATCH_PROFILE_SUCCESS:
-    case GET_PROFILE_SUCCESS:
-    case LOGIN_SUCCESS:
-    case REGISTER_SUCCESS: {
+    case GET_PROFILE_SUCCESS: {
       return {
         ...state,
         isSuccessRequest: true,
@@ -49,6 +56,12 @@ export const profileReducer = (state = initialState, action: any) => {
       return {
         ...state,
         isAuthChecked: true
+      }
+    }
+    case AUTH_RESET: {
+      return {
+        ...state,
+        isAuthChecked: false
       }
     }
     default: {

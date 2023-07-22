@@ -5,12 +5,17 @@ import {
   REGISTER_INIT
 } from "../actions/register";
 
-const initialState = {
+import type { TRegisterActions } from "../actions/register";
+type TInitialState = {
+  isSuccessRegistration: boolean;
+  isError: boolean;
+}
+const initialState: TInitialState = {
   isSuccessRegistration: false,
   isError: false
 }
 
-export const registerReducer = (state = initialState, action: any) => {
+export const registerReducer = (state = initialState, action: TRegisterActions): TInitialState => {
   switch (action.type) {
     case REGISTER_INIT:
     case REGISTER_REQUEST: {

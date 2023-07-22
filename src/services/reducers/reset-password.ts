@@ -4,13 +4,18 @@ import {
   RESET_PASSWORD_REQUEST,
   RESET_PASSWORD_INIT
 } from "../actions/reset-password";
+import type { TResetPasswordActions } from "../actions/reset-password";
 
-const initialState = {
+type TInitialState = {
+  isSuccessReset: boolean;
+  isError: string | null;
+}
+const initialState: TInitialState = {
   isSuccessReset: false,
-  isError: false
+  isError: null
 }
 
-export const resetPasswordReducer = (state = initialState, action: any) => {
+export const resetPasswordReducer = (state = initialState, action: TResetPasswordActions): TInitialState => {
   switch (action.type) {
     case RESET_PASSWORD_INIT:
     case RESET_PASSWORD_REQUEST: {
@@ -20,13 +25,13 @@ export const resetPasswordReducer = (state = initialState, action: any) => {
       return {
         ...state,
         isSuccessReset: true,
-        isError: false
+        isError: null
       }
     }
     case RESET_PASSWORD_ERROR: {
       return {
         ...state,
-        isError: true,
+        isError: action.payload,
         isSuccessReset: false
       }
     }

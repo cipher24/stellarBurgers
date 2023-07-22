@@ -1,8 +1,6 @@
 import { getCookie } from './cookie';
 import { updateTokens } from './update-tokens';
 
-// update ? 21
-
 type TFetchMethods = "POST" | "GET" | "PATCH";
 type TFetchBody = {
   [name: string]: string | string[]
@@ -11,12 +9,13 @@ type TFetchOptions = {
   method: TFetchMethods;
   headers: {
     "Content-type": string;
-    Authorization: string;
+    Authorization?: string;
   }
   body?: string | null;
 }
 
 const NORMA_URL = 'https://norma.nomoreparties.space/api';
+export const WEBSOCKET_URL = 'wss://norma.nomoreparties.space/orders';
 
 const responseCheck = <T>(response: Response): Promise<T> => {
   return response.ok ? response.json() : response.json().then(e => Promise.reject(e))
@@ -26,36 +25,41 @@ const successCheck = <T>(data: any): Promise<T> => {
   return (data && data.success) ? data : Promise.reject()
 }
 
-const optionsGenerator = (method: TFetchMethods | null, payload: TFetchBody | null): TFetchOptions => {
+
+
+//подправить насчет поля аввторизашен
+const optionsGenerator = (method: TFetchMethods | null, payload: TFetchBody | null, token: boolean): TFetchOptions => {
+  let headers;
+  if (token) {
+    headers = {
+      "Content-type": "application/json; charset=UTF-8",
+      Authorization: "Bearer " + getCookie('token')
+    }
+  }else {
+    headers = {
+      "Content-type": "application/json; charset=UTF-8"
+    }
+  }
   switch (method) {
     case null:
     case "GET": {
       return {
         method: "GET",
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-          Authorization: "Bearer " + getCookie('token')
-        }
+        headers: headers
       }
     }
     case "POST": {
       return {
         method: "POST",
         body: payload ? JSON.stringify(payload) : '',
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-          Authorization: "Bearer " + getCookie('token')
-        }
+        headers: headers
       }
     }
     case "PATCH": {
       return {
         method: "PATCH",
         body: payload ? JSON.stringify(payload) : '',
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-          Authorization: "Bearer " + getCookie('token')
-        }
+        headers: headers
       }
     }
 
@@ -68,9 +72,22 @@ export const requestNorma = (
   method: TFetchMethods | null = null,
   payload: TFetchBody | null = null
 ): Promise<any> => {
-  return fetchWithRefresh(`${NORMA_URL}/${endpoint}`, optionsGenerator(method, payload))
-    // .then(responseCheck)
+
+  //Проверка авторизирован ли пользователь, то есть имеет ли он токены
+  const accessToken = getCookie('token');
+ let refreshToken;
+  if (localStorage.getItem('refreshToken')) {
+    refreshToken = JSON.parse(localStorage.getItem('refreshToken')!);
+  }
+
+  if((accessToken !== undefined)||(refreshToken !== undefined)) {
+    return fetchWithRefresh(`${NORMA_URL}/${endpoint}`, optionsGenerator(method, payload, true))
     .then(successCheck)
+  }else {
+    return fetchWithRefresh(`${NORMA_URL}/${endpoint}`, optionsGenerator(method, payload, false))
+    .then(successCheck)
+  }
+
 }
 
 export const refreshTokenRequest = () => {
@@ -83,6 +100,7 @@ export const refreshTokenRequest = () => {
   } else value = {
     'token': null
   }
+  //зацикленность?, в какой момент выходит? просто fetch сделать?
   return requestNorma('auth/token', 'POST', value);
 }
 
@@ -96,7 +114,7 @@ export const fetchWithRefresh = async (url: RequestInfo | URL, options?: TFetchO
       console.log('c accessToken что-то не так..');
       const newTokens: any = await refreshTokenRequest();
       if (!newTokens.success) {
-        Promise.reject(newTokens);
+        return Promise.reject(newTokens);
       }
       updateTokens(newTokens);
       options!.headers!.Authorization = newTokens.accessToken;

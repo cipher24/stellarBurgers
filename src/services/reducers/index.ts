@@ -9,6 +9,8 @@ import { registerReducer } from './register';
 import { loginReducer } from './login';
 import { logoutReducer } from './logout';
 import { profileReducer } from './profile';
+import { socketReducer } from './socket';
+import { requestedOrderReducer } from './request-order';
 
 export const rootReducer = combineReducers({
   burgerIngredientsReducer,
@@ -20,5 +22,7 @@ export const rootReducer = combineReducers({
   registerReducer,
   loginReducer,
   logoutReducer,
-  profileReducer
+  profileReducer,
+  socketReducer,
+  requestedOrderReducer
 });

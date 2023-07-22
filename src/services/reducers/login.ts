@@ -1,15 +1,20 @@
 import {
   LOGIN_ERROR,
   LOGIN_SUCCESS,
-  LOGIN_REQUEST
+  LOGIN_REQUEST,
+  
 } from "../actions/login";
-
-const initialState = {
+import type {TLoginActions} from "../actions/login";
+type TInitialState = {
+  isSuccessLogin: boolean;
+  isError: boolean;
+}
+const initialState: TInitialState = {
   isSuccessLogin: false,
   isError: false
 }
 
-export const loginReducer = (state = initialState, action: any) => {
+export const loginReducer = (state = initialState, action: TLoginActions): TInitialState => {
   switch (action.type) {
     case LOGIN_REQUEST: {
       return initialState

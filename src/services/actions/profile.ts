@@ -1,18 +1,64 @@
 import { requestNorma } from '../../utils/burger-api';
 import { getCookie } from '../../utils/cookie';
-import { TRequestProps } from '../../utils/types';
+import type { AppDispatch, TAnswerError, TRequestProps, TUser } from '../../utils/types';
 
-export const GET_PROFILE_ERROR = 'GET_PROFILE_ERROR';
-export const GET_PROFILE_REQUEST = 'GET_PROFILE_REQUEST';
-export const GET_PROFILE_SUCCESS = 'GET_PROFILE_SUCCESS';
-export const PATCH_PROFILE_ERROR = 'PATCH_PROFILE_ERROR';
-export const PATCH_PROFILE_REQUEST = 'PATCH_PROFILE_REQUEST';
-export const PATCH_PROFILE_SUCCESS = 'PATCH_PROFILE_SUCCESS';
-export const AUTH_CHECKED = 'AUTH_CHECKED';
+export const GET_PROFILE_ERROR: 'GET_PROFILE_ERROR' = 'GET_PROFILE_ERROR';
+export const GET_PROFILE_REQUEST: 'GET_PROFILE_REQUEST' = 'GET_PROFILE_REQUEST';
+export const GET_PROFILE_SUCCESS: 'GET_PROFILE_SUCCESS' = 'GET_PROFILE_SUCCESS';
+export const PATCH_PROFILE_ERROR: 'PATCH_PROFILE_ERROR' = 'PATCH_PROFILE_ERROR';
+export const PATCH_PROFILE_REQUEST: 'PATCH_PROFILE_REQUEST' = 'PATCH_PROFILE_REQUEST';
+export const PATCH_PROFILE_SUCCESS: 'PATCH_PROFILE_SUCCESS' = 'PATCH_PROFILE_SUCCESS';
+export const AUTH_CHECKED: 'AUTH_CHECKED' = 'AUTH_CHECKED';
+export const AUTH_RESET: 'AUTH_RESET' = 'AUTH_RESET';
+export const RESET_PROFILE: 'RESET_PROFILE' = 'RESET_PROFILE';
+
+
+export interface IGetProfileRequest {
+  readonly type: typeof GET_PROFILE_REQUEST;
+}
+export interface IGetProfileSuccess {
+  readonly type: typeof GET_PROFILE_SUCCESS;
+  readonly payload: TUser;
+}
+export interface IGetProfileError {
+  readonly type: typeof GET_PROFILE_ERROR;
+  readonly payload: TAnswerError;
+}
+export interface IPatchProfileRequest {
+  readonly type: typeof PATCH_PROFILE_REQUEST;
+}
+export interface IPatchProfileSuccess {
+  readonly type: typeof PATCH_PROFILE_SUCCESS;
+  readonly payload: TUser;
+}
+export interface IPatchProfileError {
+  readonly type: typeof PATCH_PROFILE_ERROR;
+  readonly payload: TAnswerError;
+}
+export interface IAuthChecked {
+  readonly type: typeof AUTH_CHECKED;
+}
+export interface IAuthReset {
+  readonly type: typeof AUTH_RESET;
+}
+export interface IResetProfile {
+  readonly type: typeof RESET_PROFILE;
+}
+
+export type TProfileActions =
+  | IGetProfileError
+  | IGetProfileRequest
+  | IGetProfileSuccess
+  | IPatchProfileError
+  | IPatchProfileSuccess
+  | IPatchProfileRequest
+  | IResetProfile
+  | IAuthReset
+  | IAuthChecked;
 
 
 export function getProfileRequest() {
-  return function (dispatch: any) {
+  return function (dispatch: AppDispatch) {
     console.log('requesting user info from server...');
     dispatch({
       type: GET_PROFILE_REQUEST
@@ -26,9 +72,10 @@ export function getProfileRequest() {
         })
       })
       .catch(e => {
-        console.log('ОШИБКА! : ', e);
+        console.log('ОШИБКА! : ', e.message);
         dispatch({
-          type: GET_PROFILE_ERROR
+          type: GET_PROFILE_ERROR,
+          payload: e
         })
 
       })
@@ -37,7 +84,7 @@ export function getProfileRequest() {
 
 
 export function patchProfileRequest(payload: TRequestProps) {
-  return function (dispatch: any) {
+  return function (dispatch: AppDispatch) {
     console.log('updating user info on server...');
     dispatch({
       type: PATCH_PROFILE_REQUEST
@@ -52,16 +99,17 @@ export function patchProfileRequest(payload: TRequestProps) {
         })
       })
       .catch(e => {
-        console.log('ОШИБКА! : ', e);
+        console.log('ОШИБКА! : ', e.message);
         dispatch({
-          type: PATCH_PROFILE_ERROR
+          type: PATCH_PROFILE_ERROR,
+          payload: e
         })
       })
   }
 }
 
 export function checkAuthorization() {
-  return function (dispatch: any) {
+  return function (dispatch: AppDispatch) {
     if (getCookie('token')) {
       requestNorma('auth/user')
         .then(answer => {
@@ -72,7 +120,11 @@ export function checkAuthorization() {
           })
         })
         .catch(e => {
-          console.log('ОШИБКА! : ', e);
+          console.log('ОШИБКА! : ', e.message);
+          dispatch({
+            type: GET_PROFILE_ERROR,
+            payload: e
+          })
         })
         .finally(() => {
           dispatch({

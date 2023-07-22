@@ -1,13 +1,14 @@
 import { EmailInput, PasswordInput, Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './profile.module.css';
 import { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from '../utils/hooks';
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import { logoutRequest } from '../services/actions/logout';
 import { getProfileRequest, patchProfileRequest } from '../services/actions/profile';
 import { useForm } from '../hooks/use-form';
+import { profile } from '../selectors/selectors';
 
-type TActive =  { isActive: boolean };
+type TActive = { isActive: boolean };
 
 export function ProfilePage() {
 
@@ -19,26 +20,28 @@ export function ProfilePage() {
 
   const [isProfileChanged, setIsProfileChanged] = useState(false);
   const location = useLocation();
-  const dispatch: any = useDispatch();
-  const { user, isSuccessRequest } = useSelector((store: any) => store.profileReducer);
+  const dispatch = useDispatch();
+  const { user, isSuccessRequest } = useSelector(profile);
 
   const setActive = ({ isActive }: TActive) => isActive ? styles.linkActive : styles.linkInActive;
 
-  const onClick = (e: React.SyntheticEvent) => {
+  const onExitClick = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    dispatch(logoutRequest())
+    dispatch(logoutRequest());
   }
-
+  //функция отправки измененных данных
   const onSaveChangesClick = (e: React.SyntheticEvent) => {
     e.preventDefault();
     let payload = {
-      name: user.name,
-      email: user.email,
+      name: user!.name,
+      email: user!.email,
       password: ''
     };
+
+
     for (const [key, value] of Object.entries(values)) {
       if (key !== 'password') {
-        if (value !== user[key]) {
+        if (value !== user![key as keyof typeof user]) {
           payload[key as keyof typeof payload] = value
         }
       } else {
@@ -47,16 +50,13 @@ export function ProfilePage() {
         }
       }
     }
+
     console.log('Sending new info to server', payload);
     dispatch(patchProfileRequest(payload));
     setIsProfileChanged(false);
   }
 
-  //
   const onEditIconClick = (e: React.FocusEvent<HTMLInputElement>) => {
-    /* const onEditIconClick = (e: React.SyntheticEvent & {
-      target: HTMLButtonElement
-    }) => { */
     if (e.target.name === 'password') {
       setValues({
         ...values,
@@ -68,15 +68,15 @@ export function ProfilePage() {
   const fillWithServerData = () => {
     setValues({
       ...values,
-      email: user.email,
-      name: user.name
+      email: user!.email,
+      name: user!.name
     });
     setIsProfileChanged(false);
   }
 
   const checkChange = () => {
-    if ((values.name !== user.name) ||
-      (values.email !== user.email) ||
+    if ((values.name !== user!.name) ||
+      (values.email !== user!.email) ||
       (values.password !== '********')) {
       setIsProfileChanged(true)
     } else {
@@ -93,7 +93,8 @@ export function ProfilePage() {
     if (isSuccessRequest) fillWithServerData()
   }, [isSuccessRequest])
 
-  const form = <form className={styles.inputs} onSubmit={onSaveChangesClick}>
+  const form = <form className={`
+  ${styles.inputs} mt-20`} onSubmit={onSaveChangesClick}>
     <Input
       name={'name'}
       value={values.name}
@@ -145,26 +146,27 @@ export function ProfilePage() {
   </form>
 
   return (
-    <>
-      <div className={styles.container}>
-        <div className={`${styles.menu}  mr-15`}>
-          <NavLink end to="/profile" className={setActive}>
-            <h1 className="text text_type_main-medium">
-              Профиль
-            </h1>
-          </NavLink>
-          <NavLink to="/profile/orders" className={setActive}>
-            <h1 className="text text_type_main-medium ">История заказов</h1>
-          </NavLink>
-          <div className={styles.exit} onClick={onClick}>
-            <h1 className="text text_type_main-medium text_color_inactive mb-20">Выход</h1>
-          </div>
-          <p className="text text_type_main-default text_color_inactive">В этом разделе вы можете изменять свои персональные данные</p>
+    <div className={styles.container}>
+      <div className={`${styles.menu}  mr-15`}>
+        <NavLink end to="/profile" className={setActive}>
+          <h1 className="text text_type_main-medium">
+            Профиль
+          </h1>
+        </NavLink>
+        <NavLink to="/profile/orders" className={setActive}>
+          <h1 className="text text_type_main-medium ">История заказов</h1>
+        </NavLink>
+        <div className={styles.exit} onClick={onExitClick}>
+          <h1 className="text text_type_main-medium text_color_inactive mb-20">Выход</h1>
         </div>
+        <p className="text text_type_main-default text_color_inactive">В этом разделе вы можете изменять свои персональные данные</p>
+      </div>
+      <div className='mt-10'>
+
         {location.pathname === '/profile'
           ? form
           : <Outlet />}
       </div>
-    </>
+    </div>
   )
 }

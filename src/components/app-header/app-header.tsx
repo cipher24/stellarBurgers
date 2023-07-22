@@ -3,12 +3,10 @@ import styles from './app-header.module.css';
 import { NavLink, useLocation } from 'react-router-dom';
 
 export default function AppHeader() {
-  /* const setTypeActive = ({ isActive } : {isActive: boolean}) => isActive ? "primary" : "secondary";
-  const setLinkActive = ({ isActive } : {isActive: boolean})=> isActive ? styles.active : ''; */
   const location = useLocation();
 
   return (
-    <header >
+    <header className='' >
       <nav className={`${styles.appHeader} pt-4 pb-4`}>
         <NavLink to='/' className={`${styles.headerLink} pt-4 pb-4 pl-5 pr-5`}>
           <BurgerIcon type={`${location.pathname === "/" ? "primary" : "secondary"}`} />

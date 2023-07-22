@@ -2,9 +2,10 @@ import { EmailInput, PasswordInput, Button, Input } from '@ya.praktikum/react-de
 import styles from './register.module.css';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from '../utils/hooks';
 import { registerRequest } from '../services/actions/register';
 import { useForm } from '../hooks/use-form';
+import { register } from '../selectors/selectors';
 
 export function RegisterPage() {
 
@@ -13,8 +14,8 @@ export function RegisterPage() {
     password: '',
     name: ''
   })
-  const dispatch: any = useDispatch();
-  const { isSuccessRegistration } = useSelector((store: any) => store.registerReducer);
+  const dispatch = useDispatch();
+  const { isSuccessRegistration } = useSelector(register);
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();

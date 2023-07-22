@@ -4,13 +4,18 @@ import {
   FORGOT_PASSWORD_REQUEST,
   FORGOT_PASSWORD_INIT,
 } from "../actions/forgot-password";
+import type {TForgotPasswordActions} from "../actions/forgot-password";
 
-const initialState = {
+type TInitialState = {
+  isExistedEmail: boolean;
+  isError: boolean;
+}
+const initialState: TInitialState = {
   isExistedEmail: false,
   isError: false
 }
 
-export const forgotPasswordReducer = (state = initialState, action: any) => {
+export const forgotPasswordReducer = (state = initialState, action: TForgotPasswordActions): TInitialState => {
   switch (action.type) {
     case FORGOT_PASSWORD_INIT:
     case FORGOT_PASSWORD_REQUEST: {

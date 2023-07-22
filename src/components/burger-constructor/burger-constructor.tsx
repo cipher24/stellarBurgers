@@ -2,7 +2,7 @@ import styles from './burger-constructor.module.css'
 import { Button, CurrencyIcon, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../utils/hooks';
 import { useNavigate } from 'react-router-dom';
 import { requestServer, closeOrder } from '../../services/actions/order-details';
 import { v4 as uuidv4 } from 'uuid';
@@ -10,16 +10,18 @@ import { useDrop } from 'react-dnd';
 import { ADD_INGREDIENT, ADD_BUNS } from '../../services/actions/burger-constructor';
 import ConstructorPiece from '../constructor-piece/constructor-piece';
 import { IElement } from '../../utils/types';
+import { INCREASE_BUN_COUNT, INCREASE_INGREDIENT_COUNT } from '../../services/actions/burger-ingredients';
+import { burgerConstructor, orderDetails } from '../../selectors/selectors';
 
 type TUseDropProps = { element: IElement };
 type TIsDraggingProps = { isDragging: boolean };
 
 export default function BurgerConstructor() {
 
-  const dispatch: any = useDispatch();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isShowOrder } = useSelector((store: any) => store.orderDetailsReducer);
-  const states = useSelector((store: any) => store.burgerConstructorReducer);
+  const { isShowOrder } = useSelector(orderDetails);
+  const states = useSelector(burgerConstructor);
 
   const [{ isDragging }, dropTargetRef] = useDrop<TUseDropProps, void, TIsDraggingProps>({
     accept: 'ingredient',
@@ -35,9 +37,23 @@ export default function BurgerConstructor() {
             dragId: uuidv4(),
           }
         })
+        dispatch({
+          type: INCREASE_INGREDIENT_COUNT,
+          item: {
+            ...item.element,
+            dragId: uuidv4(),
+          }
+        })
       } else {
         dispatch({
           type: ADD_BUNS,
+          item: {
+            ...item.element,
+            dragId: uuidv4(),
+          }
+        })
+        dispatch({
+          type: INCREASE_BUN_COUNT,
           item: {
             ...item.element,
             dragId: uuidv4(),
@@ -54,15 +70,20 @@ export default function BurgerConstructor() {
   const onOrderButtonClick = (): void => {
     if (!localStorage.getItem('refreshToken')) {
       navigate('/login', { state: { from: "/" } })
-    } else if (states.buns.name !== undefined) {
+    } else if (states?.buns?.name !== undefined) {
       dispatch(requestServer(getIngredientsIds()));
     } else { window.alert('Добавьте булку, чтобы завершить заказ'); }
   }
 
+
+  //сбор ингредиентов для бургера
   const getIngredientsIds = (): { ingredients: Array<string> } => {
     const ids = [];
-    ids.push(states.buns._id);
-    ids.push(states.buns._id);
+    if (states&&states.buns) {
+
+      ids.push(states.buns._id);
+      ids.push(states.buns._id);
+    }
     states.ingredients.forEach((element: IElement) => ids.push(element._id));
     return { ingredients: ids };
   }
@@ -75,7 +96,7 @@ export default function BurgerConstructor() {
         className={`${isDragging ? styles.dropZone : ''} ${styles.list} mt-25 mb-10 ml-4`}>
 
         <div style={{ display: 'flex', flexDirection: 'column' }}>
-          {states.buns.name &&
+          {states.buns &&
             <li key={'00'}>
               <ConstructorElement
                 type="top"
@@ -100,7 +121,7 @@ export default function BurgerConstructor() {
             </div>
           }
 
-          {states.buns.name &&
+          {states.buns &&
             <li key={'01'}>
               <ConstructorElement
                 type="bottom"

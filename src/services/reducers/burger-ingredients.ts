@@ -1,22 +1,27 @@
 import {
-  ADD_INGREDIENT,
-  ADD_BUNS,
-  DELETE_INGREDIENT
-} from "../actions/burger-constructor";
-import {
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCESS,
-  GET_INGREDIENTS_ERROR
+  GET_INGREDIENTS_ERROR,
+  DECREASE_INGREDIENT_COUNT,
+  RESET_COUNTS,
+  INCREASE_BUN_COUNT,
+  INCREASE_INGREDIENT_COUNT
 } from "../actions/burger-ingredients";
-import { POST_SUCCESS } from "../actions/order-details";
+import type { TBurgerIngredientsActions } from "../actions/burger-ingredients";
+
 import { IElement } from '../../utils/types';
 
-const initialState = {
+type TInitialState = {
+  ingredients: IElement[];
+  isRequest: boolean;
+  isRequestError: boolean;
+}
+const initialState: TInitialState = {
   ingredients: [],
   isRequest: false,
   isRequestError: false
 }
-export const burgerIngredientsReducer = (state = initialState, action: any) => {
+export const burgerIngredientsReducer = (state = initialState, action: TBurgerIngredientsActions): TInitialState => {
   switch (action.type) {
     case GET_INGREDIENTS_REQUEST: {
       return {
@@ -40,8 +45,8 @@ export const burgerIngredientsReducer = (state = initialState, action: any) => {
         isRequestError: true
       }
     }
-    case ADD_INGREDIENT: {
-
+    case INCREASE_INGREDIENT_COUNT: {
+      //?передавать не целиком элемент, а только _id. Либо вообще вынести логику из редьюсера в элемент или экшен?
       const countedIngredients = state.ingredients
         .map((item: IElement) => {
           if (item._id === action.item._id) item.count = item.count + 1;
@@ -53,7 +58,7 @@ export const burgerIngredientsReducer = (state = initialState, action: any) => {
         ingredients: countedIngredients
       }
     }
-    case ADD_BUNS: {
+    case INCREASE_BUN_COUNT: {
 
       const countedBuns = state.ingredients
         .map((item: IElement) => {
@@ -69,7 +74,7 @@ export const burgerIngredientsReducer = (state = initialState, action: any) => {
       }
     }
 
-    case DELETE_INGREDIENT: {
+    case DECREASE_INGREDIENT_COUNT: {
 
       const countedIngredients = state.ingredients
         .map((item: IElement) => {
@@ -82,7 +87,7 @@ export const burgerIngredientsReducer = (state = initialState, action: any) => {
         ingredients: countedIngredients
       }
     }
-    case POST_SUCCESS: {
+    case RESET_COUNTS: {
 
       const cleanIngredients = [...state.ingredients]
         .map((item: IElement) => {

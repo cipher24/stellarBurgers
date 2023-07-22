@@ -4,7 +4,7 @@
   position: fixed;
   border-radius: 40px;
   z-index: 800;
-  top: 23%;
+  top: 15%;
   left: 30%;
 }
 
@@ -14,4 +14,9 @@
   justify-content: space-between;
   align-items: center;
   text-align: center;
+}
+.closeIcon {
+  position: absolute;
+  top: 35px;
+  right: 30px;
 }
