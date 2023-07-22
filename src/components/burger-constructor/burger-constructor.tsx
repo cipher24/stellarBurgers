@@ -11,6 +11,7 @@ import { ADD_INGREDIENT, ADD_BUNS } from '../../services/actions/burger-construc
 import ConstructorPiece from '../constructor-piece/constructor-piece';
 import { IElement } from '../../utils/types';
 import { INCREASE_BUN_COUNT, INCREASE_INGREDIENT_COUNT } from '../../services/actions/burger-ingredients';
+import { burgerConstructor, orderDetails } from '../../selectors/selectors';
 
 type TUseDropProps = { element: IElement };
 type TIsDraggingProps = { isDragging: boolean };
@@ -19,8 +20,8 @@ export default function BurgerConstructor() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isShowOrder } = useSelector((store) => store.orderDetailsReducer);
-  const states = useSelector((store) => store.burgerConstructorReducer);
+  const { isShowOrder } = useSelector(orderDetails);
+  const states = useSelector(burgerConstructor);
 
   const [{ isDragging }, dropTargetRef] = useDrop<TUseDropProps, void, TIsDraggingProps>({
     accept: 'ingredient',

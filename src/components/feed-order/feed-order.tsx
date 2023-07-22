@@ -5,20 +5,23 @@ import { CalculatePrice, STATUS } from '../../utils/utils';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch } from '../../utils/hooks';
-import { requestOrder } from '../../services/actions/show-order';
-
+import { requestOrder } from '../../services/actions/request-order';
+import { burgerIngredients, requestedOrder} from '../../selectors/selectors';
 export const FeedOrder = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
-
+  
+  //передавать локейшн отсюда?
   useEffect(() => {
-    dispatch(requestOrder(id as unknown as string))
-  }, [])
-
-  const { data } = useSelector(store => store.showOrderReducer);
-  const order = data?.orders[0];
+    if (id) {
+      dispatch(requestOrder(id))
+    }
+  }, []);
+  
+  const { answerData } = useSelector(requestedOrder);
+  const { ingredients } = useSelector(burgerIngredients);
+  const order = answerData?.orders[0];
   const price = CalculatePrice(order?.ingredients);
-  const { ingredients } = useSelector(store => store.burgerIngredientsReducer);
 
   return (
     <>

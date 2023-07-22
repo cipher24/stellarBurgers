@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from '../utils/hooks';
 import { registerRequest } from '../services/actions/register';
 import { useForm } from '../hooks/use-form';
+import { register } from '../selectors/selectors';
 
 export function RegisterPage() {
 
@@ -14,7 +15,7 @@ export function RegisterPage() {
     name: ''
   })
   const dispatch = useDispatch();
-  const { isSuccessRegistration } = useSelector((store) => store.registerReducer);
+  const { isSuccessRegistration } = useSelector(register);
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();

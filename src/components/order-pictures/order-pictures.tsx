@@ -1,16 +1,16 @@
 import { FC } from 'react';
+import { burgerIngredients } from '../../selectors/selectors';
 import { useSelector } from '../../utils/hooks';
 import styles from './order-pictures.module.css';
 
 type TOrderPicturesProps = { array: string[] };
 
 export const OrderPictures: FC<TOrderPicturesProps> = ({ array }) => {
-  const { ingredients } = useSelector((store) => store.burgerIngredientsReducer);
+  const { ingredients } = useSelector(burgerIngredients);
   let i = 0;
   return (
     <>
       {array.map((element: string, index) => {
-        // console.log(element);
         if (index < 6) {
           let zIndex = 20 - index;
           let out = ingredients.find((ingredient) => (ingredient._id === element));

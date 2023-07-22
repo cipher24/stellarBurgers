@@ -8,11 +8,11 @@ import type { TResetPasswordActions } from "../actions/reset-password";
 
 type TInitialState = {
   isSuccessReset: boolean;
-  isError: boolean;
+  isError: string | null;
 }
 const initialState: TInitialState = {
   isSuccessReset: false,
-  isError: false
+  isError: null
 }
 
 export const resetPasswordReducer = (state = initialState, action: TResetPasswordActions): TInitialState => {
@@ -25,13 +25,13 @@ export const resetPasswordReducer = (state = initialState, action: TResetPasswor
       return {
         ...state,
         isSuccessReset: true,
-        isError: false
+        isError: null
       }
     }
     case RESET_PASSWORD_ERROR: {
       return {
         ...state,
-        isError: true,
+        isError: action.payload,
         isSuccessReset: false
       }
     }

@@ -6,6 +6,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from '../utils/hooks';
 import { resetPasswordRequest } from '../services/actions/reset-password';
 import { useForm } from '../hooks/use-form';
+import { forgotPassword, resetPassword } from '../selectors/selectors';
 
 export function ResetPasswordPage() {
 
@@ -16,8 +17,8 @@ export function ResetPasswordPage() {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { isSuccessReset } = useSelector((store) => store.resetPasswordReducer);
-  const { isExistedEmail } = useSelector((store) => store.forgotPasswordReducer);
+  const { isSuccessReset } = useSelector(resetPassword);
+  const { isExistedEmail } = useSelector(forgotPassword);
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();

@@ -5,15 +5,6 @@ import {
 import type {TIngredientDetailsActions} from "../actions/ingredient-details";
 import { IElement } from "../../utils/types";
 
-/* type TInitialState = {
-  name: string;
-  calories: number;
-  fat: number;
-  proteins: number;
-  carbohydrates: number;
-  image_large: string;
-  isShowDetails: boolean;
-} */
 type TInitialState = {
   ingredient: IElement | null;
   isShowDetails: boolean;
@@ -28,12 +19,6 @@ export const ingredientDetailsReducer = (state = initialState, action: TIngredie
     case GET_INGREDIENT_INFO: {
       return {
         ...state,
-        /* name: action.payload.name,
-        calories: action.payload.calories,
-        fat: action.payload.fat,
-        proteins: action.payload.proteins,
-        carbohydrates: action.payload.carbohydrates,
-        image_large: action.payload.image_large, */
         ingredient: action.payload,
         isShowDetails: true
       }

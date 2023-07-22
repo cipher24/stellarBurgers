@@ -10,7 +10,7 @@ import { loginReducer } from './login';
 import { logoutReducer } from './logout';
 import { profileReducer } from './profile';
 import { socketReducer } from './socket';
-import { showOrderReducer } from './show-order';
+import { requestedOrderReducer } from './request-order';
 
 export const rootReducer = combineReducers({
   burgerIngredientsReducer,
@@ -24,9 +24,5 @@ export const rootReducer = combineReducers({
   logoutReducer,
   profileReducer,
   socketReducer,
-  showOrderReducer
+  requestedOrderReducer
 });
-
-
-//новый код
-// export type TRootState = ReturnType<typeof rootReducer>

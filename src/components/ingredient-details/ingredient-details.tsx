@@ -3,12 +3,13 @@ import { useSelector } from '../../utils/hooks';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { IElement } from '../../utils/types';
+import { burgerIngredient, ingredientDetails } from '../../selectors/selectors';
 
 export const IngredientDetails = () => {
 
   const [ingredientToShow, setIngredientToShow] = useState<IElement | null | undefined>(null);
-  const { ingredient } = useSelector((store) => store.ingredientDetailsReducer);
-  const { ingredients } = useSelector((store) => store.burgerIngredientsReducer);
+  const { ingredient } = useSelector(ingredientDetails);
+  const { ingredients } = useSelector(burgerIngredient);
   const { id } = useParams();
 
   useEffect(() => {

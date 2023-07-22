@@ -1,5 +1,4 @@
 import type { IElement } from '../../utils/types';
-// import { TInitialState } from '../reducers/burger-constructor';
 
 export const ADD_INGREDIENT: 'ADD_INGREDIENT' = 'ADD_INGREDIENT';
 export const ADD_BUNS: 'ADD_BUNS' = 'ADD_BUNS';

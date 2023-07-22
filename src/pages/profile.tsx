@@ -6,6 +6,7 @@ import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import { logoutRequest } from '../services/actions/logout';
 import { getProfileRequest, patchProfileRequest } from '../services/actions/profile';
 import { useForm } from '../hooks/use-form';
+import { profile } from '../selectors/selectors';
 
 type TActive = { isActive: boolean };
 
@@ -20,11 +21,11 @@ export function ProfilePage() {
   const [isProfileChanged, setIsProfileChanged] = useState(false);
   const location = useLocation();
   const dispatch = useDispatch();
-  const { user, isSuccessRequest } = useSelector((store) => store.profileReducer);
+  const { user, isSuccessRequest } = useSelector(profile);
 
   const setActive = ({ isActive }: TActive) => isActive ? styles.linkActive : styles.linkInActive;
 
-  const onClick = (e: React.SyntheticEvent) => {
+  const onExitClick = (e: React.SyntheticEvent) => {
     e.preventDefault();
     dispatch(logoutRequest());
   }
@@ -55,11 +56,7 @@ export function ProfilePage() {
     setIsProfileChanged(false);
   }
 
-  //
   const onEditIconClick = (e: React.FocusEvent<HTMLInputElement>) => {
-    /* const onEditIconClick = (e: React.SyntheticEvent & {
-      target: HTMLButtonElement
-    }) => { */
     if (e.target.name === 'password') {
       setValues({
         ...values,
@@ -149,27 +146,27 @@ export function ProfilePage() {
   </form>
 
   return (
-      <div className={styles.container}>
-        <div className={`${styles.menu}  mr-15`}>
-          <NavLink end to="/profile" className={setActive}>
-            <h1 className="text text_type_main-medium">
-              Профиль
-            </h1>
-          </NavLink>
-          <NavLink to="/profile/orders" className={setActive}>
-            <h1 className="text text_type_main-medium ">История заказов</h1>
-          </NavLink>
-          <div className={styles.exit} onClick={onClick}>
-            <h1 className="text text_type_main-medium text_color_inactive mb-20">Выход</h1>
-          </div>
-          <p className="text text_type_main-default text_color_inactive">В этом разделе вы можете изменять свои персональные данные</p>
+    <div className={styles.container}>
+      <div className={`${styles.menu}  mr-15`}>
+        <NavLink end to="/profile" className={setActive}>
+          <h1 className="text text_type_main-medium">
+            Профиль
+          </h1>
+        </NavLink>
+        <NavLink to="/profile/orders" className={setActive}>
+          <h1 className="text text_type_main-medium ">История заказов</h1>
+        </NavLink>
+        <div className={styles.exit} onClick={onExitClick}>
+          <h1 className="text text_type_main-medium text_color_inactive mb-20">Выход</h1>
         </div>
-        <div className='mt-10'>
-
-          {location.pathname === '/profile'
-            ? form
-            : <Outlet />}
-        </div>
+        <p className="text text_type_main-default text_color_inactive">В этом разделе вы можете изменять свои персональные данные</p>
       </div>
+      <div className='mt-10'>
+
+        {location.pathname === '/profile'
+          ? form
+          : <Outlet />}
+      </div>
+    </div>
   )
 }

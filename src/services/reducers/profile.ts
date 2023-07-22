@@ -6,6 +6,7 @@ import {
   PATCH_PROFILE_SUCCESS,
   PATCH_PROFILE_REQUEST,
   AUTH_CHECKED,
+  AUTH_RESET,
   RESET_PROFILE,
 } from "../actions/profile";
 import type { TProfileActions } from "../actions/profile";
@@ -29,7 +30,10 @@ export const profileReducer = (state = initialState, action: TProfileActions): T
     case PATCH_PROFILE_REQUEST:
     case GET_PROFILE_REQUEST:
     case RESET_PROFILE: {
-      return initialState
+      return {
+        ...initialState,
+        isAuthChecked: state.isAuthChecked
+      } 
     }
     case PATCH_PROFILE_SUCCESS:
     case GET_PROFILE_SUCCESS: {
@@ -52,6 +56,12 @@ export const profileReducer = (state = initialState, action: TProfileActions): T
       return {
         ...state,
         isAuthChecked: true
+      }
+    }
+    case AUTH_RESET: {
+      return {
+        ...state,
+        isAuthChecked: false
       }
     }
     default: {

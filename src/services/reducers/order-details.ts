@@ -6,7 +6,6 @@ import {
   TData
 } from "../actions/order-details";
 import type { TOrderActions } from "../actions/order-details";
-import type { TAnswer } from "../actions/order-details";
 
 
 type TInitialState = {
@@ -54,12 +53,6 @@ export const orderDetailsReducer = (state = initialState, action: TOrderActions)
         isShowOrder: false
       }
     }
-    /* case LOGOUT_SUCCESS: {
-      return {
-        ...state,
-        isShowOrder: false
-      }
-    } */
     default: {
       return state
     }

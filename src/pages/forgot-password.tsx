@@ -6,6 +6,7 @@ import { forgotPasswordRequest } from '../services/actions/forgot-password';
 import { useSelector, useDispatch } from '../utils/hooks';
 import { resetPasswordInit } from '../services/actions/reset-password';
 import { useForm } from '../hooks/use-form';
+import { forgotPassword } from '../selectors/selectors';
 
 export function ForgotPasswordPage() {
 
@@ -13,7 +14,7 @@ export function ForgotPasswordPage() {
     email: ''
   });
 
-  const { isExistedEmail } = useSelector((store) => store.forgotPasswordReducer);
+  const { isExistedEmail } = useSelector(forgotPassword);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 

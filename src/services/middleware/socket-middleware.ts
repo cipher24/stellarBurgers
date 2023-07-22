@@ -3,9 +3,6 @@ import { TRootState } from '../../utils/types';
 import {
   FEED_WS_CONNECT,
   FEED_WS_DISCONNECT,
-  IFeedConnectAction,
-  IFeedDisconnectAction,
-  TFeedActions,
   WS_ON_OPEN,
   WS_ON_ERROR,
   WS_ON_MESSAGE,
@@ -39,7 +36,7 @@ export const socketMiddleware = (wsActions: TFeedWsActionTypes | THistoryWsActio
       const { dispatch } = store;
       const { type } = action;
       const { wsConnect, wsDisconnect, onOpen, onError, onMessage, onClose } = wsActions;
-      if (type === wsConnect) {
+      if ((type === wsConnect)&&(socket?.url !== action.payload)) {
         socket = new WebSocket(action.payload);
       }
       if (socket) {
@@ -59,7 +56,8 @@ export const socketMiddleware = (wsActions: TFeedWsActionTypes | THistoryWsActio
           dispatch({type: onClose})
         }
         if (type === wsDisconnect) {
-          socket.close(1000, 'sam zakril soedinenie');
+          socket.close(1000, 'unmount component with websocket');
+          socket = null;
         }
       }
       next(action);

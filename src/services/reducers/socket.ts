@@ -9,15 +9,16 @@ import {
   HISTORY_WS_CONNECT,
   HISTORY_WS_DISCONNECT,
   THistoryActions,
+  WS_ON_CLOSE,
 } from "../actions/socket";
 
 export type TInitialState = {
   status: string;
-  isError: string;
+  isError: string | null;
   data: TWSData | null;
 }
 const initialState: TInitialState = {
-  status: 'offline',
+  status: 'disconnected',
   isError: '',
   data: null
 }
@@ -34,7 +35,7 @@ export const socketReducer = (state: TInitialState = initialState, action: TFeed
     case FEED_WS_DISCONNECT: {
       return {
         ...state,
-        status: 'disconnected',
+        status: 'disconnecting',
         isError: ''
       }
     }
@@ -48,7 +49,7 @@ export const socketReducer = (state: TInitialState = initialState, action: TFeed
     case HISTORY_WS_DISCONNECT: {
       return {
         ...state,
-        status: 'disconnected',
+        status: 'disconnecting',
         isError: ''
       }
     }
@@ -70,6 +71,11 @@ export const socketReducer = (state: TInitialState = initialState, action: TFeed
         ...state,
         isError: '',
         data: action.payload
+      }
+    }
+    case WS_ON_CLOSE: {
+      return {
+        ...initialState
       }
     }
     default: {

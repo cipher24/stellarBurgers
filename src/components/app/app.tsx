@@ -21,10 +21,11 @@ import {
   FeedPage,
   NotFound404
 } from '../../pages';
-
+import { AUTH_RESET } from '../../services/actions/profile';
 
 import Modal from '../modal/modal';
 import { IngredientDetails } from '../ingredient-details/ingredient-details';
+import { burgerIngredients } from '../../selectors/selectors';
 
 export default function App() {
   const location = useLocation();
@@ -35,16 +36,19 @@ export default function App() {
   useEffect(() => {
     dispatch(getIngredientsRequest());
     dispatch(checkAuthorization());
+    return () => {
+      dispatch({ type: AUTH_RESET });
+    }
   }, [dispatch, getIngredientsRequest, checkAuthorization]);
 
   const onCloseClick = () => {
     navigate(-1);
   }
-  const data = useSelector((store) => store.burgerIngredientsReducer.ingredients);
+  const { ingredients } = useSelector(burgerIngredients);
 
   function Main() {
     return <main className={styles.main} >
-      {data.length > 0 &&
+      {ingredients.length > 0 &&
         <DndProvider backend={HTML5Backend}>
           <BurgerIngredients />
           <BurgerConstructor />
@@ -62,9 +66,7 @@ export default function App() {
       >
         <Route path='/' element={<Main />} />
         <Route path='/feed' element={<FeedPage />} />
-        <Route path='/feed/:id' element={<FeedOrder />
-
-        } />
+        <Route path='/feed/:id' element={<FeedOrder />} />
         <Route path='/login' element={
           <ProtectedRouteElement onlyGuest={true}>
             <LoginPage />
@@ -130,14 +132,14 @@ export default function App() {
               >
                 <FeedOrder />
               </Modal>
-            }/>
+            } />
             <Route path='/profile/orders/:id' element={
               <Modal
                 onCloseClick={onCloseClick}
               >
                 <FeedOrder />
               </Modal>
-            }/>
+            } />
           </Routes>
         </>
       )}

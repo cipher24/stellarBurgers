@@ -1,9 +1,10 @@
 import { CheckMarkIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './order-details.module.css';
 import { useSelector } from '../../utils/hooks';
+import { orderDetails } from '../../selectors/selectors';
 
 const OrderDetails = () => {
-  const { orderNumber } = useSelector((store) => store.orderDetailsReducer);
+  const { orderNumber } = useSelector(orderDetails);
 
   return (<>
     {orderNumber

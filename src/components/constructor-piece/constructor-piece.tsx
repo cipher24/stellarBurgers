@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from '../../utils/hooks';
 import { DELETE_INGREDIENT, UPDATE_INGREDIENTS_ORDER } from '../../services/actions/burger-constructor';
 import { DECREASE_INGREDIENT_COUNT } from '../../services/actions/burger-ingredients';
 import { IElement } from '../../utils/types';
+import { burgerConstructor } from '../../selectors/selectors';
 
 type TSwapIngredientCallback = (dragIndex: number, hoverIndex: number) => void;
 type TDeleteIngredientCallback = (index: number, element: IElement) => void;
@@ -17,8 +18,7 @@ type TFunctionProps = { element: TDragElement, index: number };
 const ConstructorPiece: FC<TFunctionProps> = ({ element, index }) => {
   const ref = useRef<HTMLLIElement>(null);
   const dispatch = useDispatch();
-  // const dragKey = key;
-  const ingredients = useSelector((store) => store.burgerConstructorReducer.ingredients);
+  const {ingredients} = useSelector(burgerConstructor);
 
   const swapIngredient = useCallback<TSwapIngredientCallback>((dragIndex, hoverIndex) => {
     const dragIngredient = ingredients[dragIndex];

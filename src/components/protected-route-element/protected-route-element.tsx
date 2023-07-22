@@ -1,23 +1,17 @@
 import { Navigate, useLocation } from 'react-router-dom';
 import { useSelector } from '../../utils/hooks';
-import { FC} from 'react';
+import { FC, useEffect} from 'react';
+import { profile } from '../../selectors/selectors';
 
 type TProtectedRouteElementProps = {
   onlyGuest?: boolean;
   children: JSX.Element;
 }
 export const ProtectedRouteElement: FC<TProtectedRouteElementProps> = ({ onlyGuest = false, children }) => {
-  const { isAuthChecked } = useSelector((store) => store.profileReducer);
   // const [isAuth, setIsAuth] = useState<boolean>(false);
   const location = useLocation();
-  const { user } = useSelector((store) => store.profileReducer);
+  const { user, isAuthChecked } = useSelector(profile);
 
- /*  useEffect((): any => {
-    if (!isAuthChecked) {
-      return () => <p>Идет загрузка..</p>
-    }
-  }, [isAuthChecked]) */
-  // setIsAuth(isAuthChecked);
   if (!isAuthChecked) {
     return (<p>Идет загрузка..</p>)
   }
@@ -36,7 +30,7 @@ export const ProtectedRouteElement: FC<TProtectedRouteElementProps> = ({ onlyGue
       <Navigate to="/login" state={{ from: location }} />
     )
   }
-
   return children;
+
 }
 

@@ -1,5 +1,5 @@
 type TCookieProps = {
-  expires?: any ;
+  expires?: any
 };
 export function setCookie(value: string | null, props: TCookieProps | null) {
   props = props || {};
@@ -37,5 +37,5 @@ export function getCookie(name: string) {
 }
 
 export function deleteCookie(name: string) {
-  setCookie(null, { expires: -1 });
+  document.cookie = name+'=; Max-Age=-99999999;';  
 } 

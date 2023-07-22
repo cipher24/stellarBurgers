@@ -3,8 +3,6 @@ import styles from './app-header.module.css';
 import { NavLink, useLocation } from 'react-router-dom';
 
 export default function AppHeader() {
-  /* const setTypeActive = ({ isActive } : {isActive: boolean}) => isActive ? "primary" : "secondary";
-  const setLinkActive = ({ isActive } : {isActive: boolean})=> isActive ? styles.active : ''; */
   const location = useLocation();
 
   return (

@@ -3,13 +3,14 @@ import { useSelector } from '../../utils/hooks';
 import styles from './category-ingredients.module.css';
 import { FC } from 'react';
 import { IElement } from '../../utils/types';
+import { burgerIngredients } from '../../selectors/selectors';
 
 type TCategory = {
   type: string;
   title: string;
 }
 const CategoryIngredients: FC<{ category: TCategory }> = ({ category }) => {
-  const ingredients = useSelector((store) => store.burgerIngredientsReducer.ingredients);
+  const {ingredients} = useSelector(burgerIngredients);
 
   return (
     <>

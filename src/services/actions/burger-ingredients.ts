@@ -1,5 +1,5 @@
 import { requestNorma } from '../../utils/burger-api';
-import { AppDispatch, IElement, IElementTemp } from '../../utils/types';
+import { AppDispatch, IElement, IElementTemp, TAnswerError } from '../../utils/types';
 
 export const GET_INGREDIENTS_REQUEST: 'GET_INGREDIENTS_REQUEST' = 'GET_INGREDIENTS_REQUEST';
 export const GET_INGREDIENTS_SUCCESS: 'GET_INGREDIENTS_SUCCESS' = 'GET_INGREDIENTS_SUCCESS';
@@ -19,6 +19,7 @@ export interface IGetIngredientsSuccess {
 }
 export interface IGetIngredientsError {
   readonly type: typeof GET_INGREDIENTS_ERROR;
+  readonly payload: TAnswerError
 }
 export interface IResetCounts {
   readonly type: typeof RESET_COUNTS;
@@ -35,7 +36,7 @@ export interface IDecreaseIngredientCount {
   readonly type: typeof DECREASE_INGREDIENT_COUNT;
   readonly item: IElementTemp & { count: number };
 }
-// type TTest = IElementTemp & {count: number};
+
 export type TBurgerIngredientsActions =
   | IGetIngredientsRequest
   | IGetIngredientsSuccess
@@ -59,9 +60,10 @@ export function getIngredientsRequest() {
         })
       })
       .catch(e => {
-        console.log('ОШИБКА! : ', e);
+        console.log('ОШИБКА! : ', e.message);
         dispatch({
-          type: GET_INGREDIENTS_ERROR
+          type: GET_INGREDIENTS_ERROR,
+          payload: e
         })
       })
   }

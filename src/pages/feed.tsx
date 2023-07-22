@@ -1,34 +1,23 @@
 import styles from './feed.module.css';
 import { OrderCard } from '../components/order-card/order-card';
-import { ReactNode, useEffect } from 'react';
-import { feedWSConnect, FEED_WS_CONNECT, FEED_WS_DISCONNECT } from '../services/actions/socket';
+import { useEffect } from 'react';
+import { feedWSConnect, FEED_WS_DISCONNECT } from '../services/actions/socket';
 import { useDispatch, useSelector } from '../utils/hooks';
 import { TWSOrder } from '../utils/types';
-//'wss://norma.nomoreparties.space/orders/all'
+import { WEBSOCKET_URL } from '../utils/burger-api';
+import { socket } from '../selectors/selectors';
+
 export function FeedPage() {
   const dispatch = useDispatch();
+
   useEffect(() => {
-    dispatch(feedWSConnect('wss://norma.nomoreparties.space/orders/all'))
+    dispatch(feedWSConnect(`${WEBSOCKET_URL}/all`))
     return () => {
       dispatch({ type: FEED_WS_DISCONNECT });
     }
   }, [dispatch]);
 
-/*   useEffect(() => {
-
-  }, []) */
-  const { data } = useSelector(store => store.socketReducer);
-  /* let doneOrders = [[],[],[],[],[]];
-  data.forEach((order: TWSOrder) => {
-    if (order.status === 'done') {
-
-    } 
-  })*/
-  // let doneOrders, notReadyOrders;
-  /* if (data.orders) {
-    doneOrders = data.orders.filter((order: TWSOrder) => order.status === 'done');
-    notReadyOrders = data.orders.filter((order: TWSOrder) => order.status !== 'done');
-  } */
+  const { data } = useSelector(socket);
   return (
     <>
       {data && <div className={`text mb-6 ${styles.main}`}>
