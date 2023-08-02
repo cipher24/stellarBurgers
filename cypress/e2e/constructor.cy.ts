@@ -41,7 +41,7 @@ describe('Make order works correctly', function () {
   })
 
   it('Should make drag bun and ingredient, and make order', function () {
-    cy.visit('http://localhost:3000/login');
+    cy.visit('http://localhost:3000/stellarBurgers#/login');
     cy.get('[data-cy=login-form]').contains('Вход');
     cy.get('input[type=email]').type(login);
     cy.get('input[type=password]').type(password);
@@ -67,7 +67,7 @@ describe('Make order works correctly', function () {
 
 describe('ingredient modal works correctly', function () {
   beforeEach(function () {
-    cy.visit('http://localhost:3000');
+    cy.visit('http://localhost:3000/');
     cy.viewport(1300, 1000);
     cy.intercept('GET', 'api/ingredients', { fixture: 'ingredients.json' });
   })
