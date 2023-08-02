@@ -3,16 +3,16 @@ import {
   FORGOT_PASSWORD_SUCCESS,
   FORGOT_PASSWORD_REQUEST,
   FORGOT_PASSWORD_INIT,
+  TForgotPasswordActions
 } from "../actions/forgot-password";
-import type {TForgotPasswordActions} from "../actions/forgot-password";
 
 type TInitialState = {
   isExistedEmail: boolean;
-  isError: boolean;
+  isError: string | null;
 }
 const initialState: TInitialState = {
   isExistedEmail: false,
-  isError: false
+  isError: null
 }
 
 export const forgotPasswordReducer = (state = initialState, action: TForgotPasswordActions): TInitialState => {
@@ -25,13 +25,13 @@ export const forgotPasswordReducer = (state = initialState, action: TForgotPassw
       return {
         ...state,
         isExistedEmail: true,
-        isError: false
+        isError: null
       }
     }
     case FORGOT_PASSWORD_ERROR: {
       return {
         ...state,
-        isError: true,
+        isError: action.payload,
         isExistedEmail: false
       }
     }
@@ -40,3 +40,4 @@ export const forgotPasswordReducer = (state = initialState, action: TForgotPassw
     }
   }
 }
+export default forgotPasswordReducer;

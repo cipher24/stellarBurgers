@@ -1,6 +1,6 @@
 import { requestNorma } from '../../utils/burger-api';
 import { updateTokens } from '../../utils/update-tokens';
-import { AppDispatch, TAnswerError, TRequestProps } from '../../utils/types';
+import { AppDispatch, TRequestProps } from '../../utils/types';
 import { GET_PROFILE_SUCCESS } from './profile';
 import { TAnswerToken } from '../../utils/update-tokens';
 export const LOGIN_REQUEST: 'LOGIN_REQUEST' = 'LOGIN_REQUEST';
@@ -15,7 +15,7 @@ export interface ILoginSuccess {
 }
 export interface ILoginError {
   readonly type: typeof LOGIN_ERROR,
-  readonly payload: TAnswerError
+  readonly payload: string
 }
 
 export type TLoginActions =
@@ -30,7 +30,7 @@ export function loginRequest(value: TRequestProps) {
       type: LOGIN_REQUEST
     })
     requestNorma('auth/login', "POST", value)
-    //тут не было типо TAnswerToken
+      //тут не было типо TAnswerToken
       .then((answer: TAnswerToken) => {
         console.log(answer);
         updateTokens(answer);
@@ -47,7 +47,7 @@ export function loginRequest(value: TRequestProps) {
         console.log('ОШИБКА! : ', e.message);
         dispatch({
           type: LOGIN_ERROR,
-          payload: e
+          payload: e.message
         })
       })
   }

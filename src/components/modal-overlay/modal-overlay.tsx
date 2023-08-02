@@ -8,7 +8,7 @@ const ModalOverlay: FC<TModalOverlayProps> = (props) => {
   const { onCloseClick } = props;
 
   return (
-    <div className={styles.overlay} onClick={onCloseClick}>
+    <div className={styles.overlay} onClick={onCloseClick} data-cy='modal-overlay'>
     </div>
   );
 }

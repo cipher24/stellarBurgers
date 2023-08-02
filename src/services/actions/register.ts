@@ -1,6 +1,6 @@
 import { requestNorma } from '../../utils/burger-api';
 import { updateTokens } from '../../utils/update-tokens';
-import { AppDispatch, TAnswerError, TRequestProps } from '../../utils/types';
+import { AppDispatch, TRequestProps } from '../../utils/types';
 import { GET_PROFILE_SUCCESS } from './profile';
 
 export const REGISTER_REQUEST: 'REGISTER_REQUEST' = 'REGISTER_REQUEST';
@@ -16,7 +16,7 @@ export interface IRegisterSuccess {
 }
 export interface IRegisterError {
   readonly type: typeof REGISTER_ERROR;
-  readonly payload: TAnswerError
+  readonly payload: string
 }
 export interface IRegisterInit {
   readonly type: typeof REGISTER_INIT;
@@ -56,7 +56,7 @@ export function registerRequest(value: TRequestProps) {
         console.log('ОШИБКА! : ', e.message);
         dispatch({
           type: REGISTER_ERROR,
-          payload: e
+          payload: e.message
         })
       })
   }

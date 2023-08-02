@@ -1,15 +1,18 @@
 import styles from './burger-ingredient.module.css';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { getIngredientInfo } from '../../services/actions/ingredient-details';
-import { useDispatch} from '../../utils/hooks';
+import { useDispatch } from '../../utils/hooks';
 import { useDrag } from 'react-dnd';
 import { useLocation, Link } from 'react-router-dom';
-import { IElement } from '../../utils/types';
+import { IElementTemp } from '../../utils/types';
 import { FC } from 'react';
 
-type TFunctionProps = { element: IElement };
+type TFunctionProps = {
+  element: IElementTemp;
+  count: number;
+};
 
-const BurgerIngredient: FC<TFunctionProps> = ({ element }) => {
+const BurgerIngredient: FC<TFunctionProps> = ({ element, count }) => {
   //передавать, не элемент, а айди ингредиента, и уже тут достоввать по айди нужный ингредиент из хранилища.
   const dispatch = useDispatch();
   const location = useLocation();
@@ -26,8 +29,8 @@ const BurgerIngredient: FC<TFunctionProps> = ({ element }) => {
     })
   });
 
-  const countInfo = element.count
-    ? <Counter count={element.count} size="default" extraClass="m-1" />
+  const countInfo = count
+    ? <Counter count={count} size="default" extraClass="m-1" />
     : '';
   return (
     <Link

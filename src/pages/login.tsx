@@ -27,7 +27,7 @@ export function LoginPage() {
     <>
       <div className={styles.container}>
 
-        <form className={styles.form} onSubmit={handleSubmit}>
+        <form className={styles.form} onSubmit={handleSubmit} data-cy='login-form'>
           <p className='text text_type_main-medium mb-6'> Вход</p>
           <EmailInput
             onChange={handleChange}

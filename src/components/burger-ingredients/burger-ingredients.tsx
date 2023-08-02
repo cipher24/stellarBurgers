@@ -55,7 +55,7 @@ export default function BurgerIngredients() {
 
       </div>
 
-      <div className={`${styles.wholeList}`} >
+      <div className={`${styles.wholeList}`} data-cy="ingredients" >
         <CategoryIngredients category={category('bun')} />
         <CategoryIngredients category={category('sauce')} />
         <CategoryIngredients category={category('main')} />

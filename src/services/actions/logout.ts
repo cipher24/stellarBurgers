@@ -1,7 +1,7 @@
 import { requestNorma } from '../../utils/burger-api';
 import { deleteCookie } from '../../utils/cookie';
 import { RESET_PROFILE } from './profile';
-import { AppDispatch, TAnswerError, TRequestProps } from '../../utils/types';
+import { AppDispatch, TRequestProps } from '../../utils/types';
 
 export const LOGOUT_ERROR: 'LOGOUT_ERROR' = 'LOGOUT_ERROR';
 export const LOGOUT_REQUEST: 'LOGOUT_REQUEST' = 'LOGOUT_REQUEST';
@@ -12,16 +12,16 @@ export interface ILogoutRequest {
 }
 export interface ILogoutError {
   readonly type: typeof LOGOUT_ERROR;
-  readonly payload: TAnswerError;
+  readonly payload: string;
 }
 export interface ILogoutSuccess {
   readonly type: typeof LOGOUT_SUCCESS;
 }
 
-export type TLogoutActions = 
-|ILogoutRequest
-|ILogoutError
-|ILogoutSuccess;
+export type TLogoutActions =
+  | ILogoutRequest
+  | ILogoutError
+  | ILogoutSuccess;
 
 export function logoutRequest() {
   return function (dispatch: AppDispatch) {
@@ -54,7 +54,7 @@ export function logoutRequest() {
         console.log('ОШИБКА! : ', e.message);
         dispatch({
           type: LOGOUT_ERROR,
-          payload: e
+          payload: e.message
         })
       })
   }

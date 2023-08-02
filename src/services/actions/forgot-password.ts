@@ -1,5 +1,5 @@
 import { requestNorma } from '../../utils/burger-api';
-import { AppDispatch, TAnswerError, TRequestProps } from '../../utils/types';
+import { AppDispatch, TRequestProps } from '../../utils/types';
 
 export const FORGOT_PASSWORD_REQUEST: 'FORGOT_PASSWORD_REQUEST' = 'FORGOT_PASSWORD_REQUEST';
 export const FORGOT_PASSWORD_SUCCESS: 'FORGOT_PASSWORD_SUCCESS' = 'FORGOT_PASSWORD_SUCCESS';
@@ -14,7 +14,7 @@ export interface IForgotPasswordSuccess {
 }
 export interface IForgotPasswordError {
   readonly type: typeof FORGOT_PASSWORD_ERROR;
-  readonly payload: TAnswerError
+  readonly payload: string;
 }
 export interface IForgotPasswordInit {
   readonly type: typeof FORGOT_PASSWORD_INIT
@@ -49,7 +49,7 @@ export function forgotPasswordRequest(value: TRequestProps) {
         console.log('ОШИБКА! : ', e.message);
         dispatch({
           type: FORGOT_PASSWORD_ERROR,
-          payload: e
+          payload: e.message
         })
       })
   }

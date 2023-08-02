@@ -1,11 +1,11 @@
-import { TAnswerData, TAnswerError } from '../../utils/types';
+import { TAnswerData } from '../../utils/types';
 import { REQUEST_ORDER_ERROR, REQUEST_ORDER_REQUEST, REQUEST_ORDER_SUCCESS, TRequestOrderActions } from '../actions/request-order';
 
 type TInitialState = {
   answerData: TAnswerData | null;
   isError: string | null;
 }
-const initialState:TInitialState = {
+const initialState: TInitialState = {
   answerData: null,
   isError: null
 }
@@ -32,3 +32,4 @@ export const requestedOrderReducer = (state: TInitialState = initialState, actio
     }
   }
 }
+export default requestedOrderReducer;

@@ -5,7 +5,7 @@ import reportWebVitals from './reportWebVitals';
 import { compose, createStore, applyMiddleware } from 'redux';
 import { rootReducer } from './services/reducers/index';
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, HashRouter } from 'react-router-dom';
 import thunk from 'redux-thunk';
 import { socketMiddleware } from './services/middleware/socket-middleware';
 import {
@@ -18,6 +18,7 @@ import {
   HISTORY_WS_DISCONNECT,
   HISTORY_WS_CONNECT,
 } from './services/actions/socket';
+import React from 'react';
 
 declare global {
   interface Window {
@@ -50,13 +51,15 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  // <React.StrictMode>
-  <BrowserRouter>
-    <Provider store={store}>
-      <App />
-    </Provider>
-  </BrowserRouter>
-  // </React.StrictMode>
+  <React.StrictMode>
+    {/* <BrowserRouter> */}
+      <HashRouter basename='/'>
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </HashRouter>
+    {/* </BrowserRouter> */}
+  </React.StrictMode>
 );
 
 

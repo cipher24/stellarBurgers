@@ -40,3 +40,4 @@ export const resetPasswordReducer = (state = initialState, action: TResetPasswor
     }
   }
 }
+export default resetPasswordReducer;

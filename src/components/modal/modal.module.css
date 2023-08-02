@@ -20,3 +20,7 @@
   top: 35px;
   right: 30px;
 }
+button {
+  background-color: transparent;
+  border: transparent;
+}

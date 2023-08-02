@@ -35,7 +35,7 @@ export function requestOrder(number: string) {
           type: REQUEST_ORDER_SUCCESS,
           payload: data
         });
-  })
+      })
       .catch(e => {
         console.log('ОШИБКА! : ', e.message);
         dispatch({

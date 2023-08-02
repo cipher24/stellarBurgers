@@ -19,7 +19,7 @@ export type TInitialState = {
 }
 const initialState: TInitialState = {
   status: 'disconnected',
-  isError: '',
+  isError: null,
   data: null
 }
 
@@ -29,35 +29,35 @@ export const socketReducer = (state: TInitialState = initialState, action: TFeed
       return {
         ...state,
         status: 'connecting',
-        isError: ''
+        isError: null
       }
     }
     case FEED_WS_DISCONNECT: {
       return {
         ...state,
         status: 'disconnecting',
-        isError: ''
+        isError: null
       }
     }
     case HISTORY_WS_CONNECT: {
       return {
         ...state,
         status: 'connecting',
-        isError: ''
+        isError: null
       }
     }
     case HISTORY_WS_DISCONNECT: {
       return {
         ...state,
         status: 'disconnecting',
-        isError: ''
+        isError: null
       }
     }
     case WS_ON_OPEN: {
       return {
         ...state,
         status: 'connected',
-        isError: ''
+        isError: null
       }
     }
     case WS_ON_ERROR: {
@@ -69,7 +69,7 @@ export const socketReducer = (state: TInitialState = initialState, action: TFeed
     case WS_ON_MESSAGE: {
       return {
         ...state,
-        isError: '',
+        isError: null,
         data: action.payload
       }
     }
@@ -82,4 +82,5 @@ export const socketReducer = (state: TInitialState = initialState, action: TFeed
       return state
     }
   }
-}
+};
+export default socketReducer;

@@ -2,12 +2,12 @@ import styles from './ingredient-details.module.css';
 import { useSelector } from '../../utils/hooks';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { IElement } from '../../utils/types';
+import { IElementTemp } from '../../utils/types';
 import { burgerIngredient, ingredientDetails } from '../../selectors/selectors';
 
 export const IngredientDetails = () => {
 
-  const [ingredientToShow, setIngredientToShow] = useState<IElement | null | undefined>(null);
+  const [ingredientToShow, setIngredientToShow] = useState<IElementTemp | null | undefined>(null);
   const { ingredient } = useSelector(ingredientDetails);
   const { ingredients } = useSelector(burgerIngredient);
   const { id } = useParams();
@@ -16,7 +16,7 @@ export const IngredientDetails = () => {
     if (ingredient) {
       setIngredientToShow(ingredient);
     } else {
-      let requiredIngredient = ingredients.find((element: IElement) => element._id === id);
+      let requiredIngredient = ingredients.find((element: IElementTemp) => element._id === id);
       console.log(requiredIngredient);
       if (requiredIngredient) {
         setIngredientToShow(requiredIngredient);

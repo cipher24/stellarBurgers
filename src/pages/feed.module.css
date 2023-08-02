@@ -21,7 +21,6 @@
 }
 
 .doneOrdersContainer {
-
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 10;
@@ -29,8 +28,8 @@
   columns: 5;
   column-gap: 5px;
 }
-.doneOrders{
-  color: #00CCCC;
+.doneOrders {
+  color: #00cccc;
 }
 .workingOrders {
   color: white;

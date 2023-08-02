@@ -8,20 +8,21 @@ import {
   AUTH_CHECKED,
   AUTH_RESET,
   RESET_PROFILE,
+  TProfileActions
 } from "../actions/profile";
-import type { TProfileActions } from "../actions/profile";
+
 import type { TUser } from "../../utils/types";
 
 type TInitialState = {
   user: TUser | null;
   isSuccessRequest: boolean;
-  isError: boolean;
+  isError: string | null;
   isAuthChecked: boolean;
 }
 const initialState: TInitialState = {
   user: null,
   isSuccessRequest: false,
-  isError: false,
+  isError: null,
   isAuthChecked: false
 }
 
@@ -33,14 +34,14 @@ export const profileReducer = (state = initialState, action: TProfileActions): T
       return {
         ...initialState,
         isAuthChecked: state.isAuthChecked
-      } 
+      }
     }
     case PATCH_PROFILE_SUCCESS:
     case GET_PROFILE_SUCCESS: {
       return {
         ...state,
         isSuccessRequest: true,
-        isError: false,
+        isError: null,
         user: action.payload
       }
     }
@@ -49,7 +50,7 @@ export const profileReducer = (state = initialState, action: TProfileActions): T
       return {
         ...state,
         isSuccessRequest: false,
-        isError: true
+        isError: action.payload
       }
     }
     case AUTH_CHECKED: {
@@ -68,4 +69,5 @@ export const profileReducer = (state = initialState, action: TProfileActions): T
       return state
     }
   }
-}
+};
+export default profileReducer;

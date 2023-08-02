@@ -1,6 +1,6 @@
 import { requestNorma } from '../../utils/burger-api';
 import { getCookie } from '../../utils/cookie';
-import type { AppDispatch, TAnswerError, TRequestProps, TUser } from '../../utils/types';
+import type { AppDispatch, TRequestProps, TUser } from '../../utils/types';
 
 export const GET_PROFILE_ERROR: 'GET_PROFILE_ERROR' = 'GET_PROFILE_ERROR';
 export const GET_PROFILE_REQUEST: 'GET_PROFILE_REQUEST' = 'GET_PROFILE_REQUEST';
@@ -22,7 +22,7 @@ export interface IGetProfileSuccess {
 }
 export interface IGetProfileError {
   readonly type: typeof GET_PROFILE_ERROR;
-  readonly payload: TAnswerError;
+  readonly payload: string;
 }
 export interface IPatchProfileRequest {
   readonly type: typeof PATCH_PROFILE_REQUEST;
@@ -33,7 +33,7 @@ export interface IPatchProfileSuccess {
 }
 export interface IPatchProfileError {
   readonly type: typeof PATCH_PROFILE_ERROR;
-  readonly payload: TAnswerError;
+  readonly payload: string;
 }
 export interface IAuthChecked {
   readonly type: typeof AUTH_CHECKED;
@@ -75,7 +75,7 @@ export function getProfileRequest() {
         console.log('ОШИБКА! : ', e.message);
         dispatch({
           type: GET_PROFILE_ERROR,
-          payload: e
+          payload: e.message
         })
 
       })
