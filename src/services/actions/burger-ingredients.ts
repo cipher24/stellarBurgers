@@ -1,5 +1,5 @@
 import { requestNorma } from '../../utils/burger-api';
-import { AppDispatch, IElement, IElementTemp, TAnswerError } from '../../utils/types';
+import { AppDispatch, IElement, IElementTemp } from '../../utils/types';
 
 export const GET_INGREDIENTS_REQUEST: 'GET_INGREDIENTS_REQUEST' = 'GET_INGREDIENTS_REQUEST';
 export const GET_INGREDIENTS_SUCCESS: 'GET_INGREDIENTS_SUCCESS' = 'GET_INGREDIENTS_SUCCESS';
@@ -15,36 +15,17 @@ export interface IGetIngredientsRequest {
 }
 export interface IGetIngredientsSuccess {
   readonly type: typeof GET_INGREDIENTS_SUCCESS;
-  readonly ingredients: Array<IElementTemp & { count: number } & {dragId: string}>;
+  readonly ingredients: Array<IElementTemp>;
 }
 export interface IGetIngredientsError {
   readonly type: typeof GET_INGREDIENTS_ERROR;
-  readonly payload: TAnswerError
-}
-export interface IResetCounts {
-  readonly type: typeof RESET_COUNTS;
-}
-export interface IIncreaseIngredientCount {
-  readonly type: typeof INCREASE_INGREDIENT_COUNT;
-  readonly item: IElement;
-}
-export interface IIncreaseBunCount {
-  readonly type: typeof INCREASE_BUN_COUNT;
-  readonly item: IElement;
-}
-export interface IDecreaseIngredientCount {
-  readonly type: typeof DECREASE_INGREDIENT_COUNT;
-  readonly item: IElementTemp & { count: number };
+  readonly payload: string
 }
 
 export type TBurgerIngredientsActions =
   | IGetIngredientsRequest
   | IGetIngredientsSuccess
-  | IGetIngredientsError
-  | IDecreaseIngredientCount
-  | IIncreaseBunCount
-  | IIncreaseIngredientCount
-  | IResetCounts;
+  | IGetIngredientsError;
 
 export function getIngredientsRequest() {
   return function (dispatch: AppDispatch) {
@@ -63,10 +44,11 @@ export function getIngredientsRequest() {
         console.log('ОШИБКА! : ', e.message);
         dispatch({
           type: GET_INGREDIENTS_ERROR,
-          payload: e
+          payload: e.message
         })
       })
   }
 }
+
 
 

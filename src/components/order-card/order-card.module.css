@@ -6,19 +6,19 @@
 }
 .container {
   color: white;
-  background-color: #1C1C21;
+  background-color: #1c1c21;
   flex: 1;
   border-radius: 30px;
 }
-.date{
-  color: #8585AD;
+.date {
+  color: #8585ad;
 }
 .noStyle {
   text-decoration: none;
   color: white;
 }
 .statusDone {
-  color: #00CCCC
+  color: #00cccc;
 }
 .statusNormal {
   color: white;

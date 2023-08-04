@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from '../utils/hooks';
 import { historyWSConnect, HISTORY_WS_DISCONNECT } from '../services/actions/socket';
 import styles from './orders.module.css';
 import { getCookie } from '../utils/cookie';
-import { TWSOrder } from '../utils/types';
 import { WEBSOCKET_URL } from '../utils/burger-api';
 import { socket } from '../selectors/selectors';
 
@@ -24,9 +23,9 @@ export function OrdersPage() {
   }
   return (
     <>
-      {reversedOrders && <div className={`${styles.main}`}>
+      {data && reversedOrders && <div className={`${styles.main}`}>
         {reversedOrders &&
-          reversedOrders.map((order: TWSOrder) => {
+          reversedOrders.map((order) => {
             return (<OrderCard key={order._id} order={order} />)
           })
         }

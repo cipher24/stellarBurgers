@@ -37,7 +37,6 @@ export interface IWsOnCloseAction {
 }
 
 
-
 export const feedWSConnect = (url: string): IFeedConnectAction => ({
   type: FEED_WS_CONNECT,
   payload: url
@@ -45,6 +44,7 @@ export const feedWSConnect = (url: string): IFeedConnectAction => ({
 export const feedWSDisconnect = (): IFeedDisconnectAction => ({
   type: FEED_WS_DISCONNECT,
 })
+
 export const onMessage = (data: TWSData): IWsOnMessageAction => ({
   type: WS_ON_MESSAGE,
   payload: data
@@ -63,8 +63,6 @@ export type TFeedActions =
   | IWsOnErrorAction;
 
 
-
-
 export interface IHistoryConnectAction {
   readonly type: typeof HISTORY_WS_CONNECT;
   readonly payload: string;
@@ -81,7 +79,7 @@ export type THistoryActions =
   | IWsOnCloseAction
   | IWsOnErrorAction;
 
-  export const historyWSConnect = (url: string): IHistoryConnectAction => ({
-    type: HISTORY_WS_CONNECT,
-    payload: url
-  })
+export const historyWSConnect = (url: string): IHistoryConnectAction => ({
+  type: HISTORY_WS_CONNECT,
+  payload: url
+})

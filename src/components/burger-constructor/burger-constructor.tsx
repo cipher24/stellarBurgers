@@ -10,8 +10,8 @@ import { useDrop } from 'react-dnd';
 import { ADD_INGREDIENT, ADD_BUNS } from '../../services/actions/burger-constructor';
 import ConstructorPiece from '../constructor-piece/constructor-piece';
 import { IElement } from '../../utils/types';
-import { INCREASE_BUN_COUNT, INCREASE_INGREDIENT_COUNT } from '../../services/actions/burger-ingredients';
 import { burgerConstructor, orderDetails } from '../../selectors/selectors';
+import { useMemo } from 'react';
 
 type TUseDropProps = { element: IElement };
 type TIsDraggingProps = { isDragging: boolean };
@@ -37,23 +37,9 @@ export default function BurgerConstructor() {
             dragId: uuidv4(),
           }
         })
-        dispatch({
-          type: INCREASE_INGREDIENT_COUNT,
-          item: {
-            ...item.element,
-            dragId: uuidv4(),
-          }
-        })
       } else {
         dispatch({
           type: ADD_BUNS,
-          item: {
-            ...item.element,
-            dragId: uuidv4(),
-          }
-        })
-        dispatch({
-          type: INCREASE_BUN_COUNT,
           item: {
             ...item.element,
             dragId: uuidv4(),
@@ -79,25 +65,32 @@ export default function BurgerConstructor() {
   //сбор ингредиентов для бургера
   const getIngredientsIds = (): { ingredients: Array<string> } => {
     const ids = [];
-    if (states&&states.buns) {
-
-      ids.push(states.buns._id);
+    if (states && states.buns) {
       ids.push(states.buns._id);
     }
-    states.ingredients.forEach((element: IElement) => ids.push(element._id));
+    states.ingredients.forEach((element) => ids.push(element._id));
+    if (states && states.buns) {
+      ids.push(states.buns._id);
+    }
     return { ingredients: ids };
   }
+  const total = useMemo(() => {
+    return ((states.buns ? states.buns.price * 2 : 0) +
+      states.ingredients.reduce((acc, cur) => acc + cur.price, 0))
+  }, [states]);
 
   return (
     <section className={` ${styles.constructorBlock} text text_type_main-default`}>
 
       <ul
         ref={dropTargetRef}
-        className={`${isDragging ? styles.dropZone : ''} ${styles.list} mt-25 mb-10 ml-4`}>
+        className={`${isDragging ? styles.dropZone : ''} ${styles.list} mt-25 mb-10 ml-4`}
+        data-cy="constructor"
+      >
 
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           {states.buns &&
-            <li key={'00'}>
+            <li key={'00'} data-cy="constructor-bun-1">
               <ConstructorElement
                 type="top"
                 isLocked={true}
@@ -110,8 +103,11 @@ export default function BurgerConstructor() {
           }
 
           {states.ingredients &&
-            <div className={`${styles.constructorScroll}`}>
-              {states.ingredients.map((element: IElement, index: number) => (
+            <div
+              className={`${styles.constructorScroll}`}
+              data-cy="constructor-ingredient"
+            >
+              {states.ingredients.map((element, index) => (
                 <ConstructorPiece
                   element={element}
                   key={element.dragId}
@@ -122,7 +118,7 @@ export default function BurgerConstructor() {
           }
 
           {states.buns &&
-            <li key={'01'}>
+            <li key={'01'} data-cy="constructor-bun-2">
               <ConstructorElement
                 type="bottom"
                 isLocked={true}
@@ -138,8 +134,8 @@ export default function BurgerConstructor() {
       </ul>
 
       <div className={styles.confirmOrder} >
-        <p className='text text_type_digits-medium mr-10'><span>{states.total}</span> <CurrencyIcon type="primary" /></p>
-        <Button htmlType="button" type="primary" size="medium" onClick={onOrderButtonClick}>
+        <p className='text text_type_digits-medium mr-10'><span>{total}</span> <CurrencyIcon type="primary" /></p>
+        <Button htmlType="button" type="primary" size="medium" onClick={onOrderButtonClick} aria-label="Оформить заказ">
           Оформить заказ
         </Button>
       </div>

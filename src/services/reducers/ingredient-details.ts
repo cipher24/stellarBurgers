@@ -1,15 +1,16 @@
 import {
   GET_INGREDIENT_INFO,
-  CLOSE_DETAILS
+  CLOSE_DETAILS,
+  TIngredientDetailsActions
 } from "../actions/ingredient-details";
-import type {TIngredientDetailsActions} from "../actions/ingredient-details";
-import { IElement } from "../../utils/types";
+
+import { IElementTemp } from "../../utils/types";
 
 type TInitialState = {
-  ingredient: IElement | null;
+  ingredient: IElementTemp | null;
   isShowDetails: boolean;
 }
-const initialState: TInitialState = {
+export const initialState: TInitialState = {
   ingredient: null,
   isShowDetails: false
 }
@@ -34,4 +35,5 @@ export const ingredientDetailsReducer = (state = initialState, action: TIngredie
       return state
     }
   }
-}
+};
+export default ingredientDetailsReducer;

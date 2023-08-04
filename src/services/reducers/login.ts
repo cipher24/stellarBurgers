@@ -2,16 +2,16 @@ import {
   LOGIN_ERROR,
   LOGIN_SUCCESS,
   LOGIN_REQUEST,
-  
+  TLoginActions
 } from "../actions/login";
-import type {TLoginActions} from "../actions/login";
+
 type TInitialState = {
   isSuccessLogin: boolean;
-  isError: boolean;
+  isError: string | null;
 }
-const initialState: TInitialState = {
+export const initialState: TInitialState = {
   isSuccessLogin: false,
-  isError: false
+  isError: null
 }
 
 export const loginReducer = (state = initialState, action: TLoginActions): TInitialState => {
@@ -23,18 +23,19 @@ export const loginReducer = (state = initialState, action: TLoginActions): TInit
       return {
         ...state,
         isSuccessLogin: true,
-        isError: false
+        isError: null
       }
     }
     case LOGIN_ERROR: {
       return {
         ...state,
         isSuccessLogin: false,
-        isError: true
+        isError: action.payload
       }
     }
     default: {
       return state
     }
   }
-}
+};
+export default loginReducer;

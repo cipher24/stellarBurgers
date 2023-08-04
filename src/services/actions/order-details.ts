@@ -1,7 +1,6 @@
 import { requestNorma } from '../../utils/burger-api';
-import { AppDispatch, TAnswerError } from '../../utils/types';
+import { AppDispatch } from '../../utils/types';
 import { CONSTRUCTOR_INIT } from './burger-constructor';
-import { RESET_COUNTS } from './burger-ingredients';
 import type { IElementTemp } from '../../utils/types';
 
 export const POST_REQUEST: 'POST_REQUEST' = 'POST_REQUEST';
@@ -18,7 +17,7 @@ export interface IOrderSuccess {
 }
 export interface IOrderError {
   readonly type: typeof POST_ERROR;
-  readonly payload: TAnswerError;
+  readonly payload: string;
 }
 export interface IOrderClose {
   readonly type: typeof CLOSE_ORDER;
@@ -29,7 +28,7 @@ export type TOrderActions =
   | IOrderSuccess
   | IOrderError
   | IOrderClose;
-  
+
 //дополнительный тип для ответа с сервера при оформлении заказа
 export type TAnswer = {
   ingredients: IElementTemp[];
@@ -73,15 +72,12 @@ export function requestServer(ids: TProps) {
         dispatch({
           type: CONSTRUCTOR_INIT
         });
-        dispatch({
-          type: RESET_COUNTS
-        });
       })
       .catch(e => {
         console.log('ОШИБКА! : ', e.message);
         dispatch({
           type: POST_ERROR,
-          payload: e
+          payload: e.message
         })
       })
   }

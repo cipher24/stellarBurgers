@@ -34,9 +34,9 @@ const Modal: FC<PropsWithChildren<TModalProps>> = (props) => {
           }
         </header>
         {children}
-        <div className={styles.closeIcon}>
+        <button className={styles.closeIcon} aria-label='закрыть'>
           <CloseIcon type="primary" onClick={onCloseClick} />
-        </div>
+        </button>
       </div>
       <ModalOverlay onCloseClick={onCloseClick}></ModalOverlay>
     </>

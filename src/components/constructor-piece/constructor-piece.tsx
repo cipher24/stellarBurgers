@@ -4,7 +4,6 @@ import { useDrop, useDrag } from 'react-dnd';
 import { useRef, useCallback, FC } from 'react';
 import { useSelector, useDispatch } from '../../utils/hooks';
 import { DELETE_INGREDIENT, UPDATE_INGREDIENTS_ORDER } from '../../services/actions/burger-constructor';
-import { DECREASE_INGREDIENT_COUNT } from '../../services/actions/burger-ingredients';
 import { IElement } from '../../utils/types';
 import { burgerConstructor } from '../../selectors/selectors';
 
@@ -18,7 +17,7 @@ type TFunctionProps = { element: TDragElement, index: number };
 const ConstructorPiece: FC<TFunctionProps> = ({ element, index }) => {
   const ref = useRef<HTMLLIElement>(null);
   const dispatch = useDispatch();
-  const {ingredients} = useSelector(burgerConstructor);
+  const { ingredients } = useSelector(burgerConstructor);
 
   const swapIngredient = useCallback<TSwapIngredientCallback>((dragIndex, hoverIndex) => {
     const dragIngredient = ingredients[dragIndex];
@@ -32,7 +31,7 @@ const ConstructorPiece: FC<TFunctionProps> = ({ element, index }) => {
     })
   }, [ingredients, dispatch]);
 
-//функции удаления ингредиента из конструктора по нажатию на кнопку корзины рядом с элементом
+  //функции удаления ингредиента из конструктора по нажатию на кнопку корзины рядом с элементом
   const deleteIngredient = useCallback<TDeleteIngredientCallback>((index, element) => {
     const newOrder = [...ingredients];
     newOrder.splice(index, 1);
@@ -40,10 +39,6 @@ const ConstructorPiece: FC<TFunctionProps> = ({ element, index }) => {
     dispatch({
       type: DELETE_INGREDIENT,
       payload: newOrder,
-      item: element
-    })
-    dispatch({
-      type: DECREASE_INGREDIENT_COUNT,
       item: element
     })
   }, [ingredients, dispatch]);

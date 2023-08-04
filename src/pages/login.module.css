@@ -1,5 +1,5 @@
 .container {
-  margin: 200px  auto;
+  margin: 200px auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -11,9 +11,9 @@
 
 .links {
   text-decoration: none;
-  color:#4C4CFF;
+  color: #4c4cff;
   transition: color 0.3s;
 }
 .links:hover {
-  color: white
+  color: white;
 }

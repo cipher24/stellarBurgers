@@ -1,14 +1,15 @@
 import {
   LOGOUT_ERROR,
   LOGOUT_SUCCESS,
-  LOGOUT_REQUEST
+  LOGOUT_REQUEST,
+  TLogoutActions
 } from "../actions/logout";
-import type {TLogoutActions} from "../actions/logout";
+
 type TInitialState = {
-  isError: boolean;
+  isError: string | null;
 }
-const initialState: TInitialState = {
-  isError: false
+export const initialState: TInitialState = {
+  isError: null
 }
 
 export const logoutReducer = (state = initialState, action: TLogoutActions): TInitialState => {
@@ -18,12 +19,12 @@ export const logoutReducer = (state = initialState, action: TLogoutActions): TIn
     }
     case LOGOUT_SUCCESS: {
       return {
-        isError: false
+        isError: null
       }
     }
     case LOGOUT_ERROR: {
       return {
-        isError: true,
+        isError: action.payload,
       }
     }
     default: {
@@ -31,3 +32,4 @@ export const logoutReducer = (state = initialState, action: TLogoutActions): TIn
     }
   }
 }
+export default logoutReducer;

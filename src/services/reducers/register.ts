@@ -8,11 +8,11 @@ import {
 import type { TRegisterActions } from "../actions/register";
 type TInitialState = {
   isSuccessRegistration: boolean;
-  isError: boolean;
+  isError: string | null;
 }
-const initialState: TInitialState = {
+export const initialState: TInitialState = {
   isSuccessRegistration: false,
-  isError: false
+  isError: null
 }
 
 export const registerReducer = (state = initialState, action: TRegisterActions): TInitialState => {
@@ -25,13 +25,13 @@ export const registerReducer = (state = initialState, action: TRegisterActions):
       return {
         ...state,
         isSuccessRegistration: true,
-        isError: false
+        isError: null
       }
     }
     case REGISTER_ERROR: {
       return {
         ...state,
-        isError: true,
+        isError: action.payload,
         isSuccessRegistration: false
       }
     }
@@ -39,4 +39,5 @@ export const registerReducer = (state = initialState, action: TRegisterActions):
       return state
     }
   }
-}
+};
+export default registerReducer;

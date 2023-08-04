@@ -1,4 +1,4 @@
-import type { Middleware} from 'redux';
+import type { Middleware } from 'redux';
 import { TRootState } from '../../utils/types';
 import {
   FEED_WS_CONNECT,
@@ -36,7 +36,7 @@ export const socketMiddleware = (wsActions: TFeedWsActionTypes | THistoryWsActio
       const { dispatch } = store;
       const { type } = action;
       const { wsConnect, wsDisconnect, onOpen, onError, onMessage, onClose } = wsActions;
-      if ((type === wsConnect)&&(socket?.url !== action.payload)) {
+      if ((type === wsConnect) && (socket?.url !== action.payload)) {
         socket = new WebSocket(action.payload);
       }
       if (socket) {
@@ -49,15 +49,15 @@ export const socketMiddleware = (wsActions: TFeedWsActionTypes | THistoryWsActio
         socket.onmessage = event => {
           const { data } = event;
           const parsedData = JSON.parse(data);
-
-          dispatch({type: onMessage, payload: parsedData});
+          dispatch({ type: onMessage, payload: parsedData });
         };
         socket.onclose = event => {
-          dispatch({type: onClose})
+          dispatch({ type: onClose });
+          socket = null;
         }
         if (type === wsDisconnect) {
           socket.close(1000, 'unmount component with websocket');
-          socket = null;
+          // socket = null;
         }
       }
       next(action);

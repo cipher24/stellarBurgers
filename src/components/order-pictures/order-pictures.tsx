@@ -10,14 +10,14 @@ export const OrderPictures: FC<TOrderPicturesProps> = ({ array }) => {
   let i = 0;
   return (
     <>
-      {array.map((element: string, index) => {
+      {array.map((element, index) => {
         if (index < 6) {
           let zIndex = 20 - index;
           let out = ingredients.find((ingredient) => (ingredient._id === element));
           if (index !== 5) {
-            
+
             return (
-              <div key={i++} style={{zIndex: zIndex}}className={styles.pictureContainer}>
+              <div key={i++} style={{ zIndex: zIndex }} className={styles.pictureContainer}>
                 <div className={styles.background}>
                   <img className={styles.picture}
                     src={out?.image_mobile}
@@ -26,7 +26,7 @@ export const OrderPictures: FC<TOrderPicturesProps> = ({ array }) => {
                 </div>
               </div>
             )
-          }else {
+          } else {
             return (
               <div key={i++} className={styles.pictureContainer}>
                 <div className={styles.background}>
@@ -34,7 +34,7 @@ export const OrderPictures: FC<TOrderPicturesProps> = ({ array }) => {
                     src={out?.image_mobile}
                     alt={out?.name}
                   ></img>
-                  <span className={`${styles.count} text text_type_digits-default`}>{`+${array.length-5}`}</span>
+                  <span className={`${styles.count} text text_type_digits-default`}>{`+${array.length - 5}`}</span>
                 </div>
               </div>
             )
