@@ -8,7 +8,7 @@ import {
 type TInitialState = {
   isError: string | null;
 }
-const initialState: TInitialState = {
+export const initialState: TInitialState = {
   isError: null
 }
 

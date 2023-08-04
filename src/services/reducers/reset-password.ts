@@ -10,7 +10,7 @@ type TInitialState = {
   isSuccessReset: boolean;
   isError: string | null;
 }
-const initialState: TInitialState = {
+export const initialState: TInitialState = {
   isSuccessReset: false,
   isError: null
 }

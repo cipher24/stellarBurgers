@@ -11,9 +11,8 @@
   line-height: 30px;
 }
 
-.ingredientCard{
+.ingredientCard {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-

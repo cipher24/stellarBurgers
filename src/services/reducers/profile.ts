@@ -19,7 +19,7 @@ type TInitialState = {
   isError: string | null;
   isAuthChecked: boolean;
 }
-const initialState: TInitialState = {
+export const initialState: TInitialState = {
   user: null,
   isSuccessRequest: false,
   isError: null,

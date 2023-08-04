@@ -17,7 +17,7 @@ export type TInitialState = {
   isError: string | null;
   data: TWSData | null;
 }
-const initialState: TInitialState = {
+export const initialState: TInitialState = {
   status: 'disconnected',
   isError: null,
   data: null

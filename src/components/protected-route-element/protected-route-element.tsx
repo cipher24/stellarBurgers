@@ -1,6 +1,6 @@
 import { Navigate, useLocation } from 'react-router-dom';
 import { useSelector } from '../../utils/hooks';
-import { FC, useEffect} from 'react';
+import { FC } from 'react';
 import { profile } from '../../selectors/selectors';
 
 type TProtectedRouteElementProps = {
@@ -8,7 +8,6 @@ type TProtectedRouteElementProps = {
   children: JSX.Element;
 }
 export const ProtectedRouteElement: FC<TProtectedRouteElementProps> = ({ onlyGuest = false, children }) => {
-  // const [isAuth, setIsAuth] = useState<boolean>(false);
   const location = useLocation();
   const { user, isAuthChecked } = useSelector(profile);
 

@@ -9,7 +9,7 @@ type TInitialState = {
   isSuccessLogin: boolean;
   isError: string | null;
 }
-const initialState: TInitialState = {
+export const initialState: TInitialState = {
   isSuccessLogin: false,
   isError: null
 }

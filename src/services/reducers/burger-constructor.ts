@@ -14,7 +14,7 @@ export type TInitialState = {
   ingredients: IElement[],
 }
 
-const initialState: TInitialState = {
+export const initialState: TInitialState = {
   buns: null,
   ingredients: [],
 }

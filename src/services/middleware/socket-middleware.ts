@@ -53,11 +53,11 @@ export const socketMiddleware = (wsActions: TFeedWsActionTypes | THistoryWsActio
         };
         socket.onclose = event => {
           dispatch({ type: onClose });
-          // socket = null;
+          socket = null;
         }
         if (type === wsDisconnect) {
           socket.close(1000, 'unmount component with websocket');
-          socket = null;
+          // socket = null;
         }
       }
       next(action);

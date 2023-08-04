@@ -3,7 +3,6 @@ import { OrderCard } from '../components/order-card/order-card';
 import { useEffect } from 'react';
 import { feedWSConnect, FEED_WS_DISCONNECT } from '../services/actions/socket';
 import { useDispatch, useSelector } from '../utils/hooks';
-import { TWSOrder } from '../utils/types';
 import { WEBSOCKET_URL } from '../utils/burger-api';
 import { socket } from '../selectors/selectors';
 
@@ -28,7 +27,7 @@ export function FeedPage() {
           <div className={`${styles.orderList} ${styles.scroll} mr-15`}>
 
             {data.orders &&
-              data.orders.map((order: TWSOrder) => (
+              data.orders.map((order) => (
                 <OrderCard key={order._id} order={order} />
               ))
             }
@@ -40,7 +39,7 @@ export function FeedPage() {
               <div className={`mr-9 ${styles.orderNumbers}`}>Готовы:
                 <div className={`mt-6 ${styles.doneOrdersContainer}`}>
                   {data.orders &&
-                    data.orders.map((order: TWSOrder) => {
+                    data.orders.map((order) => {
                       if (order.status === 'done') {
                         return (
                           <p key={order._id} className={`${styles.doneOrders} text text_type_digits-default mb-2`}>
@@ -54,7 +53,7 @@ export function FeedPage() {
               <div className="">В работе:
                 <div className={` mt-6`}>
                   {data.orders &&
-                    data.orders.map((order: TWSOrder) => {
+                    data.orders.map((order) => {
                       if (order.status !== 'done') {
                         return (
                           <p key={order._id} className={`${styles.workingOrders} text text_type_digits-default mb-2`}>

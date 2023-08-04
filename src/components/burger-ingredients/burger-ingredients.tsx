@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredients.module.css';
 import CategoryIngredients from '../category-ingredients/category-ingredients';
@@ -11,6 +11,7 @@ export default function BurgerIngredients() {
     rootMargin: '100px 0px -500px 0px',
     threshold: 0.5
   };
+  
   const intersectCallback = (entries: IntersectionObserverEntry[]) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
@@ -18,13 +19,15 @@ export default function BurgerIngredients() {
       }
     });
   };
+  useEffect(() => {
+    let observer = new IntersectionObserver(intersectCallback, options);
+    const ingredientTargets = document.querySelectorAll('h3');
+    ingredientTargets.forEach((ingredientTarget) => {
+      observer.observe(ingredientTarget);
+    });
+  }, [options]);
 
-  let observer = new IntersectionObserver(intersectCallback, options);
 
-  const ingredientTargets = document.querySelectorAll('h3');
-  ingredientTargets.forEach((ingredientTarget) => {
-    observer.observe(ingredientTarget);
-  });
 
   const [currentTab, setCurrentTab] = React.useState<string>('bun');
 
@@ -35,7 +38,9 @@ export default function BurgerIngredients() {
     if (node) {
       node.scrollIntoView({ behavior: "smooth" })
     }
-  }
+  };
+
+
 
   return (
     <section className={`${styles.ingredientsBlock}`} >

@@ -16,7 +16,7 @@ export const IngredientDetails = () => {
     if (ingredient) {
       setIngredientToShow(ingredient);
     } else {
-      let requiredIngredient = ingredients.find((element: IElementTemp) => element._id === id);
+      let requiredIngredient = ingredients.find((element) => element._id === id);
       console.log(requiredIngredient);
       if (requiredIngredient) {
         setIngredientToShow(requiredIngredient);

@@ -37,21 +37,6 @@ export type TApplicationActions =
 // типизация метода dispatch
 export type AppDispatch = ThunkDispatch<TRootState, never, TApplicationActions>;
 
-export interface IElement {
-  _id: string;
-  name: string;
-  type: string;
-  calories: number;
-  carbohydrates: number;
-  fat: number;
-  proteins: number;
-  price: number;
-  image: string;
-  image_large: string;
-  image_mobile: string;
-  __v: number;
-  dragId: string;
-};
 
 // переделать? сделать этот основным и уже добавлять dragId и count
 export interface IElementTemp {
@@ -68,7 +53,9 @@ export interface IElementTemp {
   image_mobile: string;
   __v: number;
 }
-
+export interface IElement extends IElementTemp {
+  dragId: string;
+}
 export type TUser = {
   email: string;
   name: string;
@@ -84,7 +71,7 @@ export type TWSOrder = {
   number: number;
 }
 
-type TOrderWithOwner = TWSOrder & {
+export type TOrderWithOwner = TWSOrder & {
   owner: string;
   __v: number
 }
@@ -104,4 +91,5 @@ export type TAnswerError = {
   success: boolean,
   message: string;
 }
-export type TRequestProps = { [name: string]: string }
+
+export type TRequestProps = { [name: string]: string };

@@ -10,7 +10,7 @@ type TInitialState = {
   isExistedEmail: boolean;
   isError: string | null;
 }
-const initialState: TInitialState = {
+export const initialState: TInitialState = {
   isExistedEmail: false,
   isError: null
 }

@@ -35,7 +35,7 @@ const optionsGenerator = (method: TFetchMethods | null, payload: TFetchBody | nu
       "Content-type": "application/json; charset=UTF-8",
       Authorization: "Bearer " + getCookie('token')
     }
-  }else {
+  } else {
     headers = {
       "Content-type": "application/json; charset=UTF-8"
     }
@@ -75,17 +75,17 @@ export const requestNorma = (
 
   //Проверка авторизирован ли пользователь, то есть имеет ли он токены
   const accessToken = getCookie('token');
- let refreshToken;
+  let refreshToken;
   if (localStorage.getItem('refreshToken')) {
     refreshToken = JSON.parse(localStorage.getItem('refreshToken')!);
   }
 
-  if((accessToken !== undefined)||(refreshToken !== undefined)) {
+  if ((accessToken !== undefined) || (refreshToken !== undefined)) {
     return fetchWithRefresh(`${NORMA_URL}/${endpoint}`, optionsGenerator(method, payload, true))
-    .then(successCheck)
-  }else {
+      .then(successCheck)
+  } else {
     return fetchWithRefresh(`${NORMA_URL}/${endpoint}`, optionsGenerator(method, payload, false))
-    .then(successCheck)
+      .then(successCheck)
   }
 
 }

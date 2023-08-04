@@ -15,7 +15,7 @@ type TInitialState = {
   isShowOrder: boolean;
 }
 
-const initialState: TInitialState = {
+export const initialState: TInitialState = {
   orderNumber: null,
   answer: null,
   isOrderError: null,

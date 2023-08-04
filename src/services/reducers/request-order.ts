@@ -5,7 +5,7 @@ type TInitialState = {
   answerData: TAnswerData | null;
   isError: string | null;
 }
-const initialState: TInitialState = {
+export const initialState: TInitialState = {
   answerData: null,
   isError: null
 }

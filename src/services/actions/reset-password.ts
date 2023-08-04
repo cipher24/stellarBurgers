@@ -1,5 +1,5 @@
 import { requestNorma } from '../../utils/burger-api';
-import { AppDispatch, TAnswerError, TRequestProps } from '../../utils/types';
+import { AppDispatch, TRequestProps } from '../../utils/types';
 
 export const RESET_PASSWORD_REQUEST: 'RESET_PASSWORD_REQUEST' = 'RESET_PASSWORD_REQUEST';
 export const RESET_PASSWORD_SUCCESS: 'RESET_PASSWORD_SUCCESS' = 'RESET_PASSWORD_SUCCESS';

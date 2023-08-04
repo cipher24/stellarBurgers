@@ -12,128 +12,87 @@ import {
   WS_ON_CLOSE,
 } from "../actions/socket";
 import { MockWebSocketList } from '../../utils/mock-data';
+import { initialState } from './socket';
+
+const stateConnected = {
+  ...initialState,
+  status: 'connected'
+}
+
+const stateConnecting = {
+  ...initialState,
+  status: 'connecting'
+}
+const stateDisonnecting = {
+  ...initialState,
+  status: 'disconnecting'
+}
+
+/* const stateStatus = (status: string) => {
+  return {
+    ...initialState, 
+    status
+  }
+} */
 
 describe('test socket reducer', () => {
   it('should return the initial state History', () => {
-    expect(reducer(undefined, {} as THistoryActions)).toEqual({
-      status: 'disconnected',
-      isError: null,
-      data: null
-    })
+    expect(reducer(undefined, {} as THistoryActions)).toEqual(initialState)
   });
   it('should return the initial state Feed', () => {
-    expect(reducer(undefined, {} as TFeedActions)).toEqual({
-      status: 'disconnected',
-      isError: null,
-      data: null
-    })
+    expect(reducer(undefined, {} as TFeedActions)).toEqual(initialState)
   });
   it('should handle FEED_WS_CONNECT', () => {
     expect(reducer({
-      status: 'disconnected',
-      isError: 'Обрыв соединения',
-      data: null
+      ...initialState,
+      isError: 'Обрыв соединения'
     }, {
       type: FEED_WS_CONNECT,
       payload: 'wss://google.com'
-    })).toEqual({
-      data: null,
-      status: 'connecting',
-      isError: null
-    })
+    })).toEqual(stateConnecting)
   });
   it('should handle FEED_WS_DISCONNECT', () => {
-    expect(reducer({
-      data: null,
-      status: 'connected',
-      isError: null
-    }, {
+    expect(reducer(stateConnected, {
       type: FEED_WS_DISCONNECT
-    })).toEqual({
-      data: null,
-      status: 'disconnecting',
-      isError: null
-    })
+    })).toEqual(stateDisonnecting)
   });
   it('should handle HISTORY_WS_CONNECT', () => {
-    expect(reducer({
-      status: 'disconnected',
-      isError: 'Обрыв соединения',
-      data: null
-    }, {
+    expect(reducer(initialState, {
       type: HISTORY_WS_CONNECT,
       payload: 'wss://google.com'
-    })).toEqual({
-      data: null,
-      status: 'connecting',
-      isError: null
-    })
+    })).toEqual(stateConnecting)
   });
   it('should handle HISTORY_WS_DISCONNECT', () => {
-    expect(reducer({
-      data: null,
-      status: 'connected',
-      isError: null
-    }, {
+    expect(reducer(stateConnected, {
       type: HISTORY_WS_DISCONNECT
-    })).toEqual({
-      data: null,
-      status: 'disconnecting',
-      isError: null
-    })
+    })).toEqual(stateDisonnecting)
   });
   it('should handle WS_ON_CLOSE', () => {
-    expect(reducer({
-      data: null,
-      status: 'disconnecting',
-      isError: null
-    }, {
+    expect(reducer(stateDisonnecting, {
       type: WS_ON_CLOSE
-    })).toEqual({
-      data: null,
-      status: 'disconnected',
-      isError: null
-    })
+    })).toEqual(initialState)
   });
   it('should handle WS_ON_OPEN', () => {
-    expect(reducer({
-      data: null,
-      status: 'connecting',
-      isError: null
-    }, {
+    expect(reducer(stateConnecting, {
       type: WS_ON_OPEN
-    })).toEqual({
-      data: null,
-      status: 'connected',
-      isError: null
-    })
+    })).toEqual(stateConnected)
   });
   it('should handle WS_ON_ERROR', () => {
-    expect(reducer({
-      data: null,
-      status: 'connected',
-      isError: null
-    }, {
+    expect(reducer(stateConnected, {
       type: WS_ON_ERROR,
-      payload: 'Обрыв соединения'
+      payload: 'Ошибка при передаче сообщения'
     })).toEqual({
-      data: null,
-      status: 'connected',
-      isError: 'Обрыв соединения'
+      ...stateConnected,
+      isError: 'Ошибка при передаче сообщения'
     })
   });
   it('should handle WS_ON_MESSAGE', () => {
-    expect(reducer({
-      data: null,
-      status: 'connected',
-      isError: null
-    }, {
+    expect(reducer(stateConnected, {
       type: WS_ON_MESSAGE,
       payload: MockWebSocketList
     })).toEqual({
-      data: MockWebSocketList,
-      status: 'connected',
-      isError: null
-    })
+      ...stateConnected,
+      data: MockWebSocketList
+    });
   });
 });

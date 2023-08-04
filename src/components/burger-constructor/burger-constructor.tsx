@@ -68,7 +68,7 @@ export default function BurgerConstructor() {
     if (states && states.buns) {
       ids.push(states.buns._id);
     }
-    states.ingredients.forEach((element: IElement) => ids.push(element._id));
+    states.ingredients.forEach((element) => ids.push(element._id));
     if (states && states.buns) {
       ids.push(states.buns._id);
     }
@@ -107,7 +107,7 @@ export default function BurgerConstructor() {
               className={`${styles.constructorScroll}`}
               data-cy="constructor-ingredient"
             >
-              {states.ingredients.map((element: IElement, index: number) => (
+              {states.ingredients.map((element, index) => (
                 <ConstructorPiece
                   element={element}
                   key={element.dragId}

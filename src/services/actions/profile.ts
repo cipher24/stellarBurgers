@@ -65,7 +65,6 @@ export function getProfileRequest() {
     })
     requestNorma('auth/user')
       .then(answer => {
-        console.log(answer);
         dispatch({
           type: GET_PROFILE_SUCCESS,
           payload: answer.user
@@ -113,7 +112,6 @@ export function checkAuthorization() {
     if (getCookie('token')) {
       requestNorma('auth/user')
         .then(answer => {
-          console.log(answer);
           dispatch({
             type: GET_PROFILE_SUCCESS,
             payload: answer.user

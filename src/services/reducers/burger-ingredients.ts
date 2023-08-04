@@ -5,7 +5,6 @@ import {
   TBurgerIngredientsActions
 } from "../actions/burger-ingredients";
 
-
 import { IElementTemp } from '../../utils/types';
 
 type TInitialState = {
@@ -13,7 +12,7 @@ type TInitialState = {
   isRequest: boolean;
   isRequestError: string | null;
 }
-const initialState: TInitialState = {
+export const initialState: TInitialState = {
   ingredients: [],
   isRequest: false,
   isRequestError: null

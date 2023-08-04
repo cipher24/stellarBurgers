@@ -10,7 +10,7 @@ type TInitialState = {
   ingredient: IElementTemp | null;
   isShowDetails: boolean;
 }
-const initialState: TInitialState = {
+export const initialState: TInitialState = {
   ingredient: null,
   isShowDetails: false
 }

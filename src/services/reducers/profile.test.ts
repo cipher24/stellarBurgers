@@ -12,154 +12,85 @@ import {
   TProfileActions
 } from "../actions/profile";
 import { MockUserData } from '../../utils/mock-data';
+import { initialState } from './profile';
+
+const stateWithUserData = {
+  ...initialState,
+  user: MockUserData,
+  isAuthChecked: false,
+  isSuccessRequest: true
+}
+const stateWithUserDataAndAuth = {
+  ...stateWithUserData,
+  isAuthChecked: true
+}
+const initialStateWithAuth = {
+  ...initialState,
+  isAuthChecked: true
+}
 
 describe('test profile reducer', () => {
   it('should return the initial state', () => {
-    expect(reducer(undefined, {} as TProfileActions)).toEqual({
-      user: null,
-      isSuccessRequest: false,
-      isError: null,
-      isAuthChecked: false
-    })
+    expect(reducer(undefined, {} as TProfileActions)).toEqual(initialState)
   });
   it('should handle GET_PROFILE_REQUEST', () => {
-    expect(reducer({
-      user: null,
-      isSuccessRequest: true,
-      isError: null,
-      isAuthChecked: false
-    }, {
+    expect(reducer(initialStateWithAuth, {
       type: GET_PROFILE_REQUEST
-    })).toEqual({
-      user: null,
-      isSuccessRequest: false,
-      isError: null,
-      isAuthChecked: false
-    })
+    })).toEqual(initialStateWithAuth)
   });
   it('should handle PATCH_PROFILE_REQUEST', () => {
-    expect(reducer({
-      user: null,
-      isSuccessRequest: true,
-      isError: 'Ошибка запроса',
-      isAuthChecked: false
-    }, {
+    expect(reducer(initialStateWithAuth, {
       type: PATCH_PROFILE_REQUEST
-    })).toEqual({
-      user: null,
-      isSuccessRequest: false,
-      isError: null,
-      isAuthChecked: false
-    })
+    })).toEqual(initialStateWithAuth)
   });
   it('should handle GET_PROFILE_SUCCESS', () => {
-    expect(reducer({
-      user: null,
-      isSuccessRequest: true,
-      isError: null,
-      isAuthChecked: false
-    }, {
+    expect(reducer(initialState, {
       type: GET_PROFILE_SUCCESS,
       payload: MockUserData
-    })).toEqual({
-      user: MockUserData,
-      isSuccessRequest: true,
-      isError: null,
-      isAuthChecked: false
-    })
+    })).toEqual(stateWithUserData)
   });
   it('should handle PATCH_PROFILE_SUCCESS', () => {
     expect(reducer({
-      user: null,
-      isSuccessRequest: true,
-      isError: null,
-      isAuthChecked: false
+      ...initialState,
+      isAuthChecked: true
     }, {
       type: PATCH_PROFILE_SUCCESS,
       payload: MockUserData
-    })).toEqual({
-      user: MockUserData,
-      isSuccessRequest: true,
-      isError: null,
-      isAuthChecked: false
-    })
+    })).toEqual(stateWithUserDataAndAuth)
   });
   it('should handle GET_PROFILE_ERROR', () => {
-    expect(reducer({
-      user: MockUserData,
-      isSuccessRequest: true,
-      isError: null,
-      isAuthChecked: false
-    }, {
+    expect(reducer(stateWithUserData, {
       type: GET_PROFILE_ERROR,
       payload: 'Неверный токен'
     })).toEqual({
-      user: MockUserData,
+      ...stateWithUserData,
       isSuccessRequest: false,
-      isError: 'Неверный токен',
-      isAuthChecked: false
+      isError: 'Неверный токен'
     })
   });
   it('should handle PATCH_PROFILE_ERROR', () => {
-    expect(reducer({
-      user: MockUserData,
-      isSuccessRequest: true,
-      isError: null,
-      isAuthChecked: false
-    }, {
+    expect(reducer(stateWithUserData, {
       type: PATCH_PROFILE_ERROR,
       payload: 'Неверный токен'
     })).toEqual({
-      user: MockUserData,
+      ...stateWithUserData,
       isSuccessRequest: false,
-      isError: 'Неверный токен',
-      isAuthChecked: false
+      isError: 'Неверный токен'
     })
   });
   it('should handle RESET_PROFILE', () => {
-    expect(reducer({
-      user: MockUserData,
-      isSuccessRequest: true,
-      isError: null,
-      isAuthChecked: false
-    }, {
+    expect(reducer(stateWithUserData, {
       type: RESET_PROFILE
-    })).toEqual({
-      user: null,
-      isSuccessRequest: false,
-      isError: null,
-      isAuthChecked: false
-    })
+    })).toEqual(initialState)
   });
   it('should handle AUTH_CHECKED', () => {
-    expect(reducer({
-      user: MockUserData,
-      isSuccessRequest: true,
-      isError: null,
-      isAuthChecked: false
-    }, {
+    expect(reducer(stateWithUserData, {
       type: AUTH_CHECKED
-    })).toEqual({
-      user: MockUserData,
-      isSuccessRequest: true,
-      isError: null,
-      isAuthChecked: true
-    })
+    })).toEqual(stateWithUserDataAndAuth)
   });
   it('should handle AUTH_RESET', () => {
-    expect(reducer({
-      user: MockUserData,
-      isSuccessRequest: true,
-      isError: null,
-      isAuthChecked: true
-    }, {
+    expect(reducer(stateWithUserDataAndAuth, {
       type: AUTH_RESET
-    })).toEqual({
-      user: MockUserData,
-      isSuccessRequest: true,
-      isError: null,
-      isAuthChecked: false
-    })
+    })).toEqual(stateWithUserData)
   });
-
 });

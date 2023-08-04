@@ -6,56 +6,39 @@ import {
   REGISTER_INIT,
   TRegisterActions
 } from '../actions/register';
+import { initialState } from './register';
+
+const stateWithSuccessRegistration = {
+  ...initialState,
+  isSuccessRegistration: true
+}
+
 describe('test register reducer', () => {
   it('should return the initial state', () => {
-    expect(reducer(undefined, {} as TRegisterActions)).toEqual({
-      isSuccessRegistration: false,
-      isError: null
-    })
+    expect(reducer(undefined, {} as TRegisterActions)).toEqual(initialState)
   });
   it('should handle REGISTER_REQUEST', () => {
-    expect(reducer({
-      isSuccessRegistration: true,
-      isError: null
-    }, {
+    expect(reducer(stateWithSuccessRegistration, {
       type: REGISTER_REQUEST
-    })).toEqual({
-      isSuccessRegistration: false,
-      isError: null
-    })
+    })).toEqual(initialState)
   });
   it('should handle REGISTER_INIT', () => {
-    expect(reducer({
-      isSuccessRegistration: true,
-      isError: null
-    }, {
+    expect(reducer(stateWithSuccessRegistration, {
       type: REGISTER_INIT
-    })).toEqual({
-      isSuccessRegistration: false,
-      isError: null
-    })
+    })).toEqual(initialState)
   });
   it('should handle REGISTER_SUCCESS', () => {
-    expect(reducer({
-      isSuccessRegistration: false,
-      isError: null
-    }, {
+    expect(reducer(initialState, {
       type: REGISTER_SUCCESS,
-    })).toEqual({
-      isSuccessRegistration: true,
-      isError: null
-    })
+    })).toEqual(stateWithSuccessRegistration)
   })
   it('should handle REGISTER_ERROR', () => {
-    expect(reducer({
-      isSuccessRegistration: true,
-      isError: null
-    }, {
+    expect(reducer(stateWithSuccessRegistration, {
       type: REGISTER_ERROR,
       payload: 'Такой пользователь существует'
     })).toEqual({
-      isError: 'Такой пользователь существует',
-      isSuccessRegistration: false
+      ...initialState,
+      isError: 'Такой пользователь существует'
     })
   });
 

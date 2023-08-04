@@ -2,7 +2,6 @@ import BurgerIngredient from '../burger-ingredient/burger-ingredient';
 import { useSelector } from '../../utils/hooks';
 import styles from './category-ingredients.module.css';
 import { FC, useMemo } from 'react';
-import { IElementTemp } from '../../utils/types';
 import { burgerConstructor, burgerIngredients } from '../../selectors/selectors';
 
 type TCategory = {
@@ -32,8 +31,8 @@ const CategoryIngredients: FC<{ category: TCategory }> = ({ category }) => {
 
         {
           ingredients
-            .filter((element: IElementTemp) => element.type === category.type)
-            .map((element: IElementTemp) => {
+            .filter((element) => element.type === category.type)
+            .map((element) => {
               return <BurgerIngredient key={element._id} element={element} count={ingredientCounters[element._id]} />
             })
         }

@@ -5,35 +5,27 @@ import {
   TIngredientDetailsActions
 } from "../actions/ingredient-details";
 import { MockIngredientDetails } from '../../utils/mock-data';
+import { initialState } from './ingredient-details';
+
+const stateWithIngredient = {
+  ...initialState,
+  ingredient: MockIngredientDetails,
+  isShowDetails: true
+}
 
 describe('test ingredient-details reducer', () => {
   it('should return the initial state', () => {
-    expect(reducer(undefined, {} as TIngredientDetailsActions)).toEqual({
-      ingredient: null,
-      isShowDetails: false
-    })
+    expect(reducer(undefined, {} as TIngredientDetailsActions)).toEqual(initialState)
   });
   it('should handle GET_INGREDIENT_INFO', () => {
-    expect(reducer({
-      ingredient: null,
-      isShowDetails: false
-    }, {
+    expect(reducer(initialState, {
       type: GET_INGREDIENT_INFO,
       payload: MockIngredientDetails
-    })).toEqual({
-      ingredient: MockIngredientDetails,
-      isShowDetails: true
-    })
+    })).toEqual(stateWithIngredient)
   });
   it('should handle CLOSE_DETAILS', () => {
-    expect(reducer({
-      ingredient: MockIngredientDetails,
-      isShowDetails: true
-    }, {
+    expect(reducer(stateWithIngredient, {
       type: CLOSE_DETAILS
-    })).toEqual({
-      ingredient: null,
-      isShowDetails: false
-    })
+    })).toEqual(initialState)
   });
 })

@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import { useDispatch } from '../../utils/hooks';
 import { requestOrder } from '../../services/actions/request-order';
 import { burgerIngredients, requestedOrder} from '../../selectors/selectors';
+import { composeIngredients } from '../../utils/utils';
 export const FeedOrder = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -22,7 +23,6 @@ export const FeedOrder = () => {
   const { ingredients } = useSelector(burgerIngredients);
   const order = answerData?.orders[0];
   const price = CalculatePrice(order?.ingredients);
-
   return (
     <>
       {order && <div className={`${styles.main} text text_type_main-default`}>
@@ -32,8 +32,8 @@ export const FeedOrder = () => {
         <p className={`text text_type_main-medium mt-15 mb-6`}>Состав:</p>
 
         <div className={`${styles.ingredients}`}>
-          {order.ingredients.map((element: string, index: number) => {
-            let out = ingredients?.find((el) => el._id === element);
+          {order && Object.entries(composeIngredients(order.ingredients)).map((element, index) => {
+            let out = ingredients?.find((el) => el._id === element[0]);
             return (
               <div key={index} className={`${styles.flex} mr-6 mb-4`}>
 
@@ -42,7 +42,7 @@ export const FeedOrder = () => {
                 </div>
                 <div className={`${styles.flexName} mr-4 ml-4`}>{out?.name}</div>
                 <div className={styles.currency}>
-                  <span className='mr-2'>1 x {out?.price}</span>
+                  <span className='mr-2'>{element[1]} x {out?.price}</span>
                   <CurrencyIcon type="primary" />
                 </div>
               </div>

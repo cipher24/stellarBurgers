@@ -5,46 +5,35 @@ import {
   LOGIN_REQUEST,
   TLoginActions
 } from "../actions/login";
+import { initialState } from './login';
 
 describe('test login reducer', () => {
   it('should return the initial state', () => {
-    expect(reducer(undefined, {} as TLoginActions)).toEqual({
-      isSuccessLogin: false,
-      isError: null
-    })
+    expect(reducer(undefined, {} as TLoginActions)).toEqual(initialState)
   });
 
   it('should handle LOGIN_REQUEST', () => {
     expect(reducer({
-      isSuccessLogin: true,
-      isError: null
+      ...initialState,
+      isSuccessLogin: true
     }, {
       type: LOGIN_REQUEST
-    })).toEqual({
-      isSuccessLogin: false,
-      isError: null
-    })
+    })).toEqual(initialState)
   });
   it('should handle LOGIN_SUCCESS', () => {
-    expect(reducer({
-      isSuccessLogin: false,
-      isError: null
-    }, {
+    expect(reducer(initialState, {
       type: LOGIN_SUCCESS,
     })).toEqual({
-      isSuccessLogin: true,
-      isError: null
+      ...initialState,
+      isSuccessLogin: true
     })
   })
   it('should handle LOGIN_ERROR', () => {
-    expect(reducer({
-      isSuccessLogin: false,
-      isError: null
-    }, {
+    expect(reducer(initialState, {
       type: LOGIN_ERROR,
       payload: 'Такого пользователя не существует или неверный пароль'
     })).toEqual({
-      isSuccessLogin: false,
+      ...initialState,
       isError: 'Такого пользователя не существует или неверный пароль'
     })
   });

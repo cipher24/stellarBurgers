@@ -10,7 +10,7 @@ type TInitialState = {
   isSuccessRegistration: boolean;
   isError: string | null;
 }
-const initialState: TInitialState = {
+export const initialState: TInitialState = {
   isSuccessRegistration: false,
   isError: null
 }

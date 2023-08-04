@@ -1,6 +1,6 @@
 
 import { requestNorma } from '../../utils/burger-api';
-import { AppDispatch, TAnswerData, TAnswerError } from '../../utils/types';
+import { AppDispatch, TAnswerData } from '../../utils/types';
 
 export const REQUEST_ORDER_REQUEST: 'REQUEST_ORDER_REQUEST' = 'REQUEST_ORDER_REQUEST';
 export const REQUEST_ORDER_SUCCESS: 'REQUEST_ORDER_SUCCESS' = 'REQUEST_ORDER_SUCCESS';

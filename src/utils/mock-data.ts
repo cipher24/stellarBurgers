@@ -314,3 +314,8 @@ export const MockAddBuns = {
   count: 0,
   dragId: '460ace2f-db8b-466c-aead-37f92bfeb21f'
 };
+
+export const filledConstructor = {
+  buns: MockConstructorBuns,
+  ingredients: MockConstructorIngredients
+};
