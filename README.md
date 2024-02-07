@@ -7,6 +7,7 @@
 
 **Технологии**: HTML, CSS, JavaScript, React.JS, Redux, REST API, React-dnd, JSX, TypeScript, Websocket, Git, Jest, Cypress.
 
+**[Ссылка на проект](https://cipher24.github.io/stellarBurgers/).** **ОБРАЩАЮ ВАШЕ ВНИМАНИЕ** Возможна некорректная работа из-за отключений сервера. Решаю это проблему для более стабильной работы приложения.
 
 ## Инсткрукция для локального запуска проект:
 
